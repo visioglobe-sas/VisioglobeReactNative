@@ -5,6 +5,8 @@
  
 - [x] Allow New Architecture 
 - [ ] Implements BasicMapView API (details below)
+    - [ ] mapControllerBuilder init
+    - [ ] mapController init
     - [ ] loapMapData
     - [ ] loadMapView
 </details>
