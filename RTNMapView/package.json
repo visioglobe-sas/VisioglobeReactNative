@@ -1,0 +1,36 @@
+{
+    "name": "rtn-map-view",
+    "version": "0.0.1",
+    "description": "Show a visomove map view using visomoveessential",
+    "react-native": "js/index",
+    "source": "js/index",
+    "files": [
+      "js",
+      "android",
+      "ios",
+      "rtn-map-view.podspec",
+      "!android/build",
+      "!ios/build",
+      "!**/__tests__",
+      "!**/__fixtures__",
+      "!**/__mocks__"
+    ],
+    "keywords": ["react-native", "ios", "android"],
+    "repository": "https://github.com/visioglobe-sas/VisioglobeReactNative",
+    "author": "remi remi.mialon--evan@visioglobe.com (https://github.com/remi-vg)",
+    "license": "MIT",
+    "bugs": {
+      "url": "https://github.com/visioglobe-sas/VisioglobeReactNative/issues"
+    },
+    "homepage": "https://github.com/visioglobe-sas/VisioglobeReactNative#readme",
+    "devDependencies": {},
+    "peerDependencies": {
+      "react": "*",
+      "react-native": "*"
+    },
+    "codegenConfig": {
+      "name": "RTNMapViewSpecs",
+      "type": "components",
+      "jsSrcsDir": "js"
+    }
+  }

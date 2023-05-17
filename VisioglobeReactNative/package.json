@@ -11,8 +11,8 @@
   },
   "dependencies": {
     "react": "18.2.0",
-    "react-native": "^0.71.7",
-    "rtn-visiomoveessential": "../RTNVisioMoveEssential"
+    "react-native": "0.71.8",
+    "rtn-map-view": "../RTNMapView"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
