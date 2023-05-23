@@ -30,7 +30,10 @@
     },
     "codegenConfig": {
       "name": "RTNMapViewSpecs",
-      "type": "components",
-      "jsSrcsDir": "js"
+      "type": "modules",
+      "jsSrcsDir": "js",
+      "android": {
+        "javaPackageName": "com.rtnmapview"
+      }
     }
   }
