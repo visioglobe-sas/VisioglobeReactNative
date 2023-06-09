@@ -1,20 +1,12 @@
 ## VisioMoveEssential 2 React Bridge
 
- ### Week 1 
+ ### Current issue
  <details>
  
-- [x] Allow New Architecture 
-- [ ] Implements BasicMapView API (details below)
-    - [ ] mapControllerBuilder init
-    - [ ] mapController init
-    - [ ] loapMapData
-    - [ ] loadMapView
+- [x] RNTMap View not found UIManager (android)
+ 
+- [x] iOs part to do 
 </details>
     
- ### Week 2 
- <details>
- 
-- [ ] Implements camera movements ?(more details to come).
-</details>
     
     
