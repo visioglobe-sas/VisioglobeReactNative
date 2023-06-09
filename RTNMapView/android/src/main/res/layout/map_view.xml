@@ -6,6 +6,5 @@
       android:id="@+id/map"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      app:mapPath="asset://map_mia.zip"
-      app:mapSecretCode="348316876"/>
+      />
 </FrameLayout>

@@ -28,12 +28,17 @@
       "react": "*",
       "react-native": "*"
     },
-    "codegenConfig": {
+    "codegenConfig":
+    {
       "name": "RTNMapViewSpecs",
-      "type": "modules",
-      "jsSrcsDir": "js",
-      "android": {
-        "javaPackageName": "com.rtnmapview"
-      }
+        "type": "components",
+        "jsSrcsDir": "js"
+        },
+      "//comment" : {
+        "name": "RTNMapViewSpecs",
+        "type": "modules",
+        "jsSrcsDir": "js",
+        "android": {
+          "javaPackageName": "com.rtnmapview"
+      }}
     }
-  }

@@ -1,14 +1,15 @@
-import type {TurboModule} from 'react-native/Libraries/TurboModule/RCTExport';
-import {TurboModuleRegistry} from 'react-native';
+import type {ViewProps} from 'ViewPropTypes';
+import type {HostComponent} from 'react-native';
+import codegenNativeComponent from 'react-native/Libraries/Utilities/codegenNativeComponent';
 
+export interface NativeProps extends ViewProps {
+    filePath? : string;
+    mapPath?: string; 
+    mapSecretCode?: Int32; 
+    mapHash?: string; 
+    mapServerUrl?: string; 
+  }
 
-export interface Spec extends TurboModule {
-  init(mapPath?: string, mapSecretCode?: number, mapHash?: string, mapServerUrl?: string, promptUserToDlMap?: boolean): void;
-  loadView(): void;
-  loadData(): void;
-}
-
-export default TurboModuleRegistry.get<Spec>(
-  'RTNViewController',
-) as Spec | null;
-
+export default codegenNativeComponent<NativeProps>(
+    'RTNMapView'
+  ) as HostComponent<NativeProps>;
