@@ -1,5 +1,5 @@
 
-package com.reactlibrary;
+package com.rtnmapview;
 
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
