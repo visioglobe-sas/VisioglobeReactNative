@@ -10,8 +10,21 @@ import com.visioglobe.visiomoveessential.VMEMapView
 import com.visioglobe.visiomoveessential.listeners.VMELifeCycleListener
 import java.io.File
 import java.io.FileOutputStream
+import java.util.ArrayList
+
+
+
 
 class MapView(context: ThemedReactContext, mapViewManager: MapViewManager) : FrameLayout(context) {
+    /*private val lifecycleListener: LifecycleEventListener? = null
+    private val manager: MapViewManager? = null
+    private val view = this
+    private val context: ThemedReactContext? = null
+    private val segments: List<VMESegment> = java.util.ArrayList<VMESegment>()
+    var directions: WritableMap = Arguments.createMap()
+    private val coordinatesGetter: CurrentCoordinatesGetter? = null
+    private val mIsPlaceMarkerDisplayed = false
+    private val shouldCameraFollow = true*/
   var mMapView : VMEMapView? = null
   var mMapController : VMEMapController = VMEMapController(context, VMEMapControllerBuilder())
   var manager : MapViewManager? = mapViewManager
@@ -42,7 +55,16 @@ class MapView(context: ThemedReactContext, mapViewManager: MapViewManager) : Fra
                 }
             }
             context.addLifecycleEventListener(lifecycleListener)
+            //val args: WritableMap = extractMapInfo()
+            //manager.pushEvent(context, view, "onMapDidLoad", args)
         }
+
+      //fun mapDidDisplayRoute(mapView: VMEMapView?, routeResult: VMERouteResult) {
+          //val args: WritableMap = Arguments.createMap()
+          //segments = routeResult.getSegments()
+          //args.putArray("route", constructSegmentsForm(routeResult.getSegments()))
+          //manager.pushEvent(context, view, "onDidDisplayRoute", args)
+      //}
     }
 
   init {
@@ -100,6 +122,59 @@ class MapView(context: ThemedReactContext, mapViewManager: MapViewManager) : Fra
         }
     }
 
-  //constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
-  //}
+    //Helpers
+
+/*    private fun constructSegmentsForm(segments: List<VMESegment>): WritableArray? {
+        val arr: WritableArray = Arguments.createArray()
+        for (lSegment in segments) {
+            val segment: WritableMap = Arguments.createMap()
+            segment.putString("maneuverType", lSegment.getManeuverType() + "")
+            segment.putDouble("duration", lSegment.getDuration())
+            segment.putDouble("length", lSegment.getLength())
+            segment.putString("floorTransitionType", lSegment.getFloorTransitionType() + "")
+            segment.putString("floorTransitionId", lSegment.getFloorTransitionId())
+            val paths: WritableArray = Arguments.createArray()
+            for (vmePosition in lSegment.getPath()) {
+                val path: WritableMap = Arguments.createMap()
+                path.putDouble("latitude", vmePosition.getLatitude())
+                path.putDouble("longitude", vmePosition.getLongitude())
+                path.putDouble("altitude", vmePosition.getAltitude())
+                path.putString("buildingId", vmePosition.getScene().getBuildingID())
+                path.putString("floorId", vmePosition.getScene().getFloorID())
+                paths.pushMap(path)
+            }
+            segment.putArray("paths", paths)
+            arr.pushMap(segment)
+        }
+        return arr
+    }
+
+    private WritableMap extractMapInfo() {
+        VMEMapDescriptor vmeMapDescriptor = mMapView.getCachedMapDescriptor(mMapView.getMapHash());
+        if (vmeMapDescriptor == null) return Arguments.createMap();
+        HashMap<String,String> data = new HashMap<>();
+        data.put("Version", VMEMapView.getVersion());
+        data.put("MinDataSDKVersion", VMEMapView.getMinDataSDKVersion());
+        data.put("DataSDKVersion", VMEMapView.getDataSDKVersion());
+        data.put("MapId", vmeMapDescriptor.getID());
+        data.put("MapName", vmeMapDescriptor.getName());
+        data.put("MapSDKType", vmeMapDescriptor.getSDKType());
+        data.put("MapSDKVersion", vmeMapDescriptor.getSDKVersion() );
+        data.put("MapSDKMinVersion", vmeMapDescriptor.getSDKMinVersion());
+        data.put("Target", vmeMapDescriptor.getTarget());
+        data.put("ZipFile", vmeMapDescriptor.getZipFile());
+        data.put("SecretCode", vmeMapDescriptor.getSecretCode() + "");
+        data.put("CustomDataHash", vmeMapDescriptor.getCustomDataHash());
+        data.put("Timestamp", vmeMapDescriptor.getTimestamp() + "");
+        data.put("ExpiryDate",vmeMapDescriptor.getExpiryDate());
+        WritableMap map = Arguments.createMap();
+        for (Map.Entry<String, String> entry : data.entrySet()) {
+            map.putString(entry.getKey(), entry.getValue());
+        }
+        WritableMap mapInfo = Arguments.createMap();
+        mapInfo.putMap("MapInfo", map);
+        return mapInfo;
+  }
+ */
+
 }
