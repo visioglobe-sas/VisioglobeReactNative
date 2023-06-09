@@ -14,7 +14,10 @@ using namespace facebook::react;
 
 @implementation RTNMapView {
   UIView *_view;
-  UILabel *_label;
+  UILabel *_hash;
+  UILabel *_path;
+  UILabel *_serverurl;
+
 }
 
 + (ComponentDescriptorProvider)componentDescriptorProvider
@@ -31,9 +34,11 @@ using namespace facebook::react;
     _view = [[UIView alloc] init];
     _view.backgroundColor = [UIColor redColor];
 
-    _label = [[UILabel alloc] init];
-    _label.text = @"Initial value";
-    [_view addSubview:_label];
+    _hash = [[UILabel alloc] init];
+    _hash.text = @"";
+
+    _path = [[UILabel alloc] init];
+    _path.text = @"";
 
     _label.translatesAutoresizingMaskIntoConstraints = false;
     [NSLayoutConstraint activateConstraints:@[
