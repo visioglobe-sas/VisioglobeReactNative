@@ -73,6 +73,7 @@ class MapView(context: ThemedReactContext, mapViewManager: MapViewManager) : Fra
       mMapView?.let { mMapController!!.loadMapData() }
       mMapController.setLifeCycleListener(mLifeCycleListener)
       mMapView?.let { mMapController!!.loadMapView(it) }
+      this.addView(mMapView)
   }
 
     private fun extractFromAssetsAndGetFilePath(pFileName: String): String? {
