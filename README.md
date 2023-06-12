@@ -3,7 +3,7 @@
  ### Current issue
  <details>
  
-- [x] RNTMap View not found UIManager (android)
+- [x] Je n'arrive pas à charger la vue coté android
  
 - [x] iOs part to do 
 </details>
