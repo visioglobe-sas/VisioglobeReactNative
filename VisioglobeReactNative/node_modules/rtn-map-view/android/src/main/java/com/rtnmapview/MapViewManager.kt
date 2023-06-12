@@ -59,8 +59,7 @@ class MapViewManager (context: ReactApplicationContext) : SimpleViewManager<MapV
     @ReactProp(name = "mapHash")
     override fun setMapHash(view: MapView?, value: String?) {
         if (value != null) {
-            Log.d("cc", "notinit : $value")
-            view?.mMapController?.mapHash = value
+            view?.setMapHash(value)
         }
     }
 
