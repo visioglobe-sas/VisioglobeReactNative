@@ -14,13 +14,11 @@ const styles = StyleSheet
 
 const App: () => JSX.Element = () => {
   return (
-    <SafeAreaView style={{width: '100%', height: '80%'}} >
       <RTNMapView
-      style={{width: '100%', height: '100%'}}
+      style={{width: '100%', height: '100%'}} 
       mapHash='dev-m219a3bb03e5be89ce238a54e088aab2eb0d9b736'
       mapSecretCode={0}
   />
-  </SafeAreaView>
   );
 };
 export default App;

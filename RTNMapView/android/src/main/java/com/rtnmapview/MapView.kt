@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
 import com.facebook.react.bridge.Arguments
-import com.facebook.react.bridge.LifecycleEventListener
 import com.facebook.react.bridge.WritableMap
 import com.facebook.react.uimanager.ThemedReactContext
 import com.visioglobe.visiomoveessential.VMEMapController
@@ -22,6 +21,7 @@ import java.io.FileOutputStream
 
 class MapView(context: ThemedReactContext) : FrameLayout(context) {
     private var rView: View? = null
+    private var sdkInfo: WritableMap? = null
     /*private val lifecycleListener: LifecycleEventListener? = null
     private val manager: MapViewManager? = null
     private val view = this
@@ -32,54 +32,37 @@ class MapView(context: ThemedReactContext) : FrameLayout(context) {
     private val mIsPlaceMarkerDisplayed = false
     private val shouldCameraFollow = true*/
     private var mMapView : VMEMapView? = null
-    var mMapController: VMEMapController = VMEMapController(context, VMEMapControllerBuilder())
-    var filePath : String = "shizuru_regular.ttf"
+    lateinit var mMapController: VMEMapController
+    val builder = VMEMapControllerBuilder()
+    //var filePath : String = "shizuru_regular.ttf" NOT USEFUL NOW
     private val mLifeCycleListener: VMELifeCycleListener = object : VMELifeCycleListener() {
-        fun mapDidInitializeEngine(mapView: VMEMapView?) {
-            val lFilePath: String? = extractFromAssetsAndGetFilePath(filePath)
-            if (lFilePath != null) {
-                mMapController.setMapFont(lFilePath)
-            }
+        override fun mapDidInitializeEngine() {
+            super.mapDidInitializeEngine()
         }
 
-        fun mapDidGainFocus(mapView: VMEMapView?) {}
-        fun mapDidLoad(mapView: VMEMapView?) {
-            var lifecycleListener = object : LifecycleEventListener {
-                override fun onHostResume() {
-                    mMapController.onResume()
-                }
-
-                override fun onHostPause() {
-                    mMapController.onPause()
-                }
-
-                override fun onHostDestroy() {
-                    mMapController.unloadMapData()
-                    mMapController.unloadMapView()
-                }
-            }
-            //context.addLifecycleEventListener(lifecycleListener)
-            //val args: WritableMap = extractMapInfo()
-            //manager.pushEvent(context, view, "onMapDidLoad", args)
+        override fun mapDataDidLoad() {
+            super.mapDataDidLoad()
+            //mMapController.loadMapView(mMapView!!)
         }
 
-      //fun mapDidDisplayRoute(mapView: VMEMapView?, routeResult: VMERouteResult) {
-          //val args: WritableMap = Arguments.createMap()
-          //segments = routeResult.getSegments()
-          //args.putArray("route", constructSegmentsForm(routeResult.getSegments()))
-          //manager.pushEvent(context, view, "onDidDisplayRoute", args)
-      //}
+        override fun mapViewDidLoad() {
+            super.mapViewDidLoad()
+        }
+
+        override fun mapDidGainFocus() {
+            super.mapDidGainFocus()
+        }
     }
 
   init {
-      mMapController = VMEMapController(context, VMEMapControllerBuilder())
       val inflater = LayoutInflater.from(context)
-      rView = inflater.inflate(R.layout.map_view, null)
+      rView = inflater.inflate(R.layout.map_view, this)
       mMapView = rView?.findViewById<View>(R.id.map) as VMEMapView
-      mMapView?.let { mMapController!!.loadMapData() }
+      builder.mapHash = "dev-m219a3bb03e5be89ce238a54e088aab2eb0d9b736"
+      mMapController = VMEMapController(context,builder)
       mMapController.setLifeCycleListener(mLifeCycleListener)
-      mMapView?.let { mMapController!!.loadMapView(it) }
-      this.addView(rView)
+      mMapController.loadMapData()
+      mMapController.loadMapView(mMapView!!)
   }
 
 
@@ -115,13 +98,13 @@ class MapView(context: ThemedReactContext) : FrameLayout(context) {
 
     fun setMapSecretCode(value: Int) {
         if (value != null) {
-            mMapController.mapSecretCode = value
+            builder.mapSecretCode = value
         }
     }
 
     fun setMapHash(value: String?) {
         if (value != null) {
-            mMapController.mapHash = value
+            builder.mapHash = value
         }
     }
 
@@ -157,6 +140,7 @@ class MapView(context: ThemedReactContext) : FrameLayout(context) {
         )
             ?: return Arguments.createMap()
         val data: HashMap<String, String> = HashMap()
+        data["version"] = "VMEssential2-Beta3"
         data["MinDataSDKVersion"] = mMapController.minDataSDKVersion
         data["DataSDKVersion"] = mMapController.dataSDKVersion
         data["MapId"] = vmeMapDescriptor.id
