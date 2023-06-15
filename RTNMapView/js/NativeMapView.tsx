@@ -62,7 +62,8 @@ export interface Spec extends TurboModule {
   beginRouteRequest(type: EnumeVGRouteType, destinationOrder: string, accessible : boolean): Promise<TypeVGRouteRequest>;
   setOrigin(route : TypeVGRouteRequest, position: TypeVGPosition);
   addDestinations(route : TypeVGRouteRequest, position: TypeVGPosition);
-  computeRoute(route: TypeVGRouteRequest, callback:((Any) => TypeVGRouteResult)):
+  computeRoute(route: TypeVGRouteRequest, callback:((Any) => TypeVGRouteResult));
+  setPoisColor(objArr : {poiid: string, color: string}[]);
 }
 
 export default TurboModuleRegistry.get<Spec>(
