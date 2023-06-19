@@ -1,4 +1,4 @@
-/* This is here to implements future API */
+/* This is here to implements future API 
 import type {TurboModule} from 'react-native/Libraries/TurboModule/RCTExport';
 import {TurboModuleRegistry} from 'react-native';
 
@@ -51,7 +51,7 @@ export enum EnumeVGRouteType {
     SHORTEST
 }
 
-export type TypeVGRouteResult {
+export type TypeVGRouteResult = {
     destinations : TypeVGPosition[]
     duration : number
     length : number
@@ -68,4 +68,4 @@ export interface Spec extends TurboModule {
 
 export default TurboModuleRegistry.get<Spec>(
   'RTNMapViewModule',
-) as Spec | null;
+) as Spec | null;*/
