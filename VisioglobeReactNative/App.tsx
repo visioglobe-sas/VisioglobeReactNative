@@ -18,28 +18,43 @@ const App: () => JSX.Element = () => {
   const viewId = findNodeHandle(ref.current);
 
   function loadMapView(): void {
-    console.log("cc isme" + typeof ref.current);
     if (ref != null) {
       Commands.loadMapView(ref.current);
     }
   }
 
   function loadMapData(): void {
-    console.log("cc isme" + typeof ref.current);
     if (ref != null) {
       Commands.loadMapData(ref.current);
       ToastAndroid.show('loading map data', ToastAndroid.SHORT);
     }
   }
 
+  function unloadMapData(): void {
+    if (ref != null) {
+      Commands.unloadMapData(ref.current);
+      ToastAndroid.show('unloading map data', ToastAndroid.SHORT);
+    }
+  }
+
+  function unloadMapView(): void {
+    if (ref != null) {
+      Commands.unloadMapView(ref.current);
+    }
+  }
+
+  let props = {
+    mapHash : "dev-m219a3bb03e5be89ce238a54e088aab2eb0d9b736",
+    mapSecretCode : 0,
+      }
+
   return (
     <SafeAreaView style={{width: '100%', height: '100%'}} >
       <Button title='load data' onPress={loadMapData}/>
       <RTNMapView
       ref={ref}
-      mapHash='dev-m219a3bb03e5be89ce238a54e088aab2eb0d9b736'
-      mapSecretCode={0}
-      style={{width: '100%', height: '84%'}} 
+      {...props}
+      style={{width: '100%', height: '85%'}}
   />
   
   <Button title='load view' onPress={loadMapView}/>
