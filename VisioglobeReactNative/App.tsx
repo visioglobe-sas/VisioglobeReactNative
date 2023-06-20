@@ -28,9 +28,9 @@ const App: () => JSX.Element = () => {
     <SafeAreaView style={{width: '100%', height: '100%'}} >
       <RTNMapView
       ref={ref}
-      mapHash='dev-m1296a3820209a43f6653b25b22f919345aaf5e20'
+      mapHash='dev-m219a3bb03e5be89ce238a54e088aab2eb0d9b736'
       mapSecretCode={0}
-      style={{width: '100%', height: '80%'}} 
+      style={{width: '100%', height: '90%'}} 
   />
   <Button title='load' onPress={loadMapView}/>
   </SafeAreaView>
