@@ -5,20 +5,35 @@
  * @format
  */
 
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { StyleSheet } from 'react-native/types';
+import { Button, StyleSheet, findNodeHandle } from 'react-native';
 import RTNMapView from 'rtn-map-view/js/RTNMapViewNativeComponent';
-
+import {Commands} from 'rtn-map-view/js/RTNMapViewNativeComponent';
 const styles = StyleSheet
 
+
 const App: () => JSX.Element = () => {
+  const ref = useRef(null);
+  const viewId = findNodeHandle(ref.current);
+
+  function loadMapView(): void {
+    console.log("cc isme" + typeof ref.current);
+    if (ref != null) {
+      Commands.loadMapView(ref.current);
+    }
+  }
+
   return (
+    <SafeAreaView style={{width: '100%', height: '100%'}} >
       <RTNMapView
-      style={{width: '100%', height: '100%'}} 
-      mapHash='dev-m219a3bb03e5be89ce238a54e088aab2eb0d9b736'
+      ref={ref}
+      mapHash='dev-m1296a3820209a43f6653b25b22f919345aaf5e20'
       mapSecretCode={0}
+      style={{width: '100%', height: '80%'}} 
   />
+  <Button title='load' onPress={loadMapView}/>
+  </SafeAreaView>
   );
 };
 export default App;

@@ -5,11 +5,14 @@ import android.view.Choreographer
 import android.view.View
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.ReactMethod
+import com.facebook.react.bridge.ReadableArray
+import com.facebook.react.bridge.ReadableMap
 import com.facebook.react.module.annotations.ReactModule
 import com.facebook.react.uimanager.SimpleViewManager
 import com.facebook.react.uimanager.ThemedReactContext
 import com.facebook.react.uimanager.ViewManagerDelegate
 import com.facebook.react.uimanager.annotations.ReactProp
+import com.facebook.react.uimanager.annotations.ReactPropGroup
 import com.facebook.react.viewmanagers.RTNMapViewManagerDelegate
 import com.facebook.react.viewmanagers.RTNMapViewManagerInterface
 import com.visioglobe.visiomoveessential.enums.VMERouteDestinationsOrder
@@ -33,6 +36,8 @@ class MapViewManager (context: ReactApplicationContext) : SimpleViewManager<MapV
 
     companion object {
         const val NAME = "RTNMapView"
+        private const val LOAD_VIEW = 1
+        private const val LOAD_DATA = 2
     }
 
     @ReactProp(name = "filePath")
@@ -68,6 +73,26 @@ class MapViewManager (context: ReactApplicationContext) : SimpleViewManager<MapV
         if (value != null) {
             view?.mMapController?.mapServerUrl = value
         }
+    }
+
+
+    override fun getCommandsMap() = mapOf("loadMapView" to LOAD_VIEW, "loadMapData" to LOAD_DATA)
+
+    override fun receiveCommand(
+        view: MapView, commandId: String?, args: ReadableArray?
+    ) {
+        Log.d("cc", "receiveCommand: ")
+        //super.receiveCommand(view, commandId, args)
+        when (commandId) {
+            "loadMapView" -> {
+                Log.d("cc2", "receiveCommand: v2 ")
+                view.loadMapView()
+            }
+        }
+    }
+
+    private fun loadMapView(root: MapView, reactNativeViewId: Int) {
+        Log.d("ccc", "loadMapView: $reactNativeViewId")
     }
 
     @ReactMethod fun routeRequest(view: MapView?, requestType : VMERouteRequestType, destinationsOrder: VMERouteDestinationsOrder, isAccessible : Boolean) {

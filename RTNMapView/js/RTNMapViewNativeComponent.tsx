@@ -11,9 +11,20 @@ export interface NativeProps extends ViewProps {
     mapPath?: string; 
     mapSecretCode?: Int32; 
     mapHash?: string; 
-    mapServerUrl?: string; 
+    mapServerUrl?: string;
   }
   
 export default codegenNativeComponent<NativeProps>(
     'RTNMapView'
   ) as HostComponent<NativeProps>;
+
+
+interface NativeCommands {
+  loadMapView: (
+) => void;
+  }
+
+export const Commands: NativeCommands =
+  codegenNativeCommands<NativeCommands>({
+    supportedCommands: ['loadMapView'],
+  });

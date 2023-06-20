@@ -58,11 +58,7 @@ class MapView(context: ThemedReactContext) : FrameLayout(context) {
       val inflater = LayoutInflater.from(context)
       rView = inflater.inflate(R.layout.map_view, this)
       mMapView = rView?.findViewById<View>(R.id.map) as VMEMapView
-      builder.mapHash = "dev-m219a3bb03e5be89ce238a54e088aab2eb0d9b736"
       mMapController = VMEMapController(context,builder)
-      mMapController.setLifeCycleListener(mLifeCycleListener)
-      mMapController.loadMapData()
-      mMapController.loadMapView(mMapView!!)
   }
 
 
@@ -92,7 +88,7 @@ class MapView(context: ThemedReactContext) : FrameLayout(context) {
 
     fun setMapPath(value: String?) {
         if (value != null) {
-            mMapController.mapPath = value
+            builder.mapPath = value
         }
     }
 
@@ -110,7 +106,7 @@ class MapView(context: ThemedReactContext) : FrameLayout(context) {
 
     fun setMapServerUrl(value: String?) {
         if (value != null) {
-            mMapController.mapServerUrl = value
+            builder.mapServerURL = value
         }
     }
 
@@ -188,5 +184,12 @@ class MapView(context: ThemedReactContext) : FrameLayout(context) {
         return arr
     }
     */
+
+    fun loadMapView(){
+        mMapController = VMEMapController(context,builder)
+        mMapController.setLifeCycleListener(mLifeCycleListener)
+        mMapController.loadMapData()
+        mMapController.loadMapView(mMapView!!)
+    }
 
 }
