@@ -31,34 +31,13 @@ class MapView(context: ThemedReactContext) : FrameLayout(context) {
     private val coordinatesGetter: CurrentCoordinatesGetter? = null
     private val mIsPlaceMarkerDisplayed = false
     private val shouldCameraFollow = true*/
-    private var mMapView : VMEMapView? = null
-    lateinit var mMapController: VMEMapController
-    val builder = VMEMapControllerBuilder()
+    var mMapView : VMEMapView? = null
     //var filePath : String = "shizuru_regular.ttf" NOT USEFUL NOW
-    private val mLifeCycleListener: VMELifeCycleListener = object : VMELifeCycleListener() {
-        override fun mapDidInitializeEngine() {
-            super.mapDidInitializeEngine()
-        }
-
-        override fun mapDataDidLoad() {
-            super.mapDataDidLoad()
-            //mMapController.loadMapView(mMapView!!)
-        }
-
-        override fun mapViewDidLoad() {
-            super.mapViewDidLoad()
-        }
-
-        override fun mapDidGainFocus() {
-            super.mapDidGainFocus()
-        }
-    }
 
   init {
       val inflater = LayoutInflater.from(context)
       rView = inflater.inflate(R.layout.map_view, this)
       mMapView = rView?.findViewById<View>(R.id.map) as VMEMapView
-      mMapController = VMEMapController(context,builder)
   }
 
 
@@ -86,30 +65,6 @@ class MapView(context: ThemedReactContext) : FrameLayout(context) {
         return null
     }
 
-    fun setMapPath(value: String?) {
-        if (value != null) {
-            builder.mapPath = value
-        }
-    }
-
-    fun setMapSecretCode(value: Int) {
-        if (value != null) {
-            builder.mapSecretCode = value
-        }
-    }
-
-    fun setMapHash(value: String?) {
-        if (value != null) {
-            builder.mapHash = value
-        }
-    }
-
-    fun setMapServerUrl(value: String?) {
-        if (value != null) {
-            builder.mapServerURL = value
-        }
-    }
-
 
     /* ROUTING */
     fun routeRequest(requestType: VMERouteRequestType, destinationsOrder: VMERouteDestinationsOrder, accessible: Boolean): VMERouteRequest {
@@ -129,35 +84,6 @@ class MapView(context: ThemedReactContext) : FrameLayout(context) {
 
 
     //Helpers
-
-    private fun extractMapInfo(): WritableMap {
-        val vmeMapDescriptor: VMEMapDescriptor = mMapController.getCachedMapDescriptor(
-            mMapController.mapHash
-        )
-            ?: return Arguments.createMap()
-        val data: HashMap<String, String> = HashMap()
-        data["version"] = "VMEssential2-Beta3"
-        data["MinDataSDKVersion"] = mMapController.minDataSDKVersion
-        data["DataSDKVersion"] = mMapController.dataSDKVersion
-        data["MapId"] = vmeMapDescriptor.id
-        data["MapName"] = vmeMapDescriptor.name
-        data["MapSDKType"] = vmeMapDescriptor.sDKType
-        data["MapSDKVersion"] = vmeMapDescriptor.sdkVersion
-        data["MapSDKMinVersion"] = vmeMapDescriptor.sDKMinVersion
-        data["Target"] = vmeMapDescriptor.target
-        data["ZipFile"] = vmeMapDescriptor.zipFile
-        data["SecretCode"] = vmeMapDescriptor.secretCode.toString()
-        data["CustomDataHash"] = vmeMapDescriptor.mCustomDataHash
-        data["Timestamp"] = vmeMapDescriptor.timestamp.toString()
-        data["ExpiryDate"] = vmeMapDescriptor.expiryDate
-        val map: WritableMap = Arguments.createMap()
-        for (entry in data) {
-            map.putString(entry.key, entry.value)
-        }
-        val mapInfo: WritableMap = Arguments.createMap()
-        mapInfo.putMap("MapInfo", map)
-        return mapInfo
-    }
 
 
 /*    private fun constructSegmentsForm(segments: List<VMESegment>): WritableArray? {
@@ -184,12 +110,5 @@ class MapView(context: ThemedReactContext) : FrameLayout(context) {
         return arr
     }
     */
-
-    fun loadMapView(){
-        mMapController = VMEMapController(context,builder)
-        mMapController.setLifeCycleListener(mLifeCycleListener)
-        mMapController.loadMapData()
-        mMapController.loadMapView(mMapView!!)
-    }
 
 }

@@ -28,3 +28,4 @@ export const Commands: NativeCommands =
   codegenNativeCommands<NativeCommands>({
     supportedCommands: ['loadMapView'],
   });
+  
