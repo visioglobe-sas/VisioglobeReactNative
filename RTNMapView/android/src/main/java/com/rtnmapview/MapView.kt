@@ -22,16 +22,6 @@ import java.io.FileOutputStream
 class MapView(context: ThemedReactContext) : FrameLayout(context) {
     private var rView: View? = null
     private var sdkInfo: WritableMap? = null
-    /*private val lifecycleListener: LifecycleEventListener? = null
-    private val manager: MapViewManager? = null
-    private val view = this
-    private val context: ThemedReactContext? = null
-    private val segments: List<VMESegment> = java.util.ArrayList<VMESegment>()
-    var directions: WritableMap = Arguments.createMap()
-    private val coordinatesGetter: CurrentCoordinatesGetter? = null
-    private val mIsPlaceMarkerDisplayed = false
-    private val shouldCameraFollow = true*/
-    var mMapView : VMEMapView? = null
     //var filePath : String = "shizuru_regular.ttf" NOT USEFUL NOW
 
   init {
@@ -79,36 +69,6 @@ class MapView(context: ThemedReactContext) : FrameLayout(context) {
         return setOrigin(poiID)
     }
 
-    //fun routeResult()
-
-
-
-    //Helpers
-
-
-/*    private fun constructSegmentsForm(segments: List<VMESegment>): WritableArray? {
-        val arr: WritableArray = Arguments.createArray()
-        for (lSegment in segments) {
-            val segment: WritableMap = Arguments.createMap()
-            segment.putString("maneuverType", lSegment.getManeuverType() + "")
-            segment.putDouble("duration", lSegment.getDuration())
-            segment.putDouble("length", lSegment.getLength())
-            segment.putString("floorTransitionType", lSegment.getFloorTransitionType() + "")
-            segment.putString("floorTransitionId", lSegment.getFloorTransitionId())
-            val paths: WritableArray = Arguments.createArray()
-            for (vmePosition in lSegment.getPath()) {
-                val path: WritableMap = Arguments.createMap()
-                path.putDouble("latitude", vmePosition.getLatitude())
-                path.putDouble("longitude", vmePosition.getLongitude())
-                path.putDouble("altitude", vmePosition.getAltitude())
-                path.putString("buildingId", vmePosition.getScene().getBuildingID())
-                path.putString("floorId", vmePosition.getScene().getFloorID())
-            }
-            segment.putArray("paths", paths)
-            arr.pushMap(segment)
-        }
-        return arr
-    }
-    */
+    //fun routeResult(
 
 }
