@@ -1,12 +1,33 @@
-## VisioMoveEssential 2 React Bridge
+# react-native-visioglobe
 
- ### Current issue
- <details>
- 
-- [x] Je n'arrive pas à charger la vue coté android
- 
-- [x] iOs part to do 
-</details>
-    
-    
-    
+react native bridge for visioglobe sdk
+
+## Installation
+
+
+```sh
+yarn bootstrap 
+```
+
+puis dans example 
+```sh
+yarn start
+```
+
+## Usage
+
+```js
+import Visioglobe from "react-native-visioglobe";
+
+// ...
+
+const result = await Visioglobe.multiply(3, 7);
+```
+
+## Contributing
+
+See the [contributing guide](CONTRIBUTING.md) to learn how to contribute to the repository and the development workflow.
+
+## License
+
+MIT
