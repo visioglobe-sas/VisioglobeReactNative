@@ -1,0 +1,9 @@
+rootProject.name = 'VisioglobeExample'
+apply from: file("../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesSettingsGradle(settings)
+include ':app'
+include ':visio-sdk'
+
+// Here, set the project directory for the visio-sdk module
+project(':visio-sdk').projectDir = new File(rootProject.projectDir, '../../android/visio-sdk')
+
+includeBuild('../node_modules/@react-native/gradle-plugin')

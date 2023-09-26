@@ -1,0 +1,14 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : [],
+		"files" : [],
+		"nodes" : []
+	},
+	"installers" : [],
+	"paths" : 
+	{
+		"build" : "Visioglobe_autolinked_build",
+		"source" : "/Users/remi/Documents/VisioglobeReactNative/android/build/generated/source/codegen/jni"
+	}
+}

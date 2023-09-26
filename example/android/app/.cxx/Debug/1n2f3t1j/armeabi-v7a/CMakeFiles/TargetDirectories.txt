@@ -1,0 +1,6 @@
+/Users/remi/Documents/VisioglobeReactNative/example/android/app/.cxx/Debug/1n2f3t1j/armeabi-v7a/CMakeFiles/appmodules.dir
+/Users/remi/Documents/VisioglobeReactNative/example/android/app/.cxx/Debug/1n2f3t1j/armeabi-v7a/CMakeFiles/edit_cache.dir
+/Users/remi/Documents/VisioglobeReactNative/example/android/app/.cxx/Debug/1n2f3t1j/armeabi-v7a/CMakeFiles/rebuild_cache.dir
+/Users/remi/Documents/VisioglobeReactNative/example/android/app/.cxx/Debug/1n2f3t1j/armeabi-v7a/Visioglobe_autolinked_build/CMakeFiles/react_codegen_Visioglobe.dir
+/Users/remi/Documents/VisioglobeReactNative/example/android/app/.cxx/Debug/1n2f3t1j/armeabi-v7a/Visioglobe_autolinked_build/CMakeFiles/edit_cache.dir
+/Users/remi/Documents/VisioglobeReactNative/example/android/app/.cxx/Debug/1n2f3t1j/armeabi-v7a/Visioglobe_autolinked_build/CMakeFiles/rebuild_cache.dir

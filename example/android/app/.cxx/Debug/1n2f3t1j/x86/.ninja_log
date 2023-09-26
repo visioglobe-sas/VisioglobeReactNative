@@ -1,0 +1,18 @@
+# ninja log v5
+1663	1719	1695654560422630438	/Users/remi/Documents/VisioglobeReactNative/example/android/app/build/intermediates/cxx/Debug/1n2f3t1j/obj/x86/libappmodules.so	bea536c03d93babe
+0	1663	1695654560369024904	CMakeFiles/appmodules.dir/Users/remi/Documents/VisioglobeReactNative/example/android/app/build/generated/rncli/src/main/jni/rncli.cpp.o	cfbcd16b1be5cf39
+2	1127	1695654559835804376	Visioglobe_autolinked_build/CMakeFiles/react_codegen_Visioglobe.dir/react/renderer/components/Visioglobe/ShadowNodes.cpp.o	d3c4cfe6be458010
+1	1013	1695654559721918933	Visioglobe_autolinked_build/CMakeFiles/react_codegen_Visioglobe.dir/Visioglobe-generated.cpp.o	e9f7703685fb367b
+1	1056	1695654559765525508	Visioglobe_autolinked_build/CMakeFiles/react_codegen_Visioglobe.dir/react/renderer/components/Visioglobe/EventEmitters.cpp.o	1d5f28f7484476db
+3	958	1695654559658385521	Visioglobe_autolinked_build/CMakeFiles/react_codegen_Visioglobe.dir/react/renderer/components/Visioglobe/States.cpp.o	62ad1d40c9fa2b7b
+1	1011	1695654559720071169	Visioglobe_autolinked_build/CMakeFiles/react_codegen_Visioglobe.dir/react/renderer/components/Visioglobe/Props.cpp.o	78adb7061d5176c5
+1	1534	1695654560241944830	CMakeFiles/appmodules.dir/OnLoad.cpp.o	12f683d8e0677981
+1127	1175	1695654559885509389	/Users/remi/Documents/VisioglobeReactNative/example/android/app/build/intermediates/cxx/Debug/1n2f3t1j/obj/x86/libreact_codegen_Visioglobe.so	f2fb87cb5f7d4d2f
+4	621	1695654559329653750	Visioglobe_autolinked_build/CMakeFiles/react_codegen_Visioglobe.dir/react/renderer/components/Visioglobe/VisioglobeJSI-generated.cpp.o	8d9b783309aeb164
+1	8	0	/Users/remi/Documents/VisioglobeReactNative/example/android/app/.cxx/Debug/1n2f3t1j/x86/CMakeFiles/cmake.verify_globs	9703de1589b0b095
+1	8	0	/Users/remi/Documents/VisioglobeReactNative/example/android/app/.cxx/Debug/1n2f3t1j/x86/CMakeFiles/cmake.verify_globs	9703de1589b0b095
+4	874	1695654630176284394	CMakeFiles/appmodules.dir/OnLoad.cpp.o	12f683d8e0677981
+4	1143	1695654630444169485	CMakeFiles/appmodules.dir/Users/remi/Documents/VisioglobeReactNative/example/android/app/build/generated/rncli/src/main/jni/rncli.cpp.o	cfbcd16b1be5cf39
+1143	1205	1695654630504559348	/Users/remi/Documents/VisioglobeReactNative/example/android/app/build/intermediates/cxx/Debug/1n2f3t1j/obj/x86/libappmodules.so	bea536c03d93babe
+0	9	0	/Users/remi/Documents/VisioglobeReactNative/example/android/app/.cxx/Debug/1n2f3t1j/x86/CMakeFiles/cmake.verify_globs	9703de1589b0b095
+0	6	0	clean	1a82d5161027c543
