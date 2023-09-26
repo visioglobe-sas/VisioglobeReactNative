@@ -1,0 +1,40 @@
+framework module VisioMoveEssential {
+//    umbrella header "VisioMoveEssential.h"
+//
+//    export *
+//    module * { export * }
+
+    export *
+    module VisioMoveEssential { export * }
+    
+    link framework "CoreLocation"
+    link framework "CoreGraphics"
+    link framework "Foundation"
+    link framework "QuartzCore"
+    link framework "UIKit"
+    link framework "CoreData"
+    link framework "WebKit"
+    link framework "Security"
+    
+    link "ObjC"
+    link "z"
+    link "c++"
+    
+    /*explicit module VisioMoveEssentialInternal {
+        header "InternalClass.h"
+        // ...
+    }*/
+    
+}
+
+
+module VisioMoveEssentialInternal {
+  header "InternalClass.h"
+  export *
+}
+ 
+
+module VisioMoveEssential.Swift {
+  header "VisioMoveEssential-Swift.h"
+  requires objc
+}

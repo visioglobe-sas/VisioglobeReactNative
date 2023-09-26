@@ -1,0 +1,61 @@
+/*
+ * Copyright (c) Visioglobe SAS. All rights reserved.
+ *
+ * This file is subject to the terms and conditions defined in
+ * file 'LICENSE.txt', which is part of this source code package.
+ */
+
+html {
+    font-size:25px;
+}
+
+body
+{
+    height:95%;
+    width:95%;
+    font-family: arial,sans-serif;
+    color:#7f878f;
+    font-size: 1rem;
+    margin-left: 1.5rem;
+    margin-right: 1.5rem;
+}
+
+h1
+{
+    color:black;
+    font-size:1.6em;
+    font-weight:bold;
+}
+
+h2
+{
+    color:black;
+    font-size:1.4em;
+    font-weight:bold;
+}
+
+h3
+{
+    color:black;
+    font-size:1.2em;
+    font-weight:bold;
+}
+
+h4
+{
+    color:black;
+    font-size:1em;
+    font-weight:bold;
+}
+
+ul
+{
+    color:grey;
+    list-style-type: line;
+    padding-left:1em;
+}
+
+table {
+    font-size:1em;
+}
+

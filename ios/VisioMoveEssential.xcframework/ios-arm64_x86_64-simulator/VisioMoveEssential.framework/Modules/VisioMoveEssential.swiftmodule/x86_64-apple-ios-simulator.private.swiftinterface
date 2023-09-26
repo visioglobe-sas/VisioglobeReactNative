@@ -1,0 +1,710 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.8.1 (swiftlang-5.8.0.124.5 clang-1403.0.22.11.100)
+// swift-module-flags: -target x86_64-apple-ios12.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name VisioMoveEssential
+// swift-module-flags-ignorable: -enable-bare-slash-regex
+import CommonCrypto
+import CoreData
+import CoreLocation
+import Foundation
+import NotificationCenter
+import Swift
+import UIKit
+@_exported import VisioMoveEssential
+import WebKit
+import _Concurrency
+import _StringProcessing
+import simd
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objc public class VMEMapDescriptor : ObjectiveC.NSObject {
+  @objc public var id: Swift.String! {
+    get
+  }
+  @objc public var name: Swift.String! {
+    get
+  }
+  @objc public var timestamp: Swift.Int64 {
+    get
+  }
+  @objc public var secretCode: Swift.Int {
+    get
+  }
+  @objc public var expiryDate: Swift.String! {
+    get
+  }
+  @objc public var sdkType: Swift.String! {
+    get
+  }
+  @objc public var sdkVersion: Swift.String! {
+    get
+  }
+  @objc public var sdkMinVersion: Swift.String! {
+    get
+  }
+  @objc public var zipFile: Swift.String! {
+    get
+  }
+  @objc public var path: Swift.String! {
+    get
+  }
+  @objc public var target: Swift.String! {
+    get
+  }
+  @objc public var customDataHash: Swift.String! {
+    get
+  }
+  @objc public var layout: Swift.String! {
+    get
+  }
+  @objc public func isValid() -> Swift.Bool
+  @objc override dynamic public func isEqual(_ other: Any?) -> Swift.Bool
+  @objc deinit
+}
+@objc public enum VMECameraMoveReason : Swift.Int {
+  case animation
+  case developerAnimation
+  case gesture
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objc @_Concurrency.MainActor(unsafe) public class VMEMapView : UIKit.UIView {
+  @_Concurrency.MainActor(unsafe) public init(mapController: VisioMoveEssential.VMEMapController, frame: CoreFoundation.CGRect)
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public func layoutSubviews()
+  @objc deinit
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public func didMoveToWindow()
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public func traitCollectionDidChange(_ previousTraitCollection: UIKit.UITraitCollection?)
+}
+@objc public enum VMEPoiDisplayMode : Swift.Int, Swift.RawRepresentable {
+  case inlay
+  case overlay
+  public typealias RawValue = Swift.String
+  public var rawValue: VisioMoveEssential.VMEPoiDisplayMode.RawValue {
+    get
+  }
+  public init?(rawValue: VisioMoveEssential.VMEPoiDisplayMode.RawValue)
+}
+@objc public protocol VMEPoiListener : ObjectiveC.NSObjectProtocol {
+  @objc optional func mapDidSelectPoi(mapController: VisioMoveEssential.VMEMapController, poiID: Swift.String, position: VisioMoveEssential.VMEPosition) -> Swift.Bool
+}
+@objc public enum VMEAnchorMode : Swift.Int, Swift.RawRepresentable {
+  case topLeft
+  case topCenter
+  case topRight
+  case centerLeft
+  case center
+  case centerRight
+  case bottomLeft
+  case bottomCenter
+  case bottomRight
+  public typealias RawValue = Swift.String
+  public var rawValue: VisioMoveEssential.VMEAnchorMode.RawValue {
+    get
+  }
+  public init?(rawValue: VisioMoveEssential.VMEAnchorMode.RawValue)
+}
+@_inheritsConvenienceInitializers @objc public class VMECameraHeadingCurrent : VisioMoveEssential.VMECameraHeading {
+  @objc override dynamic public func isEqual(_ pCameraHeading: Any?) -> Swift.Bool
+  @objc override public func copy(with zone: ObjectiveC.NSZone? = nil) -> Any
+  @objc override dynamic public init()
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @objc public class VMECameraDistanceCurrentAltitudeRange : VisioMoveEssential.VMECameraDistanceRange {
+  @objc override dynamic public func isEqual(_ pDistanceRange: Any?) -> Swift.Bool
+  @objc override public func copy(with zone: ObjectiveC.NSZone? = nil) -> Any
+  @objc override dynamic public init()
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @objc public class VMECameraPitchDefault : VisioMoveEssential.VMECameraPitch {
+  @objc override dynamic public func isEqual(_ pPitch: Any?) -> Swift.Bool
+  @objc override public func copy(with zone: ObjectiveC.NSZone? = nil) -> Any
+  @objc override dynamic public init()
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers @objc public class VMESegment : ObjectiveC.NSObject, Foundation.NSCopying {
+  @objc public var path: [VisioMoveEssential.VMEPosition]! {
+    get
+  }
+  @objc public var duration: Swift.Double {
+    get
+  }
+  @objc public var length: Swift.Double {
+    get
+  }
+  @objc public var maneuverType: VisioMoveEssential.VMEManeuverType {
+    get
+  }
+  @objc public var floorTransitionType: VisioMoveEssential.VMEFloorTransitionType {
+    get
+  }
+  @objc public var floorTransitionId: Swift.String {
+    get
+  }
+  @objc public func copy(with zone: ObjectiveC.NSZone? = nil) -> Any
+  @objc override dynamic public func isEqual(_ other: Any?) -> Swift.Bool
+  @objc deinit
+}
+@objc public class VMEPoiSize : ObjectiveC.NSObject {
+  @objc public var constantSizeDistance: Swift.Double {
+    get
+  }
+  @objc public var scale: Swift.Double {
+    get
+  }
+  @objc public init(scale pScale: Swift.Double)
+  @objc public init(scale pScale: Swift.Double, constantSizeDistance pConstantSizeDistance: Swift.Double)
+  @objc deinit
+}
+@objc public enum VMELocationTrackingMode : Swift.Int, Swift.Comparable, Swift.RawRepresentable {
+  case none
+  case custom
+  case follow
+  public typealias RawValue = Swift.String
+  public var rawValue: VisioMoveEssential.VMELocationTrackingMode.RawValue {
+    get
+  }
+  public init?(rawValue: VisioMoveEssential.VMELocationTrackingMode.RawValue)
+  public static func == (lhs: VisioMoveEssential.VMELocationTrackingMode, rhs: VisioMoveEssential.VMELocationTrackingMode) -> Swift.Bool
+  public static func < (lhs: VisioMoveEssential.VMELocationTrackingMode, rhs: VisioMoveEssential.VMELocationTrackingMode) -> Swift.Bool
+}
+@_inheritsConvenienceInitializers @objc public class VMECameraPitch : ObjectiveC.NSObject, Foundation.NSCopying {
+  @objc public class func initCameraPitchCurrent() -> Self
+  @objc public class func initCameraPitchDefault() -> Self
+  @objc public class func initCameraPitch(value pPitch: Swift.Double) -> Self
+  @objc public func copy(with zone: ObjectiveC.NSZone? = nil) -> Any
+  @objc public func isEqual(to pPitch: VisioMoveEssential.VMECameraPitch?) -> Swift.Bool
+  @objc override dynamic public init()
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @objc public class VMECameraHeading : ObjectiveC.NSObject, Foundation.NSCopying {
+  @objc public class func initCameraHeadingCurrent() -> Self
+  @objc public class func initCameraHeading(poiID pPoiID: Swift.String) -> Self
+  @objc public class func initCameraHeading(value pHeading: Swift.Double) -> Self
+  @objc public func isEqual(to object: VisioMoveEssential.VMECameraHeading) -> Swift.Bool
+  @objc public func copy(with zone: ObjectiveC.NSZone? = nil) -> Any
+  @objc override dynamic public init()
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers @objc public class VMELatLng : ObjectiveC.NSObject {
+  @objc public var latitude: Swift.Double
+  @objc public var longitude: Swift.Double
+  @objc override dynamic public func isEqual(_ other: Any?) -> Swift.Bool
+  public func description() -> Swift.String?
+  @objc deinit
+}
+@objc public enum VMEPoiAltitudeMode : Swift.Int, Swift.RawRepresentable {
+  case relative
+  case absolute
+  public typealias RawValue = Swift.String
+  public var rawValue: VisioMoveEssential.VMEPoiAltitudeMode.RawValue {
+    get
+  }
+  public init?(rawValue: VisioMoveEssential.VMEPoiAltitudeMode.RawValue)
+}
+@_hasMissingDesignatedInitializers @objc public class VMEMapController : ObjectiveC.NSObject {
+  public var mapPath: Swift.String {
+    get
+  }
+  public var mapSecretCode: Swift.Int {
+    get
+  }
+  public var mapHash: Swift.String {
+    get
+  }
+  public var mapServerURL: Swift.String {
+    get
+  }
+  public var promptUserToDownloadMap: Swift.Bool {
+    get
+  }
+  @objc public class func initController(builderBlock: @escaping (_ builder: VisioMoveEssential.VMEMapControllerBuilder) -> Swift.Void) -> Self
+  @objc public func loadMapData()
+  @objc public func setMapPath(_ pMapPath: Swift.String)
+  @objc public func setMapHash(_ pMapHash: Swift.String)
+  @objc public func setMapSecretCode(_ pMapSecretCode: Swift.Int)
+  @objc public func setMapServerURL(_ pMapServerUrl: Swift.String)
+  @objc public func setPromptUserToDownloadMap(enable: Swift.Bool)
+  @objc public func getCachedMapDescriptor(identifier: Swift.String) -> VisioMoveEssential.VMEMapDescriptor?
+  @objc public func deleteCachedMap(identifier: Swift.String) throws
+  @objc public class func getVersion() -> Swift.String
+  @objc public func getMinDataSDKVersion() -> Swift.String
+  @objc public func getDataSDKVersion() -> Swift.String
+  @objc public func loadMapView(mapView: VisioMoveEssential.VMEMapView)
+  @objc public func unloadMapView()
+  @objc public func unloadMapData()
+  @objc public func setMapListener(_ mapListener: any VisioMoveEssential.VMEMapListener)
+  @objc public func setBuildingListener(_ buildingListener: any VisioMoveEssential.VMEBuildingListener)
+  @objc public func setLocationTrackingModeListener(_ locationTrackingModeListener: any VisioMoveEssential.VMELocationTrackingModeListener)
+  @objc public func setCameraListener(_ cameraListener: any VisioMoveEssential.VMECameraListener)
+  @objc public func setLifeCycleListener(_ lifeCycleListener: any VisioMoveEssential.VMELifeCycleListener)
+  @objc public func setPoiListener(_ poiListener: any VisioMoveEssential.VMEPoiListener)
+  @objc public func setNavigationListener(_ navigationListener: any VisioMoveEssential.VMENavigationListener)
+  @objc public func setNavigationIndex(_ navigationIndex: Swift.Int)
+  @objc public func setCompassListener(_ compassListener: any VisioMoveEssential.VMECompassListener)
+  @objc public func updateCamera(_ update: VisioMoveEssential.VMECameraUpdate)
+  @objc public func animateCamera(_ update: VisioMoveEssential.VMECameraUpdate)
+  @objc public func animateCamera(_ update: VisioMoveEssential.VMECameraUpdate, duration: Swift.Double, callback: (any VisioMoveEssential.VMEAnimationCallback)?)
+  @objc public func updateScene(_ update: VisioMoveEssential.VMESceneUpdate)
+  @objc public func animateScene(_ update: VisioMoveEssential.VMESceneUpdate)
+  @objc public func setFocusOnMap()
+  @objc public func getCameraContext() -> VisioMoveEssential.VMECameraContext?
+  @objc public func getCameraMoveReason() -> VisioMoveEssential.VMECameraMoveReason
+  @objc public func computeRoute(_ routeRequest: VisioMoveEssential.VMERouteRequest, callback: (any VisioMoveEssential.VMEComputeRouteCallback)?)
+  @objc public func getModalities() -> [Swift.String]
+  @objc public func getAttributes() -> [Swift.String]
+  @objc public func setExcludedModalities(_ modalities: [Swift.String])
+  @objc public func setExcludedAttributes(_ attributes: [Swift.String])
+  @objc public func setPoiColor(_ poiID: Swift.String, color: UIKit.UIColor) -> Swift.Bool
+  @objc public func resetPoiColor(poiID: Swift.String) -> Swift.Bool
+  @objc public func setPois(data: Swift.String) -> [Swift.String : Any]
+  @objc public func setCategories(data: Swift.String) -> [Swift.String : Any]
+  @objc public func setPoisColor(poiIDs: [Swift.String], colors: [UIKit.UIColor]) -> [Swift.Bool]
+  @objc public func resetPoisColor(poiIDs: [Swift.String]) -> [Swift.Bool]
+  @objc public func removePoi(poiID: Swift.String) -> Swift.Bool
+  @objc public func removePois(poiIDs: [Swift.String]) -> [Swift.Bool]
+  @objc public func setPoiPosition(poiID: Swift.String, position: VisioMoveEssential.VMEPosition, animated: Swift.Bool) -> Swift.Bool
+  @objc public func setPoisPosition(poiIDs: [Swift.String], positions: [VisioMoveEssential.VMEPosition], animated: [Swift.Bool]) -> [Swift.Bool]
+  @objc public func setPoiSize(poiID: Swift.String, size: VisioMoveEssential.VMEPoiSize, animated: Swift.Bool) -> Swift.Bool
+  @objc public func setPoisSize(poiIDs: [Swift.String], sizes: [VisioMoveEssential.VMEPoiSize], animated: [Swift.Bool]) -> [Swift.Bool]
+  @objc public func queryAllPoiIDs() -> [Swift.String]
+  @objc public func queryPois(with filter: VisioMoveEssential.VMEPoiFilter, callback: (any VisioMoveEssential.VMEPoiFilterCallback)?)
+  @objc public func getPoi(poiID: Swift.String) -> VisioMoveEssential.VMEPoi?
+  @objc public func queryAllCategoryIDs() -> [Swift.String]
+  @objc public func getCategory(categoryID: Swift.String) -> VisioMoveEssential.VMECategory?
+  @objc public func getPoiPosition(poiID: Swift.String) -> VisioMoveEssential.VMEPosition?
+  @objc public func getPoiBoundingPositions(poiID: Swift.String) -> [VisioMoveEssential.VMEPosition]
+  @objc public func updateLocation(_ update: VisioMoveEssential.VMELocation?)
+  @objc public func createLocationFromLocation(_ location: CoreLocation.CLLocation) -> VisioMoveEssential.VMELocation?
+  @objc public func createPositionFromLocation(_ location: CoreLocation.CLLocation) -> VisioMoveEssential.VMEPosition?
+  @objc public func setLocationTrackingMode(_ trackingMode: VisioMoveEssential.VMELocationTrackingMode)
+  @objc public func setLocationTrackingButtonToggleModes(_ trackingModes: [Swift.String])
+  @objc public func getLocationTrackingMode() -> VisioMoveEssential.VMELocationTrackingMode
+  @objc public func getLocationTrackingButtonToggleModeStrings() -> [Swift.String]
+  public func getLocationTrackingButtonToggleModes() -> [VisioMoveEssential.VMELocationTrackingMode]
+  @objc public func setSelectorViewVisible(_ visible: Swift.Bool)
+  @objc public func getSelectorViewVisible() -> Swift.Bool
+  @objc public func setNavigationHeaderViewVisible(_ visible: Swift.Bool)
+  @objc public func getNavigationHeaderViewVisible() -> Swift.Bool
+  @objc public func showSearchViewWithTitle(_ title: Swift.String, callback: (any VisioMoveEssential.VMESearchViewCallback)?)
+  @objc public func setMapFont(filePath: Swift.String) -> Swift.Bool
+  @objc public func showPoiInfo(poiID: Swift.String)
+  @objc public func addOverlayViewID(_ overlayViewID: Swift.String, view: UIKit.UIView, position: VisioMoveEssential.VMEPosition) -> Swift.Bool
+  @objc public func addOverlayViewID(_ overlayViewID: Swift.String, view: UIKit.UIView, position: VisioMoveEssential.VMEPosition, anchorMode: VisioMoveEssential.VMEAnchorMode) -> Swift.Bool
+  @objc public func addOverlayViewID(_ overlayViewID: Swift.String, view: UIKit.UIView, poiID: Swift.String) -> Swift.Bool
+  @objc public func addOverlayView(overlayViewID: Swift.String, view: UIKit.UIView, poiID: Swift.String, anchorMode: VisioMoveEssential.VMEAnchorMode) -> Swift.Bool
+  @objc public func setOverlayAnchor(overlayViewID: Swift.String, position: VisioMoveEssential.VMEPosition) -> Swift.Bool
+  @objc public func setOverlayAnchor(overlayViewID: Swift.String, poiID: Swift.String) -> Swift.Bool
+  @objc public func removeOverlayView(overlayViewID: Swift.String) -> Swift.Bool
+  @objc public func setCompassHeadingMarkerVisible(_ visible: Swift.Bool)
+  @objc public func getCompassHeadingMarkerVisible() -> Swift.Bool
+  @objc public func fetchCustomData(withSuccessBlock successBlock: @escaping () -> Swift.Void, andErrorBlock errorBlock: @escaping ((any Swift.Error)?) -> Swift.Void)
+  @objc public func getCustomData() -> [Swift.AnyHashable : Any]?
+  @objc public func isStatisticsLog() -> Swift.Bool
+  @objc public func isStatisticsLogCamera() -> Swift.Bool
+  @objc public func isStatisticsLogInterest() -> Swift.Bool
+  @objc public func isStatisticsLogLocation() -> Swift.Bool
+  @objc public func setStatisticsLog(_ pEnabled: Swift.Bool)
+  @objc public func setStatisticsLogCamera(_ pEnabled: Swift.Bool)
+  @objc public func setStatisticsLogLocation(_ pEnabled: Swift.Bool)
+  @objc public func setStatisticsLogInterest(_ pEnabled: Swift.Bool)
+  @objc public func setStatisticsTrackedPoiIDs(_ pTrackedPoiIDs: [Swift.String])
+  @objc public func getStatisticsTrackedPoiIDs() -> [Swift.String]?
+  @objc public func getImageFromMapBundle(_ pPath: Swift.String) -> UIKit.UIImage?
+  @objc public func getImageFromVisioMoveEssentialBundle(_ pPath: Swift.String) -> UIKit.UIImage?
+  @objc public func getImageFromMainBundle(_ pPath: Swift.String) -> UIKit.UIImage?
+  @objc public func getImage(path pPath: Swift.String, foregroundColor pForegroundColor: UIKit.UIColor, backgroundColor pBackgroundColor: UIKit.UIColor, strokeColor pStrokeColor: UIKit.UIColor, callback pCallback: @escaping (UIKit.UIImage?) -> Swift.Void)
+  @objc public func setCompass(enabled: Swift.Bool)
+  @objc deinit
+}
+@objc public class VMERouteResult : ObjectiveC.NSObject, Foundation.NSCopying {
+  @objc public var duration: Swift.Double {
+    get
+  }
+  @objc public var length: Swift.Double
+  @objc public var destinations: [Any]! {
+    get
+  }
+  @objc public var segments: [VisioMoveEssential.VMESegment]! {
+    get
+  }
+  @objc convenience public init(destinations: [Any], duration: Swift.Double, length: Swift.Double)
+  @objc required public init(destinations: [Any], duration: Swift.Double, length: Swift.Double, segments: [VisioMoveEssential.VMESegment])
+  @objc public func copy(with zone: ObjectiveC.NSZone? = nil) -> Any
+  @objc override dynamic public func isEqual(_ other: Any?) -> Swift.Bool
+  @objc public func isEqual(to routeResult: VisioMoveEssential.VMERouteResult) -> Swift.Bool
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @objc public class VMEPoiOrientation : ObjectiveC.NSObject {
+  @objc public class func initFacing() -> Self
+  @objc public class func initFlat() -> Self
+  @objc public class func initFixedWithHeading(_ pHeading: Swift.Double) -> Self
+  @objc override dynamic public init()
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers @objc public class VMECameraDistanceAltitudeRange : VisioMoveEssential.VMECameraDistanceRange {
+  @objc override dynamic public func isEqual(_ pDistanceRange: Any?) -> Swift.Bool
+  @objc override public func copy(with zone: ObjectiveC.NSZone? = nil) -> Any
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @objc public class VMESceneContext : ObjectiveC.NSObject, Foundation.NSCopying {
+  @objc public var buildingID: Swift.String? {
+    get
+  }
+  @objc public var floorID: Swift.String? {
+    get
+  }
+  @objc convenience public init(buildingID: Swift.String?, floorID: Swift.String?)
+  @objc override dynamic public init()
+  @objc public func isOutside() -> Swift.Bool
+  @objc override dynamic public var description: Swift.String {
+    @objc get
+  }
+  @objc public func copy(with zone: ObjectiveC.NSZone? = nil) -> Any
+  @objc override dynamic public func isEqual(_ other: Any?) -> Swift.Bool
+  @objc deinit
+}
+@objc public protocol VMESearchViewCallback : ObjectiveC.NSObjectProtocol {
+  @objc func searchViewDidSelectPoiID(mapController: VisioMoveEssential.VMEMapController, poiID: Swift.String)
+  @objc func searchViewDidCancel(mapController: VisioMoveEssential.VMEMapController)
+}
+@_hasMissingDesignatedInitializers @objc public class VMECameraHeadingValue : VisioMoveEssential.VMECameraHeading {
+  @objc override dynamic public func isEqual(_ pHeading: Any?) -> Swift.Bool
+  @objc override public func copy(with zone: ObjectiveC.NSZone? = nil) -> Any
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @objc public class VMERouteRequest : ObjectiveC.NSObject, Foundation.NSCopying {
+  @objc public var isAccessible: Swift.Bool
+  public var destinationsOrder: VisioMoveEssential.VMERouteDestinationsOrder!
+  public var requestType: VisioMoveEssential.VMERouteRequestType!
+  @objc public var origin: Any?
+  @objc required convenience override dynamic public init()
+  @objc required convenience public init(requestType: VisioMoveEssential.VMERouteRequestType, destinationsOrder: VisioMoveEssential.VMERouteDestinationsOrder)
+  @objc required public init(requestType: VisioMoveEssential.VMERouteRequestType, destinationsOrder: VisioMoveEssential.VMERouteDestinationsOrder, accessible isAccessible: Swift.Bool)
+  public func setOrigin(_ origin: Any)
+  @objc public func getOrigin() -> Any?
+  @objc public func getDestinations() -> [Any]
+  @objc public func addDestination(_ pDestination: Any) -> Swift.Bool
+  @objc public func addDestinations(_ pDestinations: [Any]) -> Swift.Bool
+  @objc public func removeDestination(at index: Swift.Int)
+  @objc public func removeAllDestinations()
+  @objc public func replaceDestination(at index: Swift.Int, withDestination destination: Any) -> Swift.Bool
+  @objc public func copy(with zone: ObjectiveC.NSZone? = nil) -> Any
+  @objc override dynamic public func isEqual(_ other: Any?) -> Swift.Bool
+  @objc deinit
+}
+@objc public enum VMEFloorTransitionType : Swift.Int {
+  case stairWay
+  case elevator
+  case escalator
+  case unknown
+  case none
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@_hasMissingDesignatedInitializers @objc public class VMECameraContext : ObjectiveC.NSObject {
+  @objc public func getTarget() -> VisioMoveEssential.VMELatLng
+  @objc public func getAltitude() -> Swift.Double
+  @objc public func getBearing() -> Swift.Double
+  @objc public func getPitch() -> Swift.Double
+  @objc public func getRadius() -> Swift.Double
+  @objc override dynamic public func isEqual(_ pCameraContext: Any?) -> Swift.Bool
+  public func description() -> Swift.String?
+  @objc deinit
+}
+@objc public protocol VMECameraListener : ObjectiveC.NSObjectProtocol {
+  @objc optional func mapCameraDidMove(mapController: VisioMoveEssential.VMEMapController)
+}
+@_hasMissingDesignatedInitializers @objc public class VMECameraHeadingPOI : VisioMoveEssential.VMECameraHeading {
+  @objc override dynamic public func isEqual(_ pHeading: Any?) -> Swift.Bool
+  @objc override public func copy(with zone: ObjectiveC.NSZone? = nil) -> Any
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @objc public class VMECameraDistanceDefaultAltitudeRange : VisioMoveEssential.VMECameraDistanceRange {
+  @objc override dynamic public func isEqual(_ pDistanceRange: Any?) -> Swift.Bool
+  @objc override public func copy(with zone: ObjectiveC.NSZone? = nil) -> Any
+  @objc override dynamic public init()
+  @objc deinit
+}
+@objc public protocol VMELocationTrackingModeListener : ObjectiveC.NSObjectProtocol {
+  @objc optional func mapDidUpdateTrackingMode(mapController: VisioMoveEssential.VMEMapController, trackingMode: VisioMoveEssential.VMELocationTrackingMode)
+}
+@objc public enum VMEViewMode : Swift.Int, Swift.RawRepresentable {
+  case global
+  case floor
+  case unknown
+  public typealias RawValue = Swift.String
+  public var rawValue: VisioMoveEssential.VMEViewMode.RawValue {
+    get
+  }
+  public init?(rawValue: VisioMoveEssential.VMEViewMode.RawValue)
+}
+@objc @_inheritsConvenienceInitializers public class VMEPoiVisibilityRamp : ObjectiveC.NSObject {
+  public var startVisible: Swift.Double
+  public var fullyVisible: Swift.Double
+  public var startInvisible: Swift.Double
+  public var fullyInvisible: Swift.Double
+  public init(startVisible pStartVisible: Swift.Double, fullyVisible pFullyVisible: Swift.Double, startInvisible pStartInvisible: Swift.Double, fullyInVisible pFullyInVisible: Swift.Double)
+  @objc override dynamic public init()
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objc public class VMECameraUpdateBuilder : ObjectiveC.NSObject {
+  @objc public var targets: [Swift.AnyHashable]!
+  @objc public var viewMode: VisioMoveEssential.VMEViewMode
+  @objc public var heading: VisioMoveEssential.VMECameraHeading!
+  @objc public var paddingTop: Swift.Double
+  @objc public var paddingBottom: Swift.Double
+  @objc public var paddingLeft: Swift.Double
+  @objc public var paddingRight: Swift.Double
+  @objc public var pitch: VisioMoveEssential.VMECameraPitch!
+  @objc public var distanceRange: VisioMoveEssential.VMECameraDistanceRange!
+  @objc deinit
+}
+@objc public protocol VMEMapListener : ObjectiveC.NSObjectProtocol {
+  @objc optional func mapSceneDidUpdate(mapController: VisioMoveEssential.VMEMapController, scene: VisioMoveEssential.VMESceneContext, viewMode: VisioMoveEssential.VMEViewMode)
+  @objc optional func mapDidReceiveTapGesture(mapController: VisioMoveEssential.VMEMapController, position: VisioMoveEssential.VMEPosition?)
+}
+@objc public protocol VMEMapDataListener : ObjectiveC.NSObjectProtocol {
+  @objc optional func mapDataDidLoad(venueData: [Swift.String : Any])
+}
+@_hasMissingDesignatedInitializers @objc public class VMECameraDistanceRadiusRange : VisioMoveEssential.VMECameraDistanceRange {
+  @objc override dynamic public func isEqual(_ pDistanceRange: Any?) -> Swift.Bool
+  @objc override public func copy(with zone: ObjectiveC.NSZone? = nil) -> Any
+  @objc deinit
+}
+@objc public class VMEPosition : ObjectiveC.NSObject, Foundation.NSCopying {
+  @objc public var latitude: Swift.Double
+  @objc public var longitude: Swift.Double
+  @objc public var altitude: Swift.Double
+  @objc public var scene: VisioMoveEssential.VMESceneContext!
+  @objc required public init(latitude: Swift.Double, longitude: Swift.Double, altitude: Swift.Double, scene: VisioMoveEssential.VMESceneContext)
+  @objc public init(latitude: Swift.Double, longitude: Swift.Double, altitude: Swift.Double)
+  @objc override dynamic public var description: Swift.String {
+    @objc get
+  }
+  @objc public func copy(with zone: ObjectiveC.NSZone? = nil) -> Any
+  @objc override dynamic public func isEqual(_ other: Any?) -> Swift.Bool
+  @objc deinit
+}
+@objc public protocol VMENavigationListener : ObjectiveC.NSObjectProtocol {
+  @objc func instructionsGenerated(instructions: [VisioMoveEssential.VMEInstruction])
+  @objc func instructionIndexUpdated(instructionIndex: Swift.Int)
+}
+@_hasMissingDesignatedInitializers @objc public class VMEPoi : ObjectiveC.NSObject {
+  @objc public var id: Swift.String
+  @objc public var name: Swift.String
+  @objc public var icon: Swift.String
+  @objc public var categories: [Swift.String]
+  @objc public var imageURL: Foundation.URL?
+  @objc public var position: VisioMoveEssential.VMEPosition?
+  @objc public var size: VisioMoveEssential.VMEPoiSize
+  @objc public var anchorMode: VisioMoveEssential.VMEPoiAnchorMode
+  @objc public var altitudeMode: VisioMoveEssential.VMEPoiAltitudeMode
+  @objc public var displayMode: VisioMoveEssential.VMEPoiDisplayMode
+  @objc public var orientation: VisioMoveEssential.VMEPoiOrientation
+  @objc public var visibilityRamp: VisioMoveEssential.VMEPoiVisibilityRamp
+  @objc public var htmlDescription: Swift.String!
+  @objc override dynamic public func isEqual(_ other: Any?) -> Swift.Bool
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers @objc public class VMESceneUpdate : ObjectiveC.NSObject {
+  @objc public class func sceneUpdate(viewMode: VisioMoveEssential.VMEViewMode) -> VisioMoveEssential.VMESceneUpdate
+  @objc public class func sceneUpdate(viewMode: VisioMoveEssential.VMEViewMode, buildingID: Swift.String?) -> VisioMoveEssential.VMESceneUpdate
+  @objc public class func sceneUpdate(viewMode: VisioMoveEssential.VMEViewMode, floorID: Swift.String?) -> VisioMoveEssential.VMESceneUpdate
+  @objc deinit
+}
+@objc public enum VMERouteRequestType : Swift.Int {
+  case shortest
+  case fastest
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc public protocol VMEPoiFilterCallback : ObjectiveC.NSObjectProtocol {
+  @objc optional func poiFilterDidFinish(mapController: VisioMoveEssential.VMEMapController, parameters filter: VisioMoveEssential.VMEPoiFilter, results: [VisioMoveEssential.VMERouteResult])
+}
+@objc public protocol VMECompassListener : ObjectiveC.NSObjectProtocol {
+  @objc func compassStateChanged(state: Swift.Bool)
+}
+@objc public enum VMEManeuverType : Swift.Int {
+  case unknown
+  case goStraight
+  case turnGentleRight
+  case turnGentleLeft
+  case turnRight
+  case turnLeft
+  case turnSharpRight
+  case turnSharpLeft
+  case uTurnRight
+  case uTurnLeft
+  case start
+  case end
+  case goUp
+  case goDown
+  case changeModality
+  case changeLayer
+  case waypoint
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@_hasMissingDesignatedInitializers @objc public class VMECameraUpdate : ObjectiveC.NSObject {
+  @objc public static let CAMERA_FOCAL_POINT: Swift.String
+  @objc override dynamic public func isEqual(_ pCameraUpdate: Any?) -> Swift.Bool
+  @objc public class func initCameraUpdate(builderBlock: @escaping (VisioMoveEssential.VMECameraUpdateBuilder) -> Swift.Void) -> Self
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @objc public class VMECameraDistanceRange : ObjectiveC.NSObject, Foundation.NSCopying {
+  @objc public class func initCurrentAltitudeRange() -> Self
+  @objc public class func initDefaultAltitudeRange() -> Self
+  @objc public class func initRadiusRange(minRadius pMinRadius: Swift.Double, maxRadius pMaxRadius: Swift.Double) -> Self
+  @objc public class func initAltitudeRange(minAltitude pMinAltitude: Swift.Double, maxAltitude pMaxAltitude: Swift.Double) -> Self
+  @objc public func isEqual(to pDistanceRange: VisioMoveEssential.VMECameraDistanceRange?) -> Swift.Bool
+  @objc public func copy(with zone: ObjectiveC.NSZone? = nil) -> Any
+  @objc override dynamic public init()
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers @objc public class VMEInstruction : ObjectiveC.NSObject {
+  public var mText: Swift.String!
+  public var mIconResourcePath: Swift.String!
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers @objc public class VMECameraPitchValue : VisioMoveEssential.VMECameraPitch {
+  @objc override dynamic public func isEqual(_ pPitch: Any?) -> Swift.Bool
+  @objc override public func copy(with zone: ObjectiveC.NSZone? = nil) -> Any
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers @objc public class VMECategory : ObjectiveC.NSObject {
+  @objc public var id: Swift.String! {
+    get
+  }
+  @objc public var name: Swift.String!
+  @objc public var icon: Swift.String!
+  @objc deinit
+}
+@objc public enum VMEPoiAnchorMode : Swift.Int, Swift.RawRepresentable {
+  case topLeft
+  case topCenter
+  case topRight
+  case centerLeft
+  case center
+  case centerRight
+  case bottomLeft
+  case bottomCenter
+  case bottomRight
+  public typealias RawValue = Swift.String
+  public var rawValue: VisioMoveEssential.VMEPoiAnchorMode.RawValue {
+    get
+  }
+  public init?(rawValue: VisioMoveEssential.VMEPoiAnchorMode.RawValue)
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objc public class VMEMapControllerBuilder : ObjectiveC.NSObject {
+  @objc public var mapPath: Swift.String
+  @objc public var mapSecretCode: Swift.Int
+  @objc public var mapHash: Swift.String
+  @objc public var mapServerURL: Swift.String
+  @objc public var promptUserToDownloadMap: Swift.Bool
+  @objc deinit
+}
+@objc public protocol VMEBuildingListener : ObjectiveC.NSObjectProtocol {
+  @objc optional func mapDidSelectBuilding(mapController: VisioMoveEssential.VMEMapController, buildingID: Swift.String, position: VisioMoveEssential.VMEPosition?) -> Swift.Bool
+}
+@_inheritsConvenienceInitializers @objc public class VMEPoiFilter : ObjectiveC.NSObject {
+  @objc public var target: Any? {
+    get
+  }
+  @objc public var restrictToPoiIDs: [Swift.String]?
+  @objc public var restrictToTargetLayer: Swift.Bool
+  @objc public var radius: Swift.Double
+  @objc override dynamic public init()
+  @objc convenience public init(poiID: Swift.String?)
+  @objc convenience public init(position: VisioMoveEssential.VMEPosition?)
+  @objc override dynamic public func isEqual(_ other: Any?) -> Swift.Bool
+  @objc deinit
+}
+@objc public protocol VMEComputeRouteCallback : ObjectiveC.NSObjectProtocol {
+  @objc func computeRouteDidFinish(mapController: VisioMoveEssential.VMEMapController, parameters routeRequest: VisioMoveEssential.VMERouteRequest, result routeResult: VisioMoveEssential.VMERouteResult) -> Swift.Bool
+  @objc func computeRouteDidFail(mapController: VisioMoveEssential.VMEMapController, parameters routeRequest: VisioMoveEssential.VMERouteRequest, error: Swift.String)
+}
+@objc public protocol VMELifeCycleListener : ObjectiveC.NSObjectProtocol {
+  @objc optional func mapDidInitializeEngine(mapController: VisioMoveEssential.VMEMapController)
+  @objc optional func mapDataDidLoad(mapController: VisioMoveEssential.VMEMapController, venueData: [Swift.String : Any])
+  @objc optional func mapViewDidLoad(mapController: VisioMoveEssential.VMEMapController)
+  @objc optional func mapDidGainFocus(mapController: VisioMoveEssential.VMEMapController)
+  @objc optional func mapDidDisplayRoute(mapController: VisioMoveEssential.VMEMapController, result: VisioMoveEssential.VMERouteResult)
+  @objc optional func mapDidDisplayPoiInfo(mapController: VisioMoveEssential.VMEMapController, poiID: Swift.String)
+  @objc optional func mapDidDisplaySearch(mapController: VisioMoveEssential.VMEMapController)
+  @objc optional func mapDidDisplayRouteSetup(mapController: VisioMoveEssential.VMEMapController)
+  @objc optional func mapError(error: Swift.String)
+}
+@_inheritsConvenienceInitializers @objc public class VMECameraPitchCurrent : VisioMoveEssential.VMECameraPitch {
+  @objc override dynamic public func isEqual(_ pPitch: Any?) -> Swift.Bool
+  @objc override public func copy(with zone: ObjectiveC.NSZone? = nil) -> Any
+  @objc override dynamic public init()
+  @objc deinit
+}
+@objc public protocol VMEAnimationCallback : ObjectiveC.NSObjectProtocol {
+  @objc optional func didFinish()
+}
+@objc public enum VMERouteDestinationsOrder : Swift.Int {
+  case inOrder
+  case optimal
+  case optimalFinishOnLast
+  case closest
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@_inheritsConvenienceInitializers @objc public class VMELocation : ObjectiveC.NSObject, Foundation.NSCopying {
+  @objc public var position: VisioMoveEssential.VMEPosition! {
+    get
+  }
+  @objc public var accuracy: Swift.Double {
+    get
+  }
+  @objc public var bearing: Swift.Double {
+    get
+  }
+  @objc public init(position: VisioMoveEssential.VMEPosition?, bearing: Swift.Double, accuracy: Swift.Double)
+  @objc convenience override dynamic public init()
+  @objc override dynamic public var description: Swift.String {
+    @objc get
+  }
+  @objc public func copy(with zone: ObjectiveC.NSZone? = nil) -> Any
+  @objc override dynamic public func isEqual(_ other: Any?) -> Swift.Bool
+  @objc deinit
+}
+extension VisioMoveEssential.VMECameraMoveReason : Swift.Equatable {}
+extension VisioMoveEssential.VMECameraMoveReason : Swift.Hashable {}
+extension VisioMoveEssential.VMECameraMoveReason : Swift.RawRepresentable {}
+extension VisioMoveEssential.VMEPoiDisplayMode : Swift.Equatable {}
+extension VisioMoveEssential.VMEPoiDisplayMode : Swift.Hashable {}
+extension VisioMoveEssential.VMEAnchorMode : Swift.Equatable {}
+extension VisioMoveEssential.VMEAnchorMode : Swift.Hashable {}
+extension VisioMoveEssential.VMELocationTrackingMode : Swift.Hashable {}
+extension VisioMoveEssential.VMEPoiAltitudeMode : Swift.Equatable {}
+extension VisioMoveEssential.VMEPoiAltitudeMode : Swift.Hashable {}
+extension VisioMoveEssential.VMEFloorTransitionType : Swift.Equatable {}
+extension VisioMoveEssential.VMEFloorTransitionType : Swift.Hashable {}
+extension VisioMoveEssential.VMEFloorTransitionType : Swift.RawRepresentable {}
+extension VisioMoveEssential.VMEViewMode : Swift.Equatable {}
+extension VisioMoveEssential.VMEViewMode : Swift.Hashable {}
+extension VisioMoveEssential.VMERouteRequestType : Swift.Equatable {}
+extension VisioMoveEssential.VMERouteRequestType : Swift.Hashable {}
+extension VisioMoveEssential.VMERouteRequestType : Swift.RawRepresentable {}
+extension VisioMoveEssential.VMEManeuverType : Swift.Equatable {}
+extension VisioMoveEssential.VMEManeuverType : Swift.Hashable {}
+extension VisioMoveEssential.VMEManeuverType : Swift.RawRepresentable {}
+extension VisioMoveEssential.VMEPoiAnchorMode : Swift.Equatable {}
+extension VisioMoveEssential.VMEPoiAnchorMode : Swift.Hashable {}
+extension VisioMoveEssential.VMERouteDestinationsOrder : Swift.Equatable {}
+extension VisioMoveEssential.VMERouteDestinationsOrder : Swift.Hashable {}
+extension VisioMoveEssential.VMERouteDestinationsOrder : Swift.RawRepresentable {}
