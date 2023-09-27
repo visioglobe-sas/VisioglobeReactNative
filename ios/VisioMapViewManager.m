@@ -54,6 +54,11 @@ RCT_EXTERN_METHOD(setPoisPosition : (nonnull NSNumber *)reactTag);
 RCT_EXTERN_METHOD(showPoiInfo : (nonnull NSNumber *)reactTag);
 RCT_EXTERN_METHOD(setCategories : (nonnull NSNumber *)reactTag);
 
++ (BOOL)requiresMainQueueSetup
+{
+  return NO;
+}
+
 RCT_EXTERN_METHOD(customFunctionToCall: () reactTag)
 @end
 

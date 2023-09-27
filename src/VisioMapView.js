@@ -125,6 +125,7 @@ export const VisioMapView = forwardRef((props, ref) => {
       mapHash={props.mapHash}
       mapPath={props.mapPath}
       mapSecret={props.mapSecret}
+      listeners={props.listeners}
     />
   );
 });

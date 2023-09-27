@@ -120,6 +120,7 @@ export default function App() {
         mapPath="path"
         mapSecret={0}
         ref={ref}
+        listeners={["buildingListener","cameraListener","mapListener","locationtrackingmodeListener","poiListener"]}
       />
       <View style={[styles.container, {
       flexDirection: "row"

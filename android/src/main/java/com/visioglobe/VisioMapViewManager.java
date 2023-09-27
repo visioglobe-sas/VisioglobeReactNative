@@ -74,6 +74,7 @@ public class VisioMapViewManager extends ViewGroupManager<FrameLayout> {
   private String propMapHash;
   private String propMapPath;
   private int propSecret;
+  private ReadableArray propListeners;
 
   ReactApplicationContext reactContext;
 
@@ -248,6 +249,11 @@ public class VisioMapViewManager extends ViewGroupManager<FrameLayout> {
     propSecret = value;
   }
 
+  @ReactProp(name = "listeners")
+  public void setListeners(FrameLayout view, @Nullable ReadableArray values){
+    propListeners = values;
+  }
+
   /**
    * Replace your React Native view with a custom fragment
    */
@@ -257,7 +263,7 @@ public class VisioMapViewManager extends ViewGroupManager<FrameLayout> {
     setupLayout(parentView);
 
     Log.d("VisioMapViewManager", "====> CALLED");
-    final VisioFragment myFragment = new VisioFragment(propMapHash, propMapPath, propSecret);
+    final VisioFragment myFragment = new VisioFragment(propMapHash, propMapPath, propSecret,propListeners);
     FragmentActivity activity = (FragmentActivity) reactContext.getCurrentActivity();
     activity.getSupportFragmentManager()
       .beginTransaction()

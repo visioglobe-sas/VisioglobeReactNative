@@ -9,18 +9,30 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.ColorInt;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 // replace with your view's import
+import com.facebook.react.bridge.ReadableArray;
 import com.visioglobe.visiomoveessential.VMEMapController;
 import com.visioglobe.visiomoveessential.VMEMapControllerBuilder;
 import com.visioglobe.visiomoveessential.VMEMapView;
 import com.visioglobe.visiomoveessential.callbacks.VMEComputeRouteCallback;
+import com.visioglobe.visiomoveessential.enums.VMELocationTrackingMode;
 import com.visioglobe.visiomoveessential.enums.VMERouteDestinationsOrder;
 import com.visioglobe.visiomoveessential.enums.VMERouteRequestType;
+import com.visioglobe.visiomoveessential.enums.VMEViewMode;
+import com.visioglobe.visiomoveessential.listeners.VMEBuildingListener;
+import com.visioglobe.visiomoveessential.listeners.VMECameraListener;
 import com.visioglobe.visiomoveessential.listeners.VMELifeCycleListener;
+import com.visioglobe.visiomoveessential.listeners.VMELocationTrackingModeListener;
+import com.visioglobe.visiomoveessential.listeners.VMEMapListener;
+import com.visioglobe.visiomoveessential.listeners.VMEPoiListener;
+import com.visioglobe.visiomoveessential.models.VMEPosition;
 import com.visioglobe.visiomoveessential.models.VMERouteRequest;
 import com.visioglobe.visiomoveessential.models.VMERouteResult;
+import com.visioglobe.visiomoveessential.models.VMESceneContext;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
@@ -45,13 +57,15 @@ public class VisioFragment extends Fragment {
   private String mMapHash;
   private String mMapPath;
   private int mMapSecret;
+  private ReadableArray mMapListeners;
 
   private Boolean routingEnabled = false;
 
-  public VisioFragment(String hash, String path, int secret) {
+  public VisioFragment(String hash, String path, int secret, ReadableArray listeners) {
     this.mMapHash = hash;
     this.mMapPath = path;
     this.mMapSecret = secret;
+    this.mMapListeners = listeners;
   }
 
   @Override
@@ -98,7 +112,61 @@ public class VisioFragment extends Fragment {
       Intrinsics.checkNotNull(mController);
       Log.d(TAG, "====> Load map data");
       mController.loadMapData();
-    }
+      for (int i=0; i<mMapListeners.size(); ++i) {
+        String listener = mMapListeners.getString(i);
+        switch (listener) {
+          case "buildingListener":
+            Log.d(TAG, "====> BUILDING LISTENER");
+            mController.setBuildingListener(new VMEBuildingListener() {
+              @Override
+              public boolean mapDidSelectBuilding(@NonNull String buildingID, @Nullable VMEPosition position) {
+                return super.mapDidSelectBuilding(buildingID, position);
+              }
+            });
+          case "cameraListener":
+            Log.d(TAG, "====> CAMERA LISTENER");
+            mController.setCameraListener(new VMECameraListener() {
+              @Override
+              public void mapCameraDidMove() {
+                super.mapCameraDidMove();
+              }
+            });
+          case "mapListener":
+            Log.d(TAG, "====> MAP LISTENER");
+            mController.setMapListener(new VMEMapListener() {
+              @Override
+              public void mapDidReceiveTapGesture(@Nullable VMEPosition position) {
+                super.mapDidReceiveTapGesture(position);
+              }
+
+              @Override
+              public void mapSceneDidUpdate(@Nullable VMESceneContext scene, @Nullable VMEViewMode viewMode) {
+                super.mapSceneDidUpdate(scene, viewMode);
+              }
+            });
+          case "locationtrackingmodeListener":
+            Log.d(TAG, "====> LOCATION TRACKING MODE LISTENER");
+            mController.setLocationTrackingModeListener(new VMELocationTrackingModeListener() {
+              @Override
+              public void mapDidUpdateLocationTrackingMode(@Nullable VMELocationTrackingMode locationTrackingMode) {
+                super.mapDidUpdateLocationTrackingMode(locationTrackingMode);
+              }
+            });
+          case "poiListener":
+            Log.d(TAG, "====> POI LISTENER");
+            mController.setPoiListener(new VMEPoiListener() {
+              @Override
+              public boolean mapDidSelectPoi(@Nullable String poiID, @Nullable VMEPosition position) {
+                return super.mapDidSelectPoi(poiID, position);
+              }
+            });
+          default:
+            Log.d(TAG, "====> ERREUR LISTENER");
+        }
+      }
+
+
+      }
 
     View view = this.mMapView;
     return view;
