@@ -58,14 +58,16 @@ public class VisioFragment extends Fragment {
   private String mMapPath;
   private int mMapSecret;
   private ReadableArray mMapListeners;
+  private boolean mPromptToDownload;
 
   private Boolean routingEnabled = false;
 
-  public VisioFragment(String hash, String path, int secret, ReadableArray listeners) {
+  public VisioFragment(String hash, String path, int secret, ReadableArray listeners, boolean promptToDownload) {
     this.mMapHash = hash;
     this.mMapPath = path;
     this.mMapSecret = secret;
     this.mMapListeners = listeners;
+    this.mPromptToDownload = promptToDownload;
   }
 
   @Override
@@ -93,6 +95,7 @@ public class VisioFragment extends Fragment {
 
       builder.setMapHash(mMapHash);
       builder.setMapSecretCode(mMapSecret);
+      builder.setPromptUserToDownloadMap(mPromptToDownload);
       Context context = this.getContext();
       Intrinsics.checkNotNullExpressionValue(context, "requireContext()");
       this.mMapController = new VMEMapController(context, builder);
