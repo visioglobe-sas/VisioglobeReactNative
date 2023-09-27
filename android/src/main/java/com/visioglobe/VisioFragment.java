@@ -265,6 +265,16 @@ public class VisioFragment extends Fragment {
     mMapController.setSelectorViewVisible(visible);
   }
 
+  public void unloadMapData() {
+    Log.d("REF", "====> UNLOAD MAP DATA ");
+    mMapController.unloadMapData();
+  }
+
+  public void unloadMapView() {
+    Log.d("REF", "====> UNLOAD MAP VIEW ");
+    mMapController.unloadMapView();
+  }
+
   public void setPois(String data) {
     Log.d("REF", "====> SET POIS FROM FRAGMENT");
     mMapController.setPois(data);

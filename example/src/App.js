@@ -62,7 +62,6 @@ export default function App() {
   ////////////////////////////////////////////////////////////////////////////////////
 
 
-
   ////////////////////////////// Test Method /////////////////////////////////////////
   const customMethod = () => {
     if (ref.current) {
@@ -120,6 +119,7 @@ export default function App() {
         mapPath="path"
         mapSecret={0}
         ref={ref}
+        promptToDownload={true}
         listeners={["buildingListener","cameraListener","mapListener","locationtrackingmodeListener","poiListener"]}
       />
       <View style={[styles.container, {

@@ -16,6 +16,7 @@ import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableType;
 import com.facebook.react.common.MapBuilder;
+import com.facebook.react.uimanager.UIManagerHelper;
 import com.facebook.react.uimanager.UIManagerModule;
 import com.facebook.react.uimanager.annotations.ReactPropGroup;
 import com.facebook.react.uimanager.annotations.ReactProp;
@@ -66,6 +67,8 @@ public class VisioMapViewManager extends ViewGroupManager<FrameLayout> {
   public final int COMMAND_SET_POIS_POSITION = 34;
   public final int COMMAND_SHOW_POI_INFO = 35;
   public final int COMMAND_SET_CATEGORIES = 36;
+  public final int COMMAND_UNLOAD_MAP_DATA = 37;
+  public final int COMMAND_UNLOAD_MAP_VIEW = 38;
 
   private int reactNativeViewId;
   private int propWidth;
@@ -139,6 +142,8 @@ public class VisioMapViewManager extends ViewGroupManager<FrameLayout> {
     commands.put("setPoisPosition", COMMAND_SET_POIS_POSITION);
     commands.put("showPoiInfo", COMMAND_SHOW_POI_INFO);
     commands.put("setCategories", COMMAND_SET_CATEGORIES);
+    commands.put("unloadMapData", COMMAND_UNLOAD_MAP_DATA);
+    commands.put("unloadMapView", COMMAND_UNLOAD_MAP_VIEW);
     return commands;
   }
 
@@ -215,10 +220,17 @@ public class VisioMapViewManager extends ViewGroupManager<FrameLayout> {
       case "getVersion":
         Integer requestId = args.getInt(0);
         String version = myFragment.getVersion();
+        EventDispatcher meventDispatcher = UIManagerHelper.getEventDispatcherForReactTag(reactContext, reactNativeViewId);
         eventDispatcher.dispatchEvent(new VisioGetVersionReturnedEvent(reactNativeViewId, requestId, version));
         break;
       case "getMinDataSDKVersion":
         myFragment.getMinDataSDKVersion();
+        break;
+      case "unloadMapData":
+        myFragment.unloadMapData();
+        break;
+      case "unloadMapView":
+        myFragment.unloadMapView();
         break;
       default: {}
     }
