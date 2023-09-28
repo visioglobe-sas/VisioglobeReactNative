@@ -29,6 +29,14 @@ export const VisioMapView = forwardRef((props, ref) => {
     Commands.setPois(r.current, data);
   };
 
+  const _unloadMapData = () => {
+    Commands.unloadMapData(r.current);
+  };
+
+  const _unloadMapView = () => {
+    Commands.unloadMapView(r.current);
+  };
+
   const _resetPoisColor = () => {
     Commands.resetPoisColor(r.current);
   };
@@ -103,6 +111,8 @@ export const VisioMapView = forwardRef((props, ref) => {
     getPoiPosition: _getPoiPosition,
     setSelectorViewVisible: _setSelectorViewVisible,
     getVersion: _getVersion, 
+    unloadMapView: _unloadMapView,
+    unloadMapData: _unloadMapData,
     //getDataSDKVersion: _getDataSDKVersion, 
     getMinDataSDKVersion: _getMinDataSDKVersion,
   }));

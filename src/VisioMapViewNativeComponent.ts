@@ -24,6 +24,14 @@ interface NativeCommands {
     data: string
   ) => void;
 
+  unloadMapView:  ( 
+    viewRef: React.ElementRef<NativeComponentType>
+  ) => void;
+
+  unloadMapData: (
+    viewRef: React.ElementRef<NativeComponentType>
+  ) => void;
+
   //To Update
   resetPoisColor: (viewRef: React.ElementRef<NativeComponentType>) => void;
       /**
@@ -254,6 +262,8 @@ export const Commands: NativeCommands = codegenNativeCommands<NativeCommands>({
     'updateCamera',
     'animateScene',
     'updateScene',
+    'unloadMapData',
+    'unloadMapView',
     'createLocationFromLocation',
     'createPositionFromLocation',
     'getLocationTrackingMode',
