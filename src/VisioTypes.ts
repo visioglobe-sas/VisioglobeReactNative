@@ -65,8 +65,37 @@ export type VMPoiVisibilityRamp = {
   ///Créer ou appeler hors de la vue de l'integrateur l'initialiser (voir doc SDK )
 }
 
-export type VMCameraUpdate = {
+export type VMCameraHeading = {
+  poiID?: string;//mandatory or numbre or current
+  numbre?: number;
+  current?: boolean;
+}
+export enum pitchType {
+  current,
+  default,
+}
 
+export type VMCameraPitch = {
+  pitch?: number;
+  type?: pitchType;
+}
+
+export enum VMViewModeType {
+  floor,
+  global,
+  unkown,
+}
+
+export type VMCameraUpdate = {
+  heading: VMCameraHeading;
+  paddingBottom: number;
+  paddingLeft: number;
+  paddingRight: number;
+  paddingTop: number;
+  pitch: VMCameraPitch;
+  targetPOIs?: string[];//mandatory or targetPositions
+  targetPositions?: VMPosition[];
+  viewMode: VMViewModeType;
 }
 
 export type VMAnimationCallback = {
