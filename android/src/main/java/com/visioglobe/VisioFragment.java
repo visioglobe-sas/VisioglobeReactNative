@@ -42,6 +42,7 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Random;
 
 import kotlin.jvm.internal.Intrinsics;
@@ -221,6 +222,71 @@ public class VisioFragment extends Fragment {
 
   }
 
+  public void setExcludedAttributes(ReadableArray value) {
+    Log.d("REF", "==> SET EXCLUDED ATTRIBUTES" + (List<String>)value);
+    mMapController.setExcludedAttributes((List<String>) value);
+  }
+
+  public void setExcludedModalities(ReadableArray value) {
+    Log.d("REF", "==> SET EXCLUDED MODALITIES" + (List<String>)value);
+    mMapController.setExcludedModalities((List<String>)value);
+  }
+
+  /**public void setLocationTrackingButtonToggleModes(ReadableArray value) {
+    Log.d("REF", "==> SET LOCATION TRACKING BUTTON TOGGLE MODES");
+    mMapController.setLocationTrackingButtonToggleModes(value);
+  }**/
+
+  public void setNavigationHeaderViewVisible(boolean value) {
+    Log.d("REF", "==> SET NAVIGATION HEADER VIEW VISIBLE");
+    mMapController.setNavigationHeaderViewVisible(value);
+  }
+
+  public void setCompassHeadingMarkerVisible(boolean value) {
+    Log.d("REF", "==> SET COMPASS HEADING MARKER VISIBLE");
+    mMapController.setCompassHeadingMarkerVisible(value);
+  }
+
+  public void showPoiInfo(String poiID) {
+    Log.d("REF", "==> SHOW POI INFO");
+    mMapController.showPoiInfo(poiID);
+  }
+
+  public void setStatisticsLog(boolean value) {
+    Log.d("REF", "==> SET STATISTICS LOG");
+    mMapController.setStatisticsLog(value);
+  }
+
+  public void setStatisticsLogCamera(boolean value) {
+    Log.d("REF", "==> SET STATISTICS Log CAMERA");
+    mMapController.setStatisticsLogCamera(value);
+  }
+
+  public void setStatisticsLogInterest(boolean value) {
+    Log.d("REF", "==> SET STATISTICS LOG INTEREST");
+    mMapController.setStatisticsLogInterest(value);
+  }
+
+  public void setStatisticsLogLocation(boolean value) {
+    Log.d("REF", "==> SET STATISTICS LOG LOCATION");
+    mMapController.setStatisticsLogLocation(value);
+  }
+
+  public void setStatisticsTrackedPoiIDs(ReadableArray value) {
+    Log.d("REF", "==> SET STATISTICS TRACKED POI IDs"+ (ArrayList<String>) value);
+    mMapController.setStatisticsTrackedPoiIDs((ArrayList<String>) value);
+  }
+
+  public void setCompass(boolean enabled) {
+    Log.d("REF", "==> SET COMPASS");
+    mMapController.setCompassHeadingMarkerVisible(enabled);
+  }
+
+  public void setLocationTrackingButtonToggleModes(ReadableArray value){
+    Log.d("REF", "==> SET COMPASS");
+    mMapController.setLocationTrackingButtonToggleModes((ArrayList<VMELocationTrackingMode>) value);
+  }
+
   public void animateCamera(){}
   public void getCameraContext(){}
   public void updateCamera(){}
@@ -231,7 +297,6 @@ public class VisioFragment extends Fragment {
   public void getLocationTrackingMode(){}
   public void setLocationTrackingMode(){}
   public void getLocationTrackingButtonToggleModes(){}
-  public void setLocationTrackingButtonToggleModes(){}
   public void getNavigationHeaderViewVisible(){}
   public void setNavigationHeaderViewVisible(){}
   public void getSelectorViewVisible(){}

@@ -232,6 +232,55 @@ public class VisioMapViewManager extends ViewGroupManager<FrameLayout> {
       case "unloadMapView":
         myFragment.unloadMapView();
         break;
+      case "setExcludedAttributes" :
+        ReadableArray excluded = args.getArray(0);
+        myFragment.setExcludedAttributes(excluded);
+        break;
+      case "setExcludedModalities" :
+        ReadableArray excludedMod = args.getArray(0);
+        myFragment.setExcludedModalities(excludedMod);
+        break;
+      case "setLocationTrackingButtonToggleModes" :
+        ReadableArray locationtracking = args.getArray(0);
+        myFragment.setLocationTrackingButtonToggleModes(locationtracking);
+        break;
+      case "setNavigationHeaderViewVisible" :
+        boolean navviewbool = args.getBoolean(0);
+        myFragment.setNavigationHeaderViewVisible(navviewbool);
+        break;
+      case "setCompassHeadingMarkerVisible" :
+        boolean compassmarkerbool = args.getBoolean(0);
+        myFragment.setCompassHeadingMarkerVisible(compassmarkerbool);
+        break;
+      //case "showSearchViewWithTitle" : String, callback: VMESearchViewCallback?
+      case "showPoiInfo" :
+        String poiid = args.getString(0);
+        myFragment.showPoiInfo(poiid);
+        break;
+      case "setStatisticsLog" :
+        boolean statlogbool = args.getBoolean(0);
+        myFragment.setStatisticsLog(statlogbool);
+        break;
+      case "setStatisticsLogCamera" :
+        boolean camlogbool = args.getBoolean(0);
+        myFragment.setStatisticsLogCamera(camlogbool);
+        break;
+      case "setStatisticsLogInterest" :
+        boolean interestlogbool = args.getBoolean(0);
+        myFragment.setStatisticsLogInterest(interestlogbool);
+        break;
+      case "setStatisticsLogLocation" :
+        boolean statloglogbool = args.getBoolean(0);
+        myFragment.setStatisticsLogLocation(statloglogbool);
+        break;
+      case "setStatisticsTrackedPoiIDs" :
+        ReadableArray statpoiids = args.getArray(0);
+        myFragment.setStatisticsTrackedPoiIDs(statpoiids);
+        break;
+      case "setCompass" :
+        boolean compassbool = args.getBoolean(0);
+        myFragment.setCompass(compassbool);
+        break;
       default: {}
     }
   }

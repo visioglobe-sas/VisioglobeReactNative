@@ -31,6 +31,67 @@ interface NativeCommands {
   unloadMapData: (
     viewRef: React.ElementRef<NativeComponentType>
   ) => void;
+  
+  setExcludedAttributes: (
+    viewRef: React.ElementRef<NativeComponentType>,
+    value: Array<string>
+  ) => void;
+  
+  setExcludedModalities: (
+    viewRef: React.ElementRef<NativeComponentType>,
+    value: Array<string>
+  ) => void;
+  
+  setLocationTrackingButtonToggleModes: (
+    viewRef: React.ElementRef<NativeComponentType>,
+    value: Array<string>
+  ) => void;
+  
+  setNavigationHeaderViewVisible: (
+    viewRef: React.ElementRef<NativeComponentType>,
+    value: boolean
+  ) => void;
+  
+  setCompassHeadingMarkerVisible: (
+    viewRef: React.ElementRef<NativeComponentType>,
+    value: boolean
+  ) => void;
+  
+  showPoiInfo: (
+    viewRef: React.ElementRef<NativeComponentType>,
+    poiID: string
+  ) => void;
+  
+  setStatisticsLog: (
+    viewRef: React.ElementRef<NativeComponentType>,
+    value: boolean
+  ) => void;
+  
+  setStatisticsLogCamera: (
+    viewRef: React.ElementRef<NativeComponentType>,
+    value: boolean
+  ) => void;
+  
+  setStatisticsLogInterest: (
+    viewRef: React.ElementRef<NativeComponentType>,
+    value: boolean
+  ) => void;
+  
+  setStatisticsLogLocation: (
+    viewRef: React.ElementRef<NativeComponentType>,
+    value: boolean
+  ) => void;
+  
+  setStatisticsTrackedPoiIDs: (
+    viewRef: React.ElementRef<NativeComponentType>,
+    value: Array<string>
+  ) => void;
+  
+  setCompass: (
+    viewRef: React.ElementRef<NativeComponentType>,
+    value: boolean
+  ) => void;
+  
 
   //To Update
   resetPoisColor: (viewRef: React.ElementRef<NativeComponentType>) => void;
@@ -148,19 +209,9 @@ interface NativeCommands {
       viewRef: React.ElementRef<NativeComponentType>
       ) => Promise<[VMLocationTrackingMode]>;
 
-    setLocationTrackingButtonToggleModes: (
-      viewRef: React.ElementRef<NativeComponentType>, 
-      togglemodes: [String]
-      ) => void;
-
     getNavigationHeaderViewVisible : (
       viewRef: React.ElementRef<NativeComponentType>
       ) => Promise<boolean>;
-
-    setNavigationHeaderViewVisible : (
-      viewRef: React.ElementRef<NativeComponentType>, 
-      bool: boolean
-      ) => void;
 
     getSelectorViewVisible : (
       viewRef: React.ElementRef<NativeComponentType>
@@ -237,11 +288,6 @@ interface NativeCommands {
       animated: [boolean]
       ) => Promise<[boolean]>;
 
-    showPoiInfo : (
-      viewRef: React.ElementRef<NativeComponentType>, 
-      poiID: String
-      ) => void;
-
     setCategories : (
       viewRef: React.ElementRef<NativeComponentType>, 
       data: String
@@ -288,6 +334,18 @@ export const Commands: NativeCommands = codegenNativeCommands<NativeCommands>({
     'setPoisPosition',
     'showPoiInfo',
     'setCategories',
+    'setExcludedAttributes',
+    'setExcludedModalities',
+    'setLocationTrackingButtonToggleModes',
+    'setNavigationHeaderViewVisible',
+    'setCompassHeadingMarkerVisible',
+    'showPoiInfo',
+    'setStatisticsLog',
+    'setStatisticsLogCamera',
+    'setStatisticsLogInterest',
+    'setStatisticsLogLocation',
+    'setStatisticsTrackedPoiIDs',
+    'setCompass',
     //'getDataSDKVersion', 
     //'getMinDataSDKVersion',
   ],

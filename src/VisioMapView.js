@@ -21,6 +21,54 @@ const createFragment = (viewId) =>
 export const VisioMapView = forwardRef((props, ref) => {
   const r = useRef();
 
+  const _setExcludedAttributes = (value) => {
+    Commands.setExcludedAttributes(r.current, value);
+}
+
+const _setExcludedModalities = (value) => {
+    Commands.setExcludedModalities(r.current, value);
+}
+
+const _setLocationTrackingButtonToggleModes = (value) => {
+    Commands.setLocationTrackingButtonToggleModes(r.current, value);
+}
+
+const _setNavigationHeaderViewVisible = (value) => {
+    Commands.setNavigationHeaderViewVisible(r.current, value);
+}
+
+const _setCompassHeadingMarkerVisible = (value) => {
+    Commands.setCompassHeadingMarkerVisible(r.current, value);
+}
+
+const _showPoiInfo = (value) => {
+    Commands.showPoiInfo(r.current, value);
+}
+
+const _setStatisticsLog = (value) => {
+    Commands.setStatisticsLog(r.current, value);
+}
+
+const _setStatisticsLogCamera = (value) => {
+    Commands.setStatisticsLogCamera(r.current, value);
+}
+
+const _setStatisticsLogInterest = (value) => {
+    Commands.setStatisticsLogInterest(r.current, value);
+}
+
+const _setStatisticsLogLocation = (value) => {
+    Commands.setStatisticsLogLocation(r.current, value);
+}
+
+const _setStatisticsTrackedPoiIDs = (value) => {
+    Commands.setStatisticsTrackedPoiIDs(r.current, value);
+}
+
+const _setCompass = (value) => {
+    Commands.setCompass(r.current, value);
+}
+
   const _customFunctionToCall = () => {
     NativeModules[MODULE].customFunctionToCall(findNodeHandle(r.current));
   };
@@ -115,6 +163,18 @@ export const VisioMapView = forwardRef((props, ref) => {
     unloadMapData: _unloadMapData,
     //getDataSDKVersion: _getDataSDKVersion, 
     getMinDataSDKVersion: _getMinDataSDKVersion,
+    setExcludedAttributes: _setExcludedAttributes,
+    setExcludedModalities: _setExcludedModalities,
+    setLocationTrackingButtonToggleModes: _setLocationTrackingButtonToggleModes,
+    setNavigationHeaderViewVisible: _setNavigationHeaderViewVisible,
+    setCompassHeadingMarkerVisible: _setCompassHeadingMarkerVisible,
+    showPoiInfo: _showPoiInfo,
+    setStatisticsLog: _setStatisticsLog,
+    setStatisticsLogCamera: _setStatisticsLogCamera,
+    setStatisticsLogInterest: _setStatisticsLogInterest,
+    setStatisticsLogLocation: _setStatisticsLogLocation,
+    setStatisticsTrackedPoiIDs: _setStatisticsTrackedPoiIDs,
+    setCompass: _setCompass,
   }));
 
   React.useEffect(() => {

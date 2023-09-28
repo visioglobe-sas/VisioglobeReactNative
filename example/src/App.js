@@ -51,7 +51,7 @@ export default function App() {
   const setPois = () => {
     // do something
     const greenCatData =
-    ' {"catCringe":{"name":"Black cat","icon":"https://upload.wikimedia.org/wikipedia/commons/4/4f/Kitty_emoji.png","description":"Black cat is here","features":{"image":{"icon":"https://upload.wikimedia.org/wikipedia/commons/4/4f/Kitty_emoji.png","position":[45.74131,4.88216,0.0],"anchorMode":"bottomCenter","scale":15.0,"altitudeMode":"absolute"}}}} ';
+    ' {"catCringe":{"name":"Black cat","icon":"https://upload.wikimedia.org/wikipedia/commons/4/4f/Kitty_emoji.png","description":"Black cat is here","feature":{"image":{"icon":"https://upload.wikimedia.org/wikipedia/commons/4/4f/Kitty_emoji.png","position":[45.74131,4.88216,0.0],"anchorMode":"bottomCenter","scale":15.0,"altitudeMode":"absolute"}}}} ';
     onPressSetPois();
     if (textSetPoisButton === "Set cat POIs"){
       ref.current.setPois(greenCatData);
@@ -69,6 +69,13 @@ export default function App() {
     }
   };
   ////////////////////////////////////////////////////////////////////////////////////
+
+
+  const unloadMapView = (boolean) => {
+    if (ref.current) {
+      ref.current.setStatisticsLog(boolean);
+    }
+  };
 
   const resetPoisColor = () => {
     // do something
@@ -142,8 +149,8 @@ export default function App() {
       flexDirection: "row"
     }]}>
         <TouchableOpacity style={styles.button} 
-        onPress={() => customMethod()}>
-          <Text style={styles.text}>TO DO </Text>
+        onPress={() => unloadMapView(true)}>
+          <Text style={styles.text}>TESTING </Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.button}
