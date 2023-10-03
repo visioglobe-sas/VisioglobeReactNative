@@ -18,6 +18,7 @@ import com.facebook.react.bridge.ReadableArray;
 import com.visioglobe.visiomoveessential.VMEMapController;
 import com.visioglobe.visiomoveessential.VMEMapControllerBuilder;
 import com.visioglobe.visiomoveessential.VMEMapView;
+import com.visioglobe.visiomoveessential.callbacks.VMEAnimationCallback;
 import com.visioglobe.visiomoveessential.callbacks.VMEComputeRouteCallback;
 import com.visioglobe.visiomoveessential.enums.VMELocationTrackingMode;
 import com.visioglobe.visiomoveessential.enums.VMERouteDestinationsOrder;
@@ -29,6 +30,10 @@ import com.visioglobe.visiomoveessential.listeners.VMELifeCycleListener;
 import com.visioglobe.visiomoveessential.listeners.VMELocationTrackingModeListener;
 import com.visioglobe.visiomoveessential.listeners.VMEMapListener;
 import com.visioglobe.visiomoveessential.listeners.VMEPoiListener;
+import com.visioglobe.visiomoveessential.models.VMECameraHeading;
+import com.visioglobe.visiomoveessential.models.VMECameraPitch;
+import com.visioglobe.visiomoveessential.models.VMECameraUpdate;
+import com.visioglobe.visiomoveessential.models.VMECameraUpdateBuilder;
 import com.visioglobe.visiomoveessential.models.VMEPosition;
 import com.visioglobe.visiomoveessential.models.VMERouteRequest;
 import com.visioglobe.visiomoveessential.models.VMERouteResult;
@@ -453,5 +458,20 @@ public class VisioFragment extends Fragment {
     super.onDestroy();
     // do any logic that should happen in an `onDestroy` method
     // e.g.: customView.onDestroy();
+  }
+
+  public void animateCamera(ReadableArray cameraarray, int duration) {
+    ArrayList<Object> lCameraArray = cameraarray.toArrayList();
+    Log.d("anim", "animateCamera: " + lCameraArray);
+    VMECameraUpdateBuilder builder = new VMECameraUpdateBuilder();
+    builder.setHeading(VMECameraHeading.newPoiID((String) lCameraArray.get(0)));
+    builder.setPaddingBottom(((Double)lCameraArray.get(1)).intValue());
+    builder.setPaddingLeft(((Double)lCameraArray.get(1)).intValue());
+    builder.setPaddingRight(((Double)lCameraArray.get(1)).intValue());
+    builder.setPaddingTop(((Double)lCameraArray.get(1)).intValue());
+    builder.setPitch(VMECameraPitch.newPitch((Double) lCameraArray.get(5)));
+    builder.setTargets((List<? extends Object>) lCameraArray.get(6));
+    VMECameraUpdate cameraUpdate = new VMECameraUpdate(builder);
+    mMapController.animateCamera(cameraUpdate,duration, null);
   }
 }

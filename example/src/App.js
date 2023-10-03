@@ -71,9 +71,18 @@ export default function App() {
   ////////////////////////////////////////////////////////////////////////////////////
 
 
-  const unloadMapView = (boolean) => {
+  const unloadMapView = () => {
+    const values = [];
+    values.push("outside");
+    values.push(50);
+    values.push(50);
+    values.push(50);
+    values.push(50);
+    values.push(-30);
+    values.push(["B2-UL00"]);
+    values.push("global");
     if (ref.current) {
-      ref.current.setStatisticsLog(boolean);
+      ref.current.animateCamera(values,8,undefined);
     }
   };
 

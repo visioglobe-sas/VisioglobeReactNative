@@ -281,6 +281,10 @@ public class VisioMapViewManager extends ViewGroupManager<FrameLayout> {
         boolean compassbool = args.getBoolean(0);
         myFragment.setCompass(compassbool);
         break;
+      case "animateCamera":
+        ReadableArray cameraarray = args.getArray(0);
+        int duration = args.getInt(1);
+        myFragment.animateCamera(cameraarray,duration);
       default: {}
     }
   }

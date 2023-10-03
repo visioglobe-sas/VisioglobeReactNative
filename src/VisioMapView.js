@@ -105,6 +105,10 @@ const _setCompass = (value) => {
     Commands.setSelectorViewVisible(r.current, visible);
   };
 
+  const _animateCamera = (values) => {
+    Commands.animateCamera(r.current,values,10,undefined);
+  }
+
   const _getVersion = () => {
     let requestId = this._nextRequestId++;
     let requestMap = this._requestMap;
@@ -152,6 +156,7 @@ const _setCompass = (value) => {
 
   useImperativeHandle(ref, () => ({
     customFunctionToCall: _customFunctionToCall,
+    animateCamera: _animateCamera,
     setPois: _setPois,
     resetPoisColor: _resetPoisColor,
     setPoisColor: _setPoisColor,

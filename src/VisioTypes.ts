@@ -87,12 +87,12 @@ export enum VMViewModeType {
 }
 
 export type VMCameraUpdate = {
-  heading: VMCameraHeading;
+  heading: string|number //VMCameraHeading;
   paddingBottom: number;
   paddingLeft: number;
   paddingRight: number;
   paddingTop: number;
-  pitch: VMCameraPitch;
+  pitch: number;//VMCameraPitch;
   targetPOIs?: string[];//mandatory or targetPositions
   targetPositions?: VMPosition[];
   viewMode: VMViewModeType;

@@ -161,13 +161,13 @@ interface NativeCommands {
     //TODO ALL BELOW
     animateCamera: (
       viewRef: React.ElementRef<NativeComponentType>, 
-      cameraupdate: VMCameraUpdate, 
+      cameraupdate: string[], //VMCameraUpdate, 
       duration: Double, 
-      callback: VMAnimationCallback | undefined
+      callback: undefined,//VMAnimationCallback | undefined
       ) => void;
 
     getCameraContext: (
-      viewRef: React.ElementRef<NativeComponentType>
+      viewRef: React.ElementRef<NativeComponentType>,
       ) => Promise<VMCameraContext>;
 
     updateCamera: (
