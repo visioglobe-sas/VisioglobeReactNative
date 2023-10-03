@@ -285,6 +285,7 @@ public class VisioMapViewManager extends ViewGroupManager<FrameLayout> {
     }
   }
 
+/*
   @ReactPropGroup(names = {"width", "height"}, customType = "Style")
   public void setStyle(FrameLayout view, int index, Integer value) {
     if (index == 0) {
@@ -295,6 +296,7 @@ public class VisioMapViewManager extends ViewGroupManager<FrameLayout> {
       propHeight = value;
     }
   }
+  */
 
   @ReactProp(name = "mapHash")
   public void setMapHash(FrameLayout view, String value) {
@@ -354,8 +356,10 @@ public class VisioMapViewManager extends ViewGroupManager<FrameLayout> {
    */
   public void manuallyLayoutChildren(View view) {
     // propWidth and propHeight coming from react-native props
-    int width = propWidth;
-    int height = propHeight;
+    //int width = propWidth;
+    //int height = propHeight;
+    int width = view.getWidth();
+    int height = view.getHeight();
 
     view.measure(
       View.MeasureSpec.makeMeasureSpec(width, View.MeasureSpec.EXACTLY),

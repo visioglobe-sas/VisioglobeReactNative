@@ -104,9 +104,10 @@ export default function App() {
   }
 
   return (
-    <>
+    <View style={{display: "flex", flex:1}}>
     <VisioMapView
         style={{
+        flex:1 /*,
           // converts dpi to px, provide desired height
           height:
             Platform.OS === 'ios'
@@ -119,16 +120,17 @@ export default function App() {
               : PixelRatio.getPixelSizeForLayoutSize(
                   Dimensions.get('window').width
                 ),
-                backgroundColor: 'red',
+                backgroundColor: 'red',*/
         }}
         // hash="dev-c346e782b88c53bb6c891f439dbcc7e2cde0aaab"
-        mapHash="dev-c346e782b88c53bb6c891f439dbcc7e2cde0aaab"
+        mapHash="mc8f3fec89d2b7283d15cfcf4eb28a0517428f054"
         mapPath="path"
         mapSecret={0}
         ref={ref}
         promptToDownload={true}
         listeners={["buildingListener","cameraListener","mapListener","locationtrackingmodeListener","poiListener"]}
       />
+      <View style={{flexDirection: "column",flexShrink:1, flex: 0}}>
       <View style={[styles.container, {
       flexDirection: "row"
     }]}>
@@ -165,13 +167,14 @@ export default function App() {
           <Text style={styles.text}>TO DO</Text>
         </TouchableOpacity>
       </View>
-      </>
+      </View>
+      </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    display: 'flex',
+    /*display: 'flex',*/
     backgroundColor: '#90EE90',
     alignItems: 'center',
     // justifyContent: 'center',

@@ -111,11 +111,11 @@ public class VisioFragment extends Fragment {
       VMEMapView mapView = this.mMapView;
       Intrinsics.checkNotNull(mapView);
       Log.d(TAG, "====> Load map view");
-      mController.loadMapView(mapView);
+      //mController.loadMapView(mapView);
       mController = this.mMapController;
       Intrinsics.checkNotNull(mController);
       Log.d(TAG, "====> Load map data");
-      mController.loadMapData();
+      //mController.loadMapData();
       for (int i=0; i<mMapListeners.size(); ++i) {
         String listener = mMapListeners.getString(i);
         switch (listener) {
@@ -431,6 +431,7 @@ public class VisioFragment extends Fragment {
     super.onViewCreated(view, savedInstanceState);
     // do any logic that should happen in an `onCreate` method, e.g:
     // customView.onCreate(savedInstanceState);
+    mMapController.loadMapData();
   }
 
   @Override
