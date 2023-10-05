@@ -10,7 +10,7 @@ import MapView, { Commands } from './VisioMapViewNativeComponent';
 const MODULE =
   Platform.OS === 'android' ? 'VisioglobeModule' : 'VisioMapViewManager';
 
-const createFragment = (viewId) =>
+const createFragment = (viewId: number | null) =>
   UIManager.dispatchViewManagerCommand(
     viewId,
     // we are calling the 'create' command
@@ -21,51 +21,51 @@ const createFragment = (viewId) =>
 export const VisioMapView = forwardRef((props, ref) => {
   const r = useRef();
 
-  const _setExcludedAttributes = (value) => {
+  const _setExcludedAttributes = (value: string[]) => {
     Commands.setExcludedAttributes(r.current, value);
 }
 
-const _setExcludedModalities = (value) => {
+const _setExcludedModalities = (value: string[]) => {
     Commands.setExcludedModalities(r.current, value);
 }
 
-const _setLocationTrackingButtonToggleModes = (value) => {
+const _setLocationTrackingButtonToggleModes = (value: string[]) => {
     Commands.setLocationTrackingButtonToggleModes(r.current, value);
 }
 
-const _setNavigationHeaderViewVisible = (value) => {
+const _setNavigationHeaderViewVisible = (value: boolean) => {
     Commands.setNavigationHeaderViewVisible(r.current, value);
 }
 
-const _setCompassHeadingMarkerVisible = (value) => {
+const _setCompassHeadingMarkerVisible = (value: boolean) => {
     Commands.setCompassHeadingMarkerVisible(r.current, value);
 }
 
-const _showPoiInfo = (value) => {
+const _showPoiInfo = (value: string) => {
     Commands.showPoiInfo(r.current, value);
 }
 
-const _setStatisticsLog = (value) => {
+const _setStatisticsLog = (value: boolean) => {
     Commands.setStatisticsLog(r.current, value);
 }
 
-const _setStatisticsLogCamera = (value) => {
+const _setStatisticsLogCamera = (value: boolean) => {
     Commands.setStatisticsLogCamera(r.current, value);
 }
 
-const _setStatisticsLogInterest = (value) => {
+const _setStatisticsLogInterest = (value: boolean) => {
     Commands.setStatisticsLogInterest(r.current, value);
 }
 
-const _setStatisticsLogLocation = (value) => {
+const _setStatisticsLogLocation = (value: boolean) => {
     Commands.setStatisticsLogLocation(r.current, value);
 }
 
-const _setStatisticsTrackedPoiIDs = (value) => {
+const _setStatisticsTrackedPoiIDs = (value: string[]) => {
     Commands.setStatisticsTrackedPoiIDs(r.current, value);
 }
 
-const _setCompass = (value) => {
+const _setCompass = (value: boolean) => {
     Commands.setCompass(r.current, value);
 }
 
@@ -73,7 +73,7 @@ const _setCompass = (value) => {
     NativeModules[MODULE].customFunctionToCall(findNodeHandle(r.current));
   };
 
-  const _setPois = (data) => {
+  const _setPois = (data: string) => {
     Commands.setPois(r.current, data);
   };
 
@@ -89,23 +89,23 @@ const _setCompass = (value) => {
     Commands.resetPoisColor(r.current);
   };
 
-  const _setPoisColor = (poiIDs) => {
+  const _setPoisColor = (poiIDs: string[]) => {
     Commands.setPoisColor(r.current, poiIDs);
   };
 
-  const _computeRoute = (origin, destination) => {
+  const _computeRoute = (origin: string, destination: string[]) => {
     Commands.computeRoute(r.current, origin, destination);
   };
 
-  const _getPoiPosition = (poiID) => {
+  const _getPoiPosition = (poiID: string) => {
     Commands.getPoiPosition(r.current, poiID);
   };
 
-  const _setSelectorViewVisible = (visible) => {
+  const _setSelectorViewVisible = (visible: boolean) => {
     Commands.setSelectorViewVisible(r.current, visible);
   };
 
-  const _animateCamera = (values) => {
+  const _animateCamera = (values: string[]) => {
     Commands.animateCamera(r.current,values,10,undefined);
   }
 
@@ -126,11 +126,11 @@ const _setCompass = (value) => {
   /// EN COURS
 
   // Generate a queue for the next asked promises
-  _nextRequestId = 1;
+  const _nextRequestId = 1;
 
-  _requestMap = new Map();
+  const _requestMap = new Map();
 
-  _onDataReturned = (event) => {
+  const _onDataReturned = (event: { nativeEvent: { requestId: any; result: any; error: any; }; }) => {
     let { requestId, result, error } = event.nativeEvent
     let promise = this._requestMap[requestId]
     if (result) {

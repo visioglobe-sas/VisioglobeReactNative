@@ -66,9 +66,8 @@ export type VMPoiVisibilityRamp = {
 }
 
 export type VMCameraHeading = {
-  poiID?: string;//mandatory or numbre or current
-  numbre?: number;
-  current?: boolean;
+  heading?: string | number;//mandatory or numbre or current
+  current: boolean;
 }
 export enum pitchType {
   current,
@@ -76,7 +75,7 @@ export enum pitchType {
 }
 
 export type VMCameraPitch = {
-  pitch?: number;
+  pitch: number;
   type?: pitchType;
 }
 
@@ -87,12 +86,12 @@ export enum VMViewModeType {
 }
 
 export type VMCameraUpdate = {
-  heading: string|number //VMCameraHeading;
+  heading: VMCameraHeading;
   paddingBottom: number;
   paddingLeft: number;
   paddingRight: number;
   paddingTop: number;
-  pitch: number;//VMCameraPitch;
+  pitch: VMCameraPitch;
   targetPOIs?: string[];//mandatory or targetPositions
   targetPositions?: VMPosition[];
   viewMode: VMViewModeType;

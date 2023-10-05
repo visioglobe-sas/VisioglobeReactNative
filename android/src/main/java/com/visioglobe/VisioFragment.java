@@ -464,23 +464,24 @@ public class VisioFragment extends Fragment {
 
   public void animateCamera(ReadableMap lCameraarray, int duration) {
     VMECameraUpdateBuilder builder = new VMECameraUpdateBuilder();
-    if ((lCameraarray.getMap("heading")).getType("poiID") == ReadableType.String) {
-      VMECameraHeading heading = VMECameraHeading.newPoiID((lCameraarray.getMap("heading")).getString("poiID"));
-      builder.setHeading(heading);
-    }
-    else if ((lCameraarray.getMap("heading")).getType("poiID") == ReadableType.Number){
-      VMECameraHeading heading = VMECameraHeading.newHeading((lCameraarray.getMap("heading")).getDouble("poiID"));
-      builder.setHeading(heading);
-    }
-    else if ((lCameraarray.getMap("heading")).getBoolean("current")) {
+    if ((lCameraarray.getMap("heading")).getBoolean("current")) {
       VMECameraHeading heading = VMECameraHeading.newCurrent();
       builder.setHeading(heading);
+    }
+    else {
+      if ((lCameraarray.getMap("heading")).getType("heading") == ReadableType.String) {
+        VMECameraHeading heading = VMECameraHeading.newPoiID((lCameraarray.getMap("heading")).getString("poiID"));
+        builder.setHeading(heading);
+      } else if ((lCameraarray.getMap("heading")).getType("heading") == ReadableType.Number) {
+        VMECameraHeading heading = VMECameraHeading.newHeading((lCameraarray.getMap("heading")).getDouble("poiID"));
+        builder.setHeading(heading);
+      }
     }
     builder.setPaddingBottom(lCameraarray.getInt("paddingBottom"));
     builder.setPaddingLeft(lCameraarray.getInt("paddingLeft"));
     builder.setPaddingRight(lCameraarray.getInt("paddingRight"));
     builder.setPaddingTop(lCameraarray.getInt("paddingTop"));
-    builder.setPitch(VMECameraPitch.newPitch(lCameraarray.getDouble("pitch")));
+    builder.setPitch(VMECameraPitch.newPitch(lCameraarray.getMap("pitch").getDouble("pitch")));
     builder.setTargets(lCameraarray.getArray("targetPOIs").toArrayList());
     if (lCameraarray.getDouble("viewMode") == 0){
       builder.setViewMode(VMEViewMode.FLOOR);

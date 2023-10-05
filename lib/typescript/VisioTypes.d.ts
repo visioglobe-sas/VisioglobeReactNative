@@ -51,7 +51,34 @@ export type VMPoiVisibilityRamp = {
     startInvisible: number;
     startVisible: number;
 };
-export type VMCameraUpdate = {};
+export type VMCameraHeading = {
+    heading?: string | number;
+    current?: boolean;
+};
+export declare enum pitchType {
+    current = 0,
+    default = 1
+}
+export type VMCameraPitch = {
+    pitch?: number;
+    type?: pitchType;
+};
+export declare enum VMViewModeType {
+    floor = 0,
+    global = 1,
+    unkown = 2
+}
+export type VMCameraUpdate = {
+    heading: VMCameraHeading;
+    paddingBottom: number;
+    paddingLeft: number;
+    paddingRight: number;
+    paddingTop: number;
+    pitch: VMCameraPitch;
+    targetPOIs?: string[];
+    targetPositions?: VMPosition[];
+    viewMode: VMViewModeType;
+};
 export type VMAnimationCallback = {};
 export type VMCameraContext = {};
 export type VMSceneUpdate = {};
