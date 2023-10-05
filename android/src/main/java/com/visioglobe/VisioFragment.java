@@ -15,6 +15,8 @@ import androidx.fragment.app.Fragment;
 
 // replace with your view's import
 import com.facebook.react.bridge.ReadableArray;
+import com.facebook.react.bridge.ReadableMap;
+import com.facebook.react.bridge.ReadableType;
 import com.visioglobe.visiomoveessential.VMEMapController;
 import com.visioglobe.visiomoveessential.VMEMapControllerBuilder;
 import com.visioglobe.visiomoveessential.VMEMapView;
@@ -460,17 +462,35 @@ public class VisioFragment extends Fragment {
     // e.g.: customView.onDestroy();
   }
 
-  public void animateCamera(ReadableArray cameraarray, int duration) {
-    ArrayList<Object> lCameraArray = cameraarray.toArrayList();
-    Log.d("anim", "animateCamera: " + lCameraArray);
+  public void animateCamera(ReadableMap lCameraarray, int duration) {
     VMECameraUpdateBuilder builder = new VMECameraUpdateBuilder();
-    builder.setHeading(VMECameraHeading.newPoiID((String) lCameraArray.get(0)));
-    builder.setPaddingBottom(((Double)lCameraArray.get(1)).intValue());
-    builder.setPaddingLeft(((Double)lCameraArray.get(1)).intValue());
-    builder.setPaddingRight(((Double)lCameraArray.get(1)).intValue());
-    builder.setPaddingTop(((Double)lCameraArray.get(1)).intValue());
-    builder.setPitch(VMECameraPitch.newPitch((Double) lCameraArray.get(5)));
-    builder.setTargets((List<? extends Object>) lCameraArray.get(6));
+    if ((lCameraarray.getMap("heading")).getType("poiID") == ReadableType.String) {
+      VMECameraHeading heading = VMECameraHeading.newPoiID((lCameraarray.getMap("heading")).getString("poiID"));
+      builder.setHeading(heading);
+    }
+    else if ((lCameraarray.getMap("heading")).getType("poiID") == ReadableType.Number){
+      VMECameraHeading heading = VMECameraHeading.newHeading((lCameraarray.getMap("heading")).getDouble("poiID"));
+      builder.setHeading(heading);
+    }
+    else if ((lCameraarray.getMap("heading")).getBoolean("current")) {
+      VMECameraHeading heading = VMECameraHeading.newCurrent();
+      builder.setHeading(heading);
+    }
+    builder.setPaddingBottom(lCameraarray.getInt("paddingBottom"));
+    builder.setPaddingLeft(lCameraarray.getInt("paddingLeft"));
+    builder.setPaddingRight(lCameraarray.getInt("paddingRight"));
+    builder.setPaddingTop(lCameraarray.getInt("paddingTop"));
+    builder.setPitch(VMECameraPitch.newPitch(lCameraarray.getDouble("pitch")));
+    builder.setTargets(lCameraarray.getArray("targetPOIs").toArrayList());
+    if (lCameraarray.getDouble("viewMode") == 0){
+      builder.setViewMode(VMEViewMode.FLOOR);
+    }
+    if (lCameraarray.getDouble("viewMode") == 1){
+      builder.setViewMode(VMEViewMode.GLOBAL);
+    }
+    if (lCameraarray.getDouble("viewMode") == 2){
+      builder.setViewMode(VMEViewMode.UNKNOWN);
+    }
     VMECameraUpdate cameraUpdate = new VMECameraUpdate(builder);
     mMapController.animateCamera(cameraUpdate,duration, null);
   }

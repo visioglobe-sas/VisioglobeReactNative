@@ -14,6 +14,7 @@ import androidx.fragment.app.FragmentActivity;
 
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReadableArray;
+import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.ReadableType;
 import com.facebook.react.common.MapBuilder;
 import com.facebook.react.uimanager.UIManagerHelper;
@@ -282,7 +283,7 @@ public class VisioMapViewManager extends ViewGroupManager<FrameLayout> {
         myFragment.setCompass(compassbool);
         break;
       case "animateCamera":
-        ReadableArray cameraarray = args.getArray(0);
+        ReadableMap cameraarray = args.getMap(0);
         int duration = args.getInt(1);
         myFragment.animateCamera(cameraarray,duration);
       default: {}
