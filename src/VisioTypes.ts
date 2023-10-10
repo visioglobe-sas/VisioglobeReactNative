@@ -1,7 +1,7 @@
 export type VMSceneContext = {
-  buildingID? : string,
+  buildingID : string,
   description : string,
-  floorID? : string
+  floorID : string
 }
 
 export type VMPosition = {
@@ -9,7 +9,7 @@ export type VMPosition = {
   description? : string,
   latitude : number,
   longitude : number,
-  scene : VMSceneContext
+  scene? : VMSceneContext
 }
 
 export type VMLocation =  {
@@ -124,3 +124,25 @@ export type VMPoiFilter = {
 export type VMPoiFilterCallback = {
   
 }
+
+export type VMRouteRequest = {
+  animateAllRoute: boolean
+  destinationsOrder: VMRouteDestinationsOrder
+  isAccessible: boolean
+  origin: VMPosition|String
+  destinations : VMPosition []|String[]
+  requestType: VMERouteRequestType
+}
+
+export enum VMRouteDestinationsOrder {
+  closest,
+  inOrder,
+  optimal,
+  optimalFinishOnLast
+}
+ 
+export enum VMERouteRequestType {
+  fatest,
+  shortest
+}
+

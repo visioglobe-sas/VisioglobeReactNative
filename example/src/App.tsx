@@ -10,7 +10,7 @@ import {
   Platform,
 } from 'react-native';
 import VisioMapView from 'react-native-visioglobe';
-import { VMCameraHeading, VMCameraPitch, VMCameraUpdate, VMViewModeType } from '../../src/VisioTypes';
+import { VMCameraHeading, VMCameraPitch, VMCameraUpdate, VMERouteRequestType, VMRouteDestinationsOrder, VMRouteRequest, VMViewModeType } from '../../src/VisioTypes';
 
 export default function App() {
   const ref = React.useRef<VisioMapView>(null);
@@ -72,15 +72,13 @@ export default function App() {
   ////////////////////////////////////////////////////////////////////////////////////
 
 
-  const unloadMapView = () => {
+  const animateCamera = () => {
     const heading : VMCameraHeading = {
       current: true
     }
-
     const pitch : VMCameraPitch = {
       pitch : -30,
     }
-
     const values : VMCameraUpdate = {
       heading : heading,
       paddingBottom: 50,
@@ -109,39 +107,30 @@ export default function App() {
 
   const computeRoute = () => {
     // do something
-    const origin = 'B2-UL01-ID0002';
-    const destination = ['B3-UL01-ID0022', 'B2-UL01-ID0081'];
-    ref.current.computeRoute(origin, destination);
+    const route : VMRouteRequest = {
+      animateAllRoute: false,
+      destinationsOrder: VMRouteDestinationsOrder.optimalFinishOnLast,
+      isAccessible: true,
+      origin: "B1-UL00-ID0039",
+      destinations: ["B4-UL05-ID0032", "B2-LL01-ID0011", "B3-UL00-ID0070"],
+      requestType: VMERouteRequestType.fatest
+    }
+    ref.current.computeRoute(route);
   };
 
   const getVersion = async () => {
     //console.log(ref.current.getVersion());
     let promise = ref.current.getVersion()
-    promise.then((value: string) => {
-      alert(value);
-    });
-  }
+    //promise.then((value: string) => {
+      //console.log(value);
+    };
 
   return (
     <View style={{display: "flex", flex:1}}>
     <VisioMapView
         style={{
-        flex:1 /*,
-          // converts dpi to px, provide desired height
-          height:
-            Platform.OS === 'ios'
-              ? 400
-              : 400,
-          // converts dpi to px, provide desired width
-          width:
-            Platform.OS === 'ios'
-              ? Dimensions.get('window').width
-              : PixelRatio.getPixelSizeForLayoutSize(
-                  Dimensions.get('window').width
-                ),
-                backgroundColor: 'red',*/
+        flex:1
         }}
-        // hash="dev-c346e782b88c53bb6c891f439dbcc7e2cde0aaab"
         mapHash="mc8f3fec89d2b7283d15cfcf4eb28a0517428f054"
         mapPath="path"
         mapSecret={0}
@@ -156,21 +145,25 @@ export default function App() {
         <TouchableOpacity style={styles.button} onPress={() => getVersion()}>
           <Text style={styles.text}>Display SDK Version</Text>
         </TouchableOpacity>
+
         <TouchableOpacity style={styles.button} onPress={() => setPois()}>
           <Text style={styles.text}> {textSetPoisButton}</Text>
         </TouchableOpacity>
+
         <TouchableOpacity
           style={styles.button}
-          onPress={() => setSelectorViewVisible(boolean)}
+          onPress={() => animateCamera()}
         >
-          <Text style={styles.text}>{textSetSelectorViewButton}</Text>
+          <Text style={styles.text}>{"Animate camera"}</Text>
         </TouchableOpacity>
+
         </View>
+
       <View style={[styles.container, {
       flexDirection: "row"
     }]}>
         <TouchableOpacity style={styles.button} 
-        onPress={() => unloadMapView(true)}>
+        onPress={() => computeRoute()}>
           <Text style={styles.text}>TESTING </Text>
         </TouchableOpacity>
         <TouchableOpacity

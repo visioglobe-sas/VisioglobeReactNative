@@ -6,6 +6,7 @@ import {
   UIManager,
 } from 'react-native';
 import MapView, { Commands } from './VisioMapViewNativeComponent';
+import { VMRouteRequest } from './VisioTypes';
 
 const MODULE =
   Platform.OS === 'android' ? 'VisioglobeModule' : 'VisioMapViewManager';
@@ -93,8 +94,8 @@ const _setCompass = (value: boolean) => {
     Commands.setPoisColor(r.current, poiIDs);
   };
 
-  const _computeRoute = (origin: string, destination: string[]) => {
-    Commands.computeRoute(r.current, origin, destination);
+  const _computeRoute = (request : VMRouteRequest) => {
+    Commands.computeRoute(r.current, request);
   };
 
   const _getPoiPosition = (poiID: string) => {

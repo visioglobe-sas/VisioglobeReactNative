@@ -4,7 +4,7 @@ import './VisioTypes';
 import codegenNativeComponent from 'react-native/Libraries/Utilities/codegenNativeComponent';
 import codegenNativeCommands from 'react-native/Libraries/Utilities/codegenNativeCommands';
 import type { Double } from 'react-native/Libraries/Types/CodegenTypes';
-import type { VMAnimationCallback, VMCameraContext, VMCameraUpdate, VMCategory, VMLocation, VMLocationTrackingMode, VMPoi, VMPoiFilter, VMPoiFilterCallback, VMPoiSize, VMPosition, VMSceneUpdate } from './VisioTypes';
+import type { VMAnimationCallback, VMCameraContext, VMCameraUpdate, VMCategory, VMLocation, VMLocationTrackingMode, VMPoi, VMPoiFilter, VMPoiFilterCallback, VMPoiSize, VMPosition, VMRouteRequest, VMSceneUpdate } from './VisioTypes';
 
 export interface NativeProps extends ViewProps {
   mapPath?: string;
@@ -118,8 +118,7 @@ interface NativeCommands {
   //ComputeROute to update
   computeRoute: (
     viewRef: React.ElementRef<NativeComponentType>,
-    origin: string,
-    destinations: Array<string>
+    request : VMRouteRequest
   ) => void;
   //computeRoute : (viewRef: React.ElementRef<NativeComponentType>, routerequest: VMRouteRequest, callback: VMComputeRouteCallback?) => void;
 

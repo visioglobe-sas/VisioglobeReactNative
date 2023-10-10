@@ -198,17 +198,8 @@ public class VisioMapViewManager extends ViewGroupManager<FrameLayout> {
         myFragment.resetPoisColor();
         break;
       case "computeRoute":
-        String origin = args.getString(0);
-        Boolean optimize = args.getBoolean(2);
-        ReadableArray destinations = args.getArray(1);
-        ArrayList<String> destinationList = new ArrayList<String>();
-
-        for (int i = 0; i < destinations.size(); i++) {
-          if (destinations.getType(i) == ReadableType.String) {
-            destinationList.add(destinations.getString(i));
-          }
-        }
-        myFragment.computeRoute(origin, destinationList, optimize);
+        ReadableMap routeInfo = args.getMap(0);
+        myFragment.computeRoute(routeInfo);
         break;
       case "getPoiPosition":
         String poi = args.getString(0);

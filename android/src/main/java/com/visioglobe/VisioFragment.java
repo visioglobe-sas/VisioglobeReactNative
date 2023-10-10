@@ -47,7 +47,10 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
@@ -370,33 +373,68 @@ public class VisioFragment extends Fragment {
   }
   private VMEComputeRouteCallback mRouteCallback = new VMEComputeRouteCallback() {
     @Override
-    public boolean computeRouteDidFinish(VMERouteRequest routeRequest, VMERouteResult routeResult) {
-      String lRouteDescription = String.format(
-        "computeRouteDidFinish, duration: %.0fmins and length: %.0fm",
-        routeResult.getDuration() / 60,
-        routeResult.getLength()
-      );
-      Log.i(TAG, lRouteDescription);
-      routingEnabled = true;
+    public boolean computeRouteDidFinish(@NonNull VMERouteRequest vmeRouteRequest, @NonNull VMERouteResult vmeRouteResult) {
       return true;
     }
 
     @Override
-    public void computeRouteDidFail(VMERouteRequest routeRequest, String error) {
-      String lRouteDescription = String.format("computeRouteDidFail, Error: %s", error);
-      Log.i(TAG, lRouteDescription);
-      routingEnabled = false;
+    public void computeRouteDidFail(@NonNull VMERouteRequest vmeRouteRequest, @Nullable String s) {
     }
   };
 
+  //UTILS
 
-  public void computeRoute(String origin, ArrayList<String> destinations, Boolean optimize) {
-    VMERouteDestinationsOrder destinationsOrder = optimize ? VMERouteDestinationsOrder.OPTIMAL : VMERouteDestinationsOrder.IN_ORDER;
-    VMERouteRequest routeRequest = new VMERouteRequest(VMERouteRequestType.FASTEST, destinationsOrder);
+  public void computeRoute(ReadableMap lRouteInfo) {
+    boolean animateAllRoute = lRouteInfo.getBoolean("animateAllRoute");
+    Double routeDestinationsOrderNumber = lRouteInfo.getDouble("destinationsOrder");
+    VMERouteDestinationsOrder routeDestinationsOrder = null;
+    if (routeDestinationsOrderNumber == 0){
+      routeDestinationsOrder = VMERouteDestinationsOrder.CLOSEST;
+    }
+    if (routeDestinationsOrderNumber == 1){
+      routeDestinationsOrder = VMERouteDestinationsOrder.IN_ORDER;
+    }
+    if (routeDestinationsOrderNumber == 2){
+      routeDestinationsOrder = VMERouteDestinationsOrder.OPTIMAL;
+    }
+    if (routeDestinationsOrderNumber == 3){
+      routeDestinationsOrder = VMERouteDestinationsOrder.OPTIMAL_FINISH_ON_LAST;
+    }
+    boolean isAccessible = lRouteInfo.getBoolean("isAccessible");
+    ReadableArray destinations = lRouteInfo.getArray("destinations");
+    Object origin;
+    if ((lRouteInfo.getType("origin") == ReadableType.String)) {
+      origin = lRouteInfo.getString("origin");
+    }
+    else
+    {
+      VMESceneContext scene = new VMESceneContext();
+      if (lRouteInfo.getMap("origin").toHashMap().containsKey("scene")) {
+        scene = new VMESceneContext(lRouteInfo.getMap("origin").getMap("scene").getString("buildingID"), lRouteInfo.getMap("origin").getMap("scene").getString("FloorID"));
+      }
+      origin = new VMEPosition(lRouteInfo.getMap("origin").getDouble("latitude"), lRouteInfo.getMap("origin").getDouble("longitude"), lRouteInfo.getMap("origin").getDouble("altitude"), scene);
+    }
+
+    Double requestTypeNumber = lRouteInfo.getDouble("requestType");
+    VMERouteRequestType requestType = null;
+    if (requestTypeNumber == 0){
+      requestType = VMERouteRequestType.FASTEST;
+    }
+    if (requestTypeNumber == 1){
+      requestType = VMERouteRequestType.SHORTEST;
+    }
+    assert destinations != null;
+    ArrayList<Object> destinationsArray = new ArrayList<>();
+    for (int i = 0; i < destinations.size(); i++) {
+      String element = destinations.getString(i);
+      destinationsArray.add(element);
+    }
+    assert requestType != null;
+    assert routeDestinationsOrder != null;
+    VMERouteRequest routeRequest = new VMERouteRequest(requestType, routeDestinationsOrder, isAccessible);
     routeRequest.setOrigin(origin);
-    routeRequest.addDestinations(destinations);
-    Log.d("REF", "====> COMPUTE ROUTE FROM FRAGMENT");
-    mMapController.computeRoute(routeRequest, mRouteCallback);
+    routeRequest.addDestinations(destinationsArray);
+    mMapController.computeRoute(routeRequest,mRouteCallback);
   }
 
   public void getPoiPosition(String poi) {
