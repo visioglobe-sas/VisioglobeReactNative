@@ -155,10 +155,9 @@ const _setCompass = (value: boolean) => {
     Commands.getMinDataSDKVersion(r.current);
   };
 
-  const _updateCamera =  (update : VMCameraUpdate) => ({
-
-
-  });
+  const _updateCamera =  (update : VMCameraUpdate) => {
+    Commands.updateCamera(r.current,update);
+  };
 
   useImperativeHandle(ref, () => ({
     customFunctionToCall: _customFunctionToCall,

@@ -277,6 +277,9 @@ public class VisioMapViewManager extends ViewGroupManager<FrameLayout> {
         ReadableMap cameraarray = args.getMap(0);
         int duration = args.getInt(1);
         myFragment.animateCamera(cameraarray,duration);
+      case "updateCamera" :
+        ReadableMap cameraupdate = args.getMap(0);
+        myFragment.updateCamera(cameraupdate);
       default: {}
     }
   }

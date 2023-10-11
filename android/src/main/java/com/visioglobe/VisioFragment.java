@@ -20,7 +20,6 @@ import com.facebook.react.bridge.ReadableType;
 import com.visioglobe.visiomoveessential.VMEMapController;
 import com.visioglobe.visiomoveessential.VMEMapControllerBuilder;
 import com.visioglobe.visiomoveessential.VMEMapView;
-import com.visioglobe.visiomoveessential.callbacks.VMEAnimationCallback;
 import com.visioglobe.visiomoveessential.callbacks.VMEComputeRouteCallback;
 import com.visioglobe.visiomoveessential.enums.VMELocationTrackingMode;
 import com.visioglobe.visiomoveessential.enums.VMERouteDestinationsOrder;
@@ -32,10 +31,7 @@ import com.visioglobe.visiomoveessential.listeners.VMELifeCycleListener;
 import com.visioglobe.visiomoveessential.listeners.VMELocationTrackingModeListener;
 import com.visioglobe.visiomoveessential.listeners.VMEMapListener;
 import com.visioglobe.visiomoveessential.listeners.VMEPoiListener;
-import com.visioglobe.visiomoveessential.models.VMECameraHeading;
-import com.visioglobe.visiomoveessential.models.VMECameraPitch;
 import com.visioglobe.visiomoveessential.models.VMECameraUpdate;
-import com.visioglobe.visiomoveessential.models.VMECameraUpdateBuilder;
 import com.visioglobe.visiomoveessential.models.VMEPosition;
 import com.visioglobe.visiomoveessential.models.VMERouteRequest;
 import com.visioglobe.visiomoveessential.models.VMERouteResult;
@@ -47,10 +43,7 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
@@ -299,7 +292,10 @@ public class VisioFragment extends Fragment {
 
   public void animateCamera(){}
   public void getCameraContext(){}
-  public void updateCamera(){}
+  public void updateCamera(ReadableMap cameraupdate){
+    VMECameraUpdate update = new UtilsType().readableMapToCamera(cameraupdate);
+    mMapController.updateCamera(update);
+  }
   public void animateScene(){}
   public void updateScene(){}
   public void createLocationFromLocation(){}
@@ -501,36 +497,7 @@ public class VisioFragment extends Fragment {
   }
 
   public void animateCamera(ReadableMap lCameraarray, int duration) {
-    VMECameraUpdateBuilder builder = new VMECameraUpdateBuilder();
-    if ((lCameraarray.getMap("heading")).getBoolean("current")) {
-      VMECameraHeading heading = VMECameraHeading.newCurrent();
-      builder.setHeading(heading);
-    }
-    else {
-      if ((lCameraarray.getMap("heading")).getType("heading") == ReadableType.String) {
-        VMECameraHeading heading = VMECameraHeading.newPoiID((lCameraarray.getMap("heading")).getString("poiID"));
-        builder.setHeading(heading);
-      } else if ((lCameraarray.getMap("heading")).getType("heading") == ReadableType.Number) {
-        VMECameraHeading heading = VMECameraHeading.newHeading((lCameraarray.getMap("heading")).getDouble("poiID"));
-        builder.setHeading(heading);
-      }
-    }
-    builder.setPaddingBottom(lCameraarray.getInt("paddingBottom"));
-    builder.setPaddingLeft(lCameraarray.getInt("paddingLeft"));
-    builder.setPaddingRight(lCameraarray.getInt("paddingRight"));
-    builder.setPaddingTop(lCameraarray.getInt("paddingTop"));
-    builder.setPitch(VMECameraPitch.newPitch(lCameraarray.getMap("pitch").getDouble("pitch")));
-    builder.setTargets(lCameraarray.getArray("targetPOIs").toArrayList());
-    if (lCameraarray.getDouble("viewMode") == 0){
-      builder.setViewMode(VMEViewMode.FLOOR);
-    }
-    if (lCameraarray.getDouble("viewMode") == 1){
-      builder.setViewMode(VMEViewMode.GLOBAL);
-    }
-    if (lCameraarray.getDouble("viewMode") == 2){
-      builder.setViewMode(VMEViewMode.UNKNOWN);
-    }
-    VMECameraUpdate cameraUpdate = new VMECameraUpdate(builder);
+    VMECameraUpdate cameraUpdate = new UtilsType().readableMapToCamera(lCameraarray);
     mMapController.animateCamera(cameraUpdate,duration, null);
   }
 }
