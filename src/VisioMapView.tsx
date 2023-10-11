@@ -6,7 +6,7 @@ import {
   UIManager,
 } from 'react-native';
 import MapView, { Commands } from './VisioMapViewNativeComponent';
-import { VMRouteRequest } from './VisioTypes';
+import { VMCameraUpdate, VMRouteRequest } from './VisioTypes';
 
 const MODULE =
   Platform.OS === 'android' ? 'VisioglobeModule' : 'VisioMapViewManager';
@@ -106,7 +106,7 @@ const _setCompass = (value: boolean) => {
     Commands.setSelectorViewVisible(r.current, visible);
   };
 
-  const _animateCamera = (values: string[]) => {
+  const _animateCamera = (values: VMCameraUpdate) => {
     Commands.animateCamera(r.current,values,10,undefined);
   }
 
@@ -155,8 +155,14 @@ const _setCompass = (value: boolean) => {
     Commands.getMinDataSDKVersion(r.current);
   };
 
+  const _updateCamera =  (update : VMCameraUpdate) => ({
+
+
+  });
+
   useImperativeHandle(ref, () => ({
     customFunctionToCall: _customFunctionToCall,
+    updateCamera: _updateCamera,
     animateCamera: _animateCamera,
     setPois: _setPois,
     resetPoisColor: _resetPoisColor,

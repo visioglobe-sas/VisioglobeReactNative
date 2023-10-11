@@ -90,7 +90,7 @@ export default function App() {
       viewMode : VMViewModeType.floor,
     }
     if (ref.current) {
-      ref.current.animateCamera(values,8,undefined);
+      ref.current.animateCamera(values,5,undefined);
     }
   };
 
