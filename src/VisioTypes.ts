@@ -109,16 +109,23 @@ export type VMSceneUpdate = {
 
 }
 
-export type VMLocationTrackingMode = {
-
+export enum VMLocationTrackingMode {
+  custom,
+  follow,
+  none
 }
 
 export type VMCategory = { 
-
+  icon: string
+  id: string
+  name: string
 }
 
 export type VMPoiFilter = {
-
+  radius : number
+  restrictToPoiIDs? : string[]
+  restrictToTargetLayer : boolean
+  target : any //TO DO??
 }
 
 export type VMPoiFilterCallback = {
