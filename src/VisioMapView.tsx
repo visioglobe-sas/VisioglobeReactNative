@@ -1,12 +1,14 @@
-import React, { forwardRef, useRef, useImperativeHandle } from 'react';
+import React, { forwardRef, useRef, useImperativeHandle, ElementRef, Component } from 'react';
 import {
   NativeModules,
   findNodeHandle,
   Platform,
   UIManager,
+  NativeMethods,
 } from 'react-native';
-import MapView, { Commands } from './VisioMapViewNativeComponent';
+import MapView, { Commands, NativeProps } from './VisioMapViewNativeComponent';
 import { VMCameraUpdate, VMRouteRequest } from './VisioTypes';
+import codegenNativeComponent, { NativeComponentType } from 'react-native/Libraries/Utilities/codegenNativeComponent';
 
 const MODULE =
   Platform.OS === 'android' ? 'VisioglobeModule' : 'VisioMapViewManager';
@@ -20,7 +22,7 @@ const createFragment = (viewId: number | null) =>
   );
 
 export const VisioMapView = forwardRef((props, ref) => {
-  const r = useRef();
+  const r = useRef() as React.MutableRefObject<Component<NativeProps, {}, any> & Readonly<NativeMethods>>;
 
   const _setExcludedAttributes = (value: string[]) => {
     Commands.setExcludedAttributes(r.current, value);
@@ -75,6 +77,7 @@ const _setCompass = (value: boolean) => {
   };
 
   const _setPois = (data: string) => {
+    console.log("r.curr =" + typeof r);
     Commands.setPois(r.current, data);
   };
 
