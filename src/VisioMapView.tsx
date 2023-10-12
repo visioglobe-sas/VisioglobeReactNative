@@ -21,7 +21,7 @@ const createFragment = (viewId: number | null) =>
     [viewId]
   );
 
-export const VisioMapView = forwardRef((props, ref) => {
+export const VisioMapView = forwardRef((props: NativeProps, ref) => {
   const r = useRef() as React.MutableRefObject<Component<NativeProps, {}, any> & Readonly<NativeMethods>>;
 
   const _setExcludedAttributes = (value: string[]) => {
@@ -205,7 +205,7 @@ const _setCompass = (value: boolean) => {
       ///EN COURS
       onDataReturned={this._onDataReturned}
       ///
-      style={{ ...props.style }}
+      style={props.style}
       mapHash={props.mapHash}
       mapPath={props.mapPath}
       mapSecret={props.mapSecret}
