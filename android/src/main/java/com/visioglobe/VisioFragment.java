@@ -168,7 +168,7 @@ public class VisioFragment extends Fragment {
               }
             });
           default:
-            Log.d(TAG, "====> ERREUR LISTENER");
+            Log.d(TAG, "====> SETTING LISTENERS");
         }
       }
 
