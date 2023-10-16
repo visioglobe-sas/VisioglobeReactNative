@@ -139,7 +139,7 @@ interface NativeCommands {
     //OK ANDROID Update iOs
     getVersion: (
       viewRef: React.ElementRef<NativeComponentType>, 
-      requestId: string
+      //requestId: number
       ) => Promise<string>;
     
     //getDataSDKVersion: (viewRef: React.ElementRef<NativeComponentType>) => string;

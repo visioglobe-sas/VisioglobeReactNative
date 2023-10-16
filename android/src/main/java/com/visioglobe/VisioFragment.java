@@ -14,9 +14,12 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 // replace with your view's import
+import com.facebook.react.bridge.Promise;
+import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.ReadableType;
+import com.facebook.react.bridge.WritableMap;
 import com.visioglobe.visiomoveessential.VMEMapController;
 import com.visioglobe.visiomoveessential.VMEMapControllerBuilder;
 import com.visioglobe.visiomoveessential.VMEMapView;
@@ -321,9 +324,69 @@ public class VisioFragment extends Fragment {
   public void setPoisPosition(){}
   public void showPoiInfo(){}
   public void setCategories(){}
-  public String getVersion(){
+  @ReactMethod
+  public Promise getVersion(){
     Log.d("REF", "====> GET VERSION ");
-    return mMapController.getDataSDKVersion();
+    Promise promise = new Promise() {
+      @Override
+      public void resolve(@Nullable Object o) {
+
+      }
+
+      @Override
+      public void reject(String s, String s1) {
+
+      }
+
+      @Override
+      public void reject(String s, Throwable throwable) {
+
+      }
+
+      @Override
+      public void reject(String s, String s1, Throwable throwable) {
+
+      }
+
+      @Override
+      public void reject(Throwable throwable) {
+
+      }
+
+      @Override
+      public void reject(Throwable throwable, WritableMap writableMap) {
+
+      }
+
+      @Override
+      public void reject(String s, @NonNull WritableMap writableMap) {
+
+      }
+
+      @Override
+      public void reject(String s, Throwable throwable, WritableMap writableMap) {
+
+      }
+
+      @Override
+      public void reject(String s, String s1, @NonNull WritableMap writableMap) {
+
+      }
+
+      @Override
+      public void reject(String s, String s1, Throwable throwable, WritableMap writableMap) {
+
+      }
+
+      @Override
+      public void reject(String s) {
+
+      }
+    };
+    if (mMapController.getDataSDKVersion() instanceof String){
+      promise.resolve(mMapController.getDataSDKVersion());
+    } else promise.reject("error on SDK version");
+    return promise;
   }
 
   public String getMinDataSDKVersion(){

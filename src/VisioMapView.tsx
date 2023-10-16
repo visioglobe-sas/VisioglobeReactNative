@@ -114,17 +114,18 @@ const _setCompass = (value: boolean) => {
   }
 
   const _getVersion = () => {
-    let requestId = this._nextRequestId++;
+    /*let requestId: number = this._nextRequestId++;
     let requestMap = this._requestMap;
     let promise = new Promise(function (resolve, reject) {
       requestMap[requestId] = { resolve: resolve, reject: reject };
-    });
-    Commands.getVersion(r.current, requestId);
+    });*/
+    const pro : Promise<String> = Commands.getVersion(r.current);
+    pro.then((value) => console.log(value));
 
     /**promise.then((value) => {
       console.log(value);
     });**/
-    return (promise);
+    //return (promise);
   };
 
   /// EN COURS

@@ -12,14 +12,13 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.FragmentActivity;
 
+import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.ReadableType;
 import com.facebook.react.common.MapBuilder;
-import com.facebook.react.uimanager.UIManagerHelper;
 import com.facebook.react.uimanager.UIManagerModule;
-import com.facebook.react.uimanager.annotations.ReactPropGroup;
 import com.facebook.react.uimanager.annotations.ReactProp;
 import com.facebook.react.uimanager.ViewGroupManager;
 import com.facebook.react.uimanager.ThemedReactContext;
@@ -210,10 +209,8 @@ public class VisioMapViewManager extends ViewGroupManager<FrameLayout> {
         myFragment.setSelectorViewVisible(visible);
         break;
       case "getVersion":
-        Integer requestId = args.getInt(0);
-        String version = myFragment.getVersion();
-        EventDispatcher meventDispatcher = UIManagerHelper.getEventDispatcherForReactTag(reactContext, reactNativeViewId);
-        eventDispatcher.dispatchEvent(new VisioGetVersionReturnedEvent(reactNativeViewId, requestId, version));
+        double requestId = args.getDouble(0);
+        myFragment.getVersion();
         break;
       case "getMinDataSDKVersion":
         myFragment.getMinDataSDKVersion();
