@@ -79,7 +79,7 @@ class VisioMapViewManager: RCTViewManager {
         }**/
     }
     @objc func animateCamera(_ reactTag: NSNumber, data: NSDictionary, duration: NSNumber, callback: NSDictionary?) {
-        print("ANIMATE CAMERA")
+        print("ANIMATE CAMERA");
         let duration = duration.doubleValue;
         
         var viewMode: VMEViewMode = VMEViewMode.unknown;
@@ -91,7 +91,7 @@ class VisioMapViewManager: RCTViewManager {
             viewMode = VMEViewMode.unknown
         }
         
-        var heading: VMECameraHeading
+        var heading: VMECameraHeading = VMECameraHeading.initCameraHeadingCurrent();
         if (((data["heading"] as! NSDictionary)["current"]) as! Bool == true){
             heading = VMECameraHeading.initCameraHeadingCurrent();
         } else if ((data["heading"] as! NSDictionary)["heading"] is String){
@@ -100,38 +100,45 @@ class VisioMapViewManager: RCTViewManager {
             heading = VMECameraHeading.initCameraHeading(value: ((data["heading"] as! NSDictionary)["heading"] as! NSNumber).doubleValue);
         }
         
-        var target: Array<VMEPosition>
-        if (((data["targetPositions"])) != nil){
-            var positions = (data["targetPositions"]) as! Array<NSDictionary>
-            var VMPosition : VMEPosition
-            var sceneContext : VMESceneContext
-            for position in positions {
-                
-                 sceneContext = VMESceneContext.init(buildingID: scene["buildingID"] as? String, floorID: scene["floorID"] as? String)
-                VMPosition = VMEPosition.init(
-                    latitude: (position["altitude"] as! NSNumber).doubleValue,
-                    longitude: (position["longitude"] as! NSNumber).doubleValue,
-                    altitude: (position["altitude"] as! NSNumber).doubleValue,
-                    scene: ()
-                
-                )
-                
+        var target: [AnyHashable] = [];
+        let positions = (data["targets"]) as! Array<Any>;
+        var _ : VMEPosition;
+        var sceneContext : VMESceneContext = VMESceneContext.init();
+        for position in positions {
+            if (!(position is NSString)) {
+                let pos = position as! NSDictionary;
+                if ( pos["scene"] != nil){
+                    let scene = pos["scene"] as? NSDictionary;
+                    sceneContext = VMESceneContext.init(buildingID: scene?["buildingID"] as? String,
+                                                        floorID: scene?["floorID"] as? String);
+                }
+                let VMPosition = VMEPosition.init(
+                    latitude: (pos["altitude"] as! NSNumber).doubleValue,
+                    longitude: (pos["longitude"] as! NSNumber).doubleValue,
+                    altitude: (pos["altitude"] as! NSNumber).doubleValue,
+                    scene: sceneContext
+                );
+                target.append(VMPosition);
+            } else if(position is NSString){
+                let pos = position as! NSString;
+                target.append(pos);
+            } else{
+                print ("ERROR ON ANIMATE CAMERA POINT:" + (position as! String))
             }
         }
         
-        let cameraUpdateBuilder = VMECameraUpdate.initCameraUpdate { builder in
+        let cameraUpdate = VMECameraUpdate.initCameraUpdate { builder in
             builder.heading = heading;
             builder.paddingBottom = (data["paddingBottom"] as? Double)!;
             builder.paddingTop = (data["paddingTop"] as? Double)!;
             builder.paddingLeft = (data["paddingLeft"] as? Double)!;
             builder.paddingRight = (data["paddingRight"] as? Double)!;
             builder.viewMode = viewMode;
-            builder.targets = (data[])
-            //builder.pitch = data["pitch"]["type"]
+            builder.targets = target;
         }
         DispatchQueue.main.async {
             if let view = self.bridge.uiManager.view(forReactTag: reactTag) as? VisioMapView {
-                //view.animateCamera(<#T##cameraUpdate: VMECameraUpdate##VMECameraUpdate#>, duration: duration)
+                view.animateCamera(cameraUpdate, duration: duration)
             }
         }
     }
@@ -254,7 +261,7 @@ class VisioMapViewManager: RCTViewManager {
   } */
 }
 
-class VisioMapView: UIView, VMELifeCycleListener {
+class VisioMapView: UIView, VMELifeCycleListener, VMEAnimationCallback {
     var mMapController: VMEMapController!
     var mMapView: VMEMapView!  // assuming VMEMapView is the correct type
     let label: UILabel = UILabel()
@@ -300,7 +307,7 @@ class VisioMapView: UIView, VMELifeCycleListener {
     
     func animateCamera(_ cameraUpdate: VMECameraUpdate, duration: Double){
         print("=====> ANIMATE CAMERA")
-        //mMapController.animateCamera(cameraUpdate, duration : duration, callback: n);
+        mMapController.animateCamera(cameraUpdate, duration : duration, callback: self);
     }
     
     func setPoisColor(_ poiIDs: [String], lColors: [UIColor]) {

@@ -52,7 +52,7 @@ export default function App() {
   const setPois = () => {
     // do something
     const greenCatData =
-    ' {"catCringe":{"name":"Black cat","icon":"https://upload.wikimedia.org/wikipedia/commons/4/4f/Kitty_emoji.png","description":"Black cat is here","feature":{"image":{"icon":"https://upload.wikimedia.org/wikipedia/commons/4/4f/Kitty_emoji.png","position":[45.74131,4.88216,0.0],"anchorMode":"bottomCenter","scale":15.0,"altitudeMode":"absolute"}}}} ';
+    ' {"catCringe":{"name":"Black cat","icon":"https://upload.wikimedia.org/wikipedia/commons/4/4f/Kitty_emoji.png","description":"Black cat is here","features":{"image":{"icon":"https://upload.wikimedia.org/wikipedia/commons/4/4f/Kitty_emoji.png","position":[45.74131,4.88216,0.0],"anchorMode":"bottomCenter","scale":15.0,"altitudeMode":"absolute"}}}} ';
     onPressSetPois();
     if (textSetPoisButton === "Set cat POIs"){
       ref.current.setPois(greenCatData);
@@ -86,7 +86,7 @@ export default function App() {
       paddingRight : 50,
       paddingTop : 50,
       pitch : pitch,
-      targetPOIs : ["B2-UL00"],
+      targets : ["B2-UL00"],
       viewMode : VMViewModeType.floor,
     }
     if (ref.current) {

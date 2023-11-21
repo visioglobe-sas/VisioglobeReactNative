@@ -92,8 +92,7 @@ export type VMCameraUpdate = {
   paddingRight: number;
   paddingTop: number;
   pitch: VMCameraPitch;
-  targetPOIs?: string[];//mandatory or targetPositions
-  targetPositions?: VMPosition[];
+  targets: [string | VMPosition];
   viewMode: VMViewModeType;
 }
 
