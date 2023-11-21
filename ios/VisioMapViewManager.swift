@@ -38,29 +38,9 @@ class VisioMapViewManager: RCTViewManager {
         }
     }
     
-    class func randomColor() -> UIColor? {
-        let lRed = Int(arc4random() % 255)
-        let lGreen = Int(arc4random() % 255)
-        let lBlue = Int(arc4random() % 255)
-        let lRandomColor = UIColor(red: CGFloat(Double(lRed) / 255.0), green: CGFloat(Double(lGreen) / 255.0), blue: CGFloat(Double(lBlue) / 255.0), alpha: 1.0)
-        return lRandomColor
-    }
-    
     @objc
     func setPoisColor(_ reactTag: NSNumber, poiIDs: [NSString]) {
         print("=====> SET POIS COLOR FROM VIEW MANAGER")
-        print(poiIDs)
-        let poiIDsToString = poiIDs.map { $0 as String }
-        let lRandomColor = VisioMapViewManager.randomColor()
-        var lColors = [UIColor]()
-        for _ in poiIDsToString {
-            lColors.append(lRandomColor!)
-        }
-        DispatchQueue.main.async {
-            if let view = self.bridge.uiManager.view(forReactTag: reactTag) as? VisioMapView {
-                view.setPoisColor(poiIDsToString, lColors: lColors)
-            }
-        }
     }
     
     @objc
@@ -98,8 +78,62 @@ class VisioMapViewManager: RCTViewManager {
             }
         }**/
     }
-    @objc func animateCamera(_ reactTag: NSNumber) {
+    @objc func animateCamera(_ reactTag: NSNumber, data: NSDictionary, duration: NSNumber, callback: NSDictionary?) {
         print("ANIMATE CAMERA")
+        let duration = duration.doubleValue;
+        
+        var viewMode: VMEViewMode = VMEViewMode.unknown;
+        if(data["viewMode"] as! Int == 0) {
+            viewMode = VMEViewMode.floor
+        } else if (data["viewMode"] as! Int == 1){
+            viewMode = VMEViewMode.global
+        } else if (data["viewMode"] as! Int == 2){
+            viewMode = VMEViewMode.unknown
+        }
+        
+        var heading: VMECameraHeading
+        if (((data["heading"] as! NSDictionary)["current"]) as! Bool == true){
+            heading = VMECameraHeading.initCameraHeadingCurrent();
+        } else if ((data["heading"] as! NSDictionary)["heading"] is String){
+            heading = VMECameraHeading.initCameraHeading(poiID: (data["heading"] as! NSDictionary)["heading"] as! String);
+        } else if ((data["heading"] as! NSDictionary)["heading"] is NSNumber){
+            heading = VMECameraHeading.initCameraHeading(value: ((data["heading"] as! NSDictionary)["heading"] as! NSNumber).doubleValue);
+        }
+        
+        var target: Array<VMEPosition>
+        if (((data["targetPositions"])) != nil){
+            var positions = (data["targetPositions"]) as! Array<NSDictionary>
+            var VMPosition : VMEPosition
+            var sceneContext : VMESceneContext
+            for position in positions {
+                
+                 sceneContext = VMESceneContext.init(buildingID: scene["buildingID"] as? String, floorID: scene["floorID"] as? String)
+                VMPosition = VMEPosition.init(
+                    latitude: (position["altitude"] as! NSNumber).doubleValue,
+                    longitude: (position["longitude"] as! NSNumber).doubleValue,
+                    altitude: (position["altitude"] as! NSNumber).doubleValue,
+                    scene: ()
+                
+                )
+                
+            }
+        }
+        
+        let cameraUpdateBuilder = VMECameraUpdate.initCameraUpdate { builder in
+            builder.heading = heading;
+            builder.paddingBottom = (data["paddingBottom"] as? Double)!;
+            builder.paddingTop = (data["paddingTop"] as? Double)!;
+            builder.paddingLeft = (data["paddingLeft"] as? Double)!;
+            builder.paddingRight = (data["paddingRight"] as? Double)!;
+            builder.viewMode = viewMode;
+            builder.targets = (data[])
+            //builder.pitch = data["pitch"]["type"]
+        }
+        DispatchQueue.main.async {
+            if let view = self.bridge.uiManager.view(forReactTag: reactTag) as? VisioMapView {
+                //view.animateCamera(<#T##cameraUpdate: VMECameraUpdate##VMECameraUpdate#>, duration: duration)
+            }
+        }
     }
 
     @objc func getCameraContext(_ reactTag: NSNumber) {
@@ -228,6 +262,7 @@ class VisioMapView: UIView, VMELifeCycleListener {
     @objc var mapHash: NSString = ""
     @objc var mapPath: NSString = ""
     @objc var mapSecret: NSNumber = 0
+    @objc var listeners: NSArray = []
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -236,9 +271,10 @@ class VisioMapView: UIView, VMELifeCycleListener {
     
     override func didSetProps(_ changedProps: [String]!) {
         print("====> DID SET PROPS")
-        print(self.mapHash as String)
-        print(self.mapPath as String)
+        print("mapHash" + (self.mapHash as String) as String)
+        print("mapPath" + (self.mapPath as String) as String)
         print(Int32(truncating: self.mapSecret))
+        print(self.listeners)
         
         mMapController = VMEMapController.initController(builderBlock: { builder in
             builder.mapHash = self.mapHash as String
@@ -260,6 +296,11 @@ class VisioMapView: UIView, VMELifeCycleListener {
         let result = mMapController.setPois(data: data);
         print("=====> SET POIS RESULT")
         print(result)
+    }
+    
+    func animateCamera(_ cameraUpdate: VMECameraUpdate, duration: Double){
+        print("=====> ANIMATE CAMERA")
+        //mMapController.animateCamera(cameraUpdate, duration : duration, callback: n);
     }
     
     func setPoisColor(_ poiIDs: [String], lColors: [UIColor]) {

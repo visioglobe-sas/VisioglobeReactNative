@@ -25,7 +25,11 @@ RCT_EXTERN_METHOD(computeRoute: (nonnull NSNumber *) reactTag
                   destinations: (nonnull NSArray<NSString *> *) destinations)
 
 RCT_EXTERN_METHOD(getVersion: (nonnull NSNumber *)reactTag)
-RCT_EXTERN_METHOD(animateCamera : (nonnull NSNumber *)reactTag)
+RCT_EXTERN_METHOD(animateCamera : (nonnull NSNumber *)reactTag
+                  data : (nonnull NSDictionary *)data
+                  duration : (nonnull NSNumber *)duration
+                  callback : (NSDictionary *)
+                  )
 RCT_EXTERN_METHOD(getCameraContext : (nonnull NSNumber *)reactTag)
 RCT_EXTERN_METHOD(updateCamera : (nonnull NSNumber *)reactTag)
 RCT_EXTERN_METHOD(animateScene : (nonnull NSNumber *)reactTag)

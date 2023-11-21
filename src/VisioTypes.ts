@@ -1,7 +1,7 @@
 export type VMSceneContext = {
-  buildingID : string,
+  buildingID : string | null,
   description : string,
-  floorID : string
+  floorID : string | null
 }
 
 export type VMPosition = {

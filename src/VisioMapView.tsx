@@ -77,7 +77,7 @@ const _setCompass = (value: boolean) => {
   };
 
   const _setPois = (data: string) => {
-    console.log("r.curr =" + typeof r);
+    console.log(data);
     Commands.setPois(r.current, data);
   };
 
@@ -110,6 +110,7 @@ const _setCompass = (value: boolean) => {
   };
 
   const _animateCamera = (values: VMCameraUpdate) => {
+    console.log(values);
     Commands.animateCamera(r.current,values,10,undefined);
   }
 
