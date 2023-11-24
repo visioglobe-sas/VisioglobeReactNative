@@ -7,6 +7,10 @@ import com.visioglobe.visiomoveessential.models.VMECameraHeading;
 import com.visioglobe.visiomoveessential.models.VMECameraPitch;
 import com.visioglobe.visiomoveessential.models.VMECameraUpdate;
 import com.visioglobe.visiomoveessential.models.VMECameraUpdateBuilder;
+import com.visioglobe.visiomoveessential.models.VMEPosition;
+import com.visioglobe.visiomoveessential.models.VMESceneContext;
+
+import java.util.ArrayList;
 
 public class UtilsType {
     public VMECameraUpdate readableMapToCamera(ReadableMap lCameraarray){
@@ -29,7 +33,16 @@ public class UtilsType {
         builder.setPaddingRight(lCameraarray.getInt("paddingRight"));
         builder.setPaddingTop(lCameraarray.getInt("paddingTop"));
         builder.setPitch(VMECameraPitch.newPitch(lCameraarray.getMap("pitch").getDouble("pitch")));
-        builder.setTargets(lCameraarray.getArray("targetPOIs").toArrayList());
+
+        ArrayList<Object> targets = new ArrayList<>();
+        for (Object element: lCameraarray.getArray("targets").toArrayList()) {
+            if (element instanceof String) targets.add(element);
+            else if (element instanceof ReadableMap){
+                targets.add(readableMapToPosition((ReadableMap) element));
+            }
+        }
+
+        builder.setTargets(targets);
         if (lCameraarray.getDouble("viewMode") == 0){
             builder.setViewMode(VMEViewMode.FLOOR);
         }
@@ -41,5 +54,16 @@ public class UtilsType {
         }
         VMECameraUpdate cameraUpdate = new VMECameraUpdate(builder);
         return cameraUpdate;
+    }
+
+    public VMEPosition readableMapToPosition(ReadableMap positionMap){
+        VMESceneContext scene;
+        ReadableMap inputSceneMap = positionMap.getMap("scene");
+        if (inputSceneMap != null) {
+            scene = new VMESceneContext(inputSceneMap.getString("buildingID"),inputSceneMap.getString("floorID"));
+        }
+        else scene = new VMESceneContext();
+        VMEPosition position = new VMEPosition(positionMap.getDouble("latitude"),positionMap.getDouble("longitude"),positionMap.getDouble("altitude"),scene);
+        return position;
     }
 }

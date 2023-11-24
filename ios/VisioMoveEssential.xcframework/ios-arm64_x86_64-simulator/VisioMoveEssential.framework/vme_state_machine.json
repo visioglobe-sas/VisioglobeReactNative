@@ -671,27 +671,6 @@
             ]
         },
         {
-            "id": "buildingOverlay",
-            "class": "VMEBuildingOverlay",
-            "handles": [
-                {
-                    "signal": "Explore"
-                },
-                {
-                    "signal": "ParametersLoaded"
-                },
-                {
-                    "signal": "ThemeUpdated"
-                },
-                {
-                    "signal": "MapDataLoaded"
-                },
-                {
-                    "signal": "PoiDataLoaded"
-                }
-            ]
-        },
-        {
             "id": "poiOverlay",
             "class": "VMEPoiOverlay",
             "handles": [
@@ -1283,6 +1262,12 @@
                 },
                 {
                     "signal": "MapDragGesture"
+                },
+                {
+                    "signal": "CompassState"
+                },
+                {
+                    "signal": "LocationTrackingModeState"
                 }
             ]
         },

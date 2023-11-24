@@ -136,7 +136,7 @@ export type VMRouteRequest = {
   destinationsOrder: VMRouteDestinationsOrder
   isAccessible: boolean
   origin: VMPosition|String
-  destinations : VMPosition []|String[]
+  destinations : [VMPosition|String]
   requestType: VMERouteRequestType
 }
 

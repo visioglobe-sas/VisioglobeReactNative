@@ -82,42 +82,16 @@ class VisioMapViewManager: RCTViewManager {
         print("ANIMATE CAMERA");
         let duration = duration.doubleValue;
         
-        var viewMode: VMEViewMode = VMEViewMode.unknown;
-        if(data["viewMode"] as! Int == 0) {
-            viewMode = VMEViewMode.floor
-        } else if (data["viewMode"] as! Int == 1){
-            viewMode = VMEViewMode.global
-        } else if (data["viewMode"] as! Int == 2){
-            viewMode = VMEViewMode.unknown
-        }
+        var viewMode: VMEViewMode = Utils.getNativeViewMode(data: data);
         
-        var heading: VMECameraHeading = VMECameraHeading.initCameraHeadingCurrent();
-        if (((data["heading"] as! NSDictionary)["current"]) as! Bool == true){
-            heading = VMECameraHeading.initCameraHeadingCurrent();
-        } else if ((data["heading"] as! NSDictionary)["heading"] is String){
-            heading = VMECameraHeading.initCameraHeading(poiID: (data["heading"] as! NSDictionary)["heading"] as! String);
-        } else if ((data["heading"] as! NSDictionary)["heading"] is NSNumber){
-            heading = VMECameraHeading.initCameraHeading(value: ((data["heading"] as! NSDictionary)["heading"] as! NSNumber).doubleValue);
-        }
+        var heading: VMECameraHeading = Utils.getNativeHeading(data: data);
         
         var target: [AnyHashable] = [];
         let positions = (data["targets"]) as! Array<Any>;
         var _ : VMEPosition;
-        var sceneContext : VMESceneContext = VMESceneContext.init();
         for position in positions {
             if (!(position is NSString)) {
-                let pos = position as! NSDictionary;
-                if ( pos["scene"] != nil){
-                    let scene = pos["scene"] as? NSDictionary;
-                    sceneContext = VMESceneContext.init(buildingID: scene?["buildingID"] as? String,
-                                                        floorID: scene?["floorID"] as? String);
-                }
-                let VMPosition = VMEPosition.init(
-                    latitude: (pos["altitude"] as! NSNumber).doubleValue,
-                    longitude: (pos["longitude"] as! NSNumber).doubleValue,
-                    altitude: (pos["altitude"] as! NSNumber).doubleValue,
-                    scene: sceneContext
-                );
+                let VMPosition = Utils.getNativePosition(pos: position as! NSDictionary)
                 target.append(VMPosition);
             } else if(position is NSString){
                 let pos = position as! NSString;
