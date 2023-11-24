@@ -92,7 +92,7 @@ export type VMCameraUpdate = {
   paddingRight: number;
   paddingTop: number;
   pitch: VMCameraPitch;
-  targets: [string | VMPosition];
+  targets: (string | VMPosition)[];
   viewMode: VMViewModeType;
 }
 
@@ -136,7 +136,7 @@ export type VMRouteRequest = {
   destinationsOrder: VMRouteDestinationsOrder
   isAccessible: boolean
   origin: VMPosition|String
-  destinations : [VMPosition|String]
+  destinations : (VMPosition|String)[]
   requestType: VMERouteRequestType
 }
 
