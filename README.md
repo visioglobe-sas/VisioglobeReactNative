@@ -31,3 +31,8 @@ See the [contributing guide](CONTRIBUTING.md) to learn how to contribute to the 
 ## License
 
 MIT
+
+## Known Issue 
+
+In case of implicit declaration with ios : 
+clean and build the app <strong>in xcode</strong> before calling yarn ios 

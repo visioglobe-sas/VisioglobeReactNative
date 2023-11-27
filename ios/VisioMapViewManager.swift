@@ -121,12 +121,58 @@ class VisioMapViewManager: RCTViewManager {
         print("GET CAMERA CONTEXT")
     }
 
-    @objc func updateCamera(_ reactTag: NSNumber) {
+    @objc func updateCamera(_ reactTag: NSNumber, data: NSDictionary) {
         print("UPDATE CAMERA")
+        var viewMode: VMEViewMode = Utils.getNativeViewMode(data: data);
+        
+        var heading: VMECameraHeading = Utils.getNativeHeading(data: data);
+        
+        var target: [AnyHashable] = [];
+        let positions = (data["targets"]) as! Array<Any>;
+        var _ : VMEPosition;
+        for position in positions {
+            if (!(position is NSString)) {
+                let VMPosition = Utils.getNativePosition(pos: position as! NSDictionary)
+                target.append(VMPosition);
+            } else if(position is NSString){
+                let pos = position as! NSString;
+                target.append(pos);
+            } else{
+                print ("ERROR ON ANIMATE CAMERA POINT:" + (position as! String))
+            }
+        }
+        
+        let cameraUpdate = VMECameraUpdate.initCameraUpdate { builder in
+            builder.heading = heading;
+            builder.paddingBottom = (data["paddingBottom"] as? Double)!;
+            builder.paddingTop = (data["paddingTop"] as? Double)!;
+            builder.paddingLeft = (data["paddingLeft"] as? Double)!;
+            builder.paddingRight = (data["paddingRight"] as? Double)!;
+            builder.viewMode = viewMode;
+            builder.targets = target;
+        }
+        DispatchQueue.main.async {
+            if let view = self.bridge.uiManager.view(forReactTag: reactTag) as? VisioMapView {
+                view.updateCamera(cameraUpdate);
+            }
+        }
     }
 
-    @objc func animateScene(_ reactTag: NSNumber) {
+    @objc func animateScene(_ reactTag: NSNumber, data: NSDictionary) {
         print("ANIMATE SCENE")
+        let viewMode: VMEViewMode = Utils.getNativeViewMode(data: data);
+        var animateScene : VMESceneUpdate = VMESceneUpdate.sceneUpdate(viewMode: viewMode);
+        if (data["buildingID"] != nil) {
+            animateScene = VMESceneUpdate.sceneUpdate(viewMode: viewMode, buildingID: data["buildingID"] as? String)
+        } else if (data["floorID"] != nil){
+            animateScene = VMESceneUpdate.sceneUpdate(viewMode:viewMode,floorID:data["floorID"] as? String);
+        }
+        DispatchQueue.main.async {
+            if let view = self.bridge.uiManager.view(forReactTag: reactTag) as? VisioMapView {
+                view.animateScene(animateScene);
+            }
+        }
+
     }
 
     @objc func updateScene(_ reactTag: NSNumber) {
@@ -279,9 +325,19 @@ class VisioMapView: UIView, VMELifeCycleListener, VMEAnimationCallback {
         print(result)
     }
     
+    func animateScene(_ sceneUpdate: VMESceneUpdate){
+        print("=====> ANIMATE SCENE")
+        mMapController.animateScene(sceneUpdate);
+    }
+    
     func animateCamera(_ cameraUpdate: VMECameraUpdate, duration: Double){
         print("=====> ANIMATE CAMERA")
         mMapController.animateCamera(cameraUpdate, duration : duration, callback: self);
+    }
+    
+    func updateCamera(_ cameraUpdate: VMECameraUpdate){
+        print("=====> ANIMATE CAMERA")
+        mMapController.updateCamera(cameraUpdate);
     }
     
     func setPoisColor(_ poiIDs: [String], lColors: [UIColor]) {

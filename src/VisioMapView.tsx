@@ -7,7 +7,7 @@ import {
   NativeMethods,
 } from 'react-native';
 import MapView, { Commands, NativeProps } from './VisioMapViewNativeComponent';
-import { VMCameraUpdate, VMRouteRequest } from './VisioTypes';
+import { VMCameraUpdate, VMRouteRequest, VMSceneUpdate } from './VisioTypes';
 import codegenNativeComponent, { NativeComponentType } from 'react-native/Libraries/Utilities/codegenNativeComponent';
 import { Double } from 'react-native/Libraries/Types/CodegenTypes';
 
@@ -115,6 +115,11 @@ const _setCompass = (value: boolean) => {
     Commands.animateCamera(r.current,values,duration as Double,undefined);
   }
 
+  const _animateScene = (values: VMSceneUpdate) => {
+    console.log(values);
+    Commands.animateScene(r.current,values);
+  }
+
   const _getVersion = () => {
     /*let requestId: number = this._nextRequestId++;
     let requestMap = this._requestMap;
@@ -169,6 +174,7 @@ const _setCompass = (value: boolean) => {
     customFunctionToCall: _customFunctionToCall,
     updateCamera: _updateCamera,
     animateCamera: _animateCamera,
+    animateScene: _animateScene,
     setPois: _setPois,
     resetPoisColor: _resetPoisColor,
     setPoisColor: _setPoisColor,

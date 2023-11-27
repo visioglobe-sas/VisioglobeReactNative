@@ -105,7 +105,9 @@ export type VMCameraContext = {
 }
 
 export type VMSceneUpdate = { 
-
+  viewMode: VMViewModeType,
+  buildingID : string | null,
+  floorID : string | null
 }
 
 export enum VMLocationTrackingMode {
