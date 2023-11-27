@@ -30,13 +30,36 @@ class VisioMapViewManager: RCTViewManager {
     
     @objc
     func setPois(_ reactTag: NSNumber, data: NSString) {
-        print("=====> SET POIS FROM VIEW MANAGER")
+        print("=====> SET POIS")
         DispatchQueue.main.async {
             if let view = self.bridge.uiManager.view(forReactTag: reactTag) as? VisioMapView {
                 view.setPois(String(data))
             }
         }
     }
+    
+    @objc
+    func setExcludedAttributes(_ reactTag: NSNumber, data:NSArray) {
+        print("=====> SET EXCLUDED ATTRIBUTES")
+        DispatchQueue.main.async {
+            if let view = self.bridge.uiManager.view(forReactTag: reactTag) as? VisioMapView {
+                view.setExcludedAttributes(data as! [String]);
+            }
+        }
+        
+    }
+    
+    @objc
+    func setExcludedModalities(_ reactTag: NSNumber, data:NSArray) {
+        print("=====> SET EXCLUDED MODALITIES")
+        DispatchQueue.main.async {
+            if let view = self.bridge.uiManager.view(forReactTag: reactTag) as? VisioMapView {
+                view.setExcludedModalities(data as! [String]);
+            }
+        }
+        
+    }
+
     
     @objc
     func setPoisColor(_ reactTag: NSNumber, poiIDs: [NSString]) {
@@ -336,13 +359,25 @@ class VisioMapView: UIView, VMELifeCycleListener, VMEAnimationCallback {
     }
     
     func updateCamera(_ cameraUpdate: VMECameraUpdate){
-        print("=====> ANIMATE CAMERA")
+        print("=====> UPDATE CAMERA")
         mMapController.updateCamera(cameraUpdate);
     }
     
     func setPoisColor(_ poiIDs: [String], lColors: [UIColor]) {
         let result = mMapController.setPoisColor(poiIDs: poiIDs, colors: lColors)
         print("=====> SET POIS COLOR RESULT")
+        print(result)
+    }
+    
+    func setExcludedAttributes(_ data:[String]){
+        let result = mMapController.setExcludedAttributes(data)
+        print("====> SET EXCLUDED ATTRIBUTES")
+        print(result)
+    }
+    
+    func setExcludedModalities(_ data:[String]){
+        let result = mMapController.setExcludedModalities(data)
+        print("====> SET EXCLUDED MODALITIES")
         print(result)
     }
     

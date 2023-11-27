@@ -57,6 +57,10 @@ RCT_EXTERN_METHOD(queryAllPoiIDs : (nonnull NSNumber *)reactTag);
 RCT_EXTERN_METHOD(queryPois : (nonnull NSNumber *)reactTag);
 RCT_EXTERN_METHOD(resetPoiColor : (nonnull NSNumber *)reactTag);
 RCT_EXTERN_METHOD(setPoiSize : (nonnull NSNumber *)reactTag);
+RCT_EXTERN_METHOD(setExcludedAttributes : (nonnull NSNumber *)reactTag
+                  data : (nonnull NSArray *) data);
+RCT_EXTERN_METHOD(setExcludedModalities : (nonnull NSNumber *)reactTag
+                  data : (nonnull NSArray *) data);
 RCT_EXTERN_METHOD(setPoisSize : (nonnull NSNumber *)reactTag);
 RCT_EXTERN_METHOD(setPoiPosition : (nonnull NSNumber *)reactTag);
 RCT_EXTERN_METHOD(setPoisPosition : (nonnull NSNumber *)reactTag);

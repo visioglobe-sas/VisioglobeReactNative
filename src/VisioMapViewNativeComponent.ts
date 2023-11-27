@@ -200,10 +200,13 @@ interface NativeCommands {
       viewRef: React.ElementRef<NativeComponentType>
       ) => Promise<VMLocationTrackingMode>;
 
-    setLocationTrackingMode: (
+    /**LocationTrackingMode is an enum ts side and does not needs to exist
+     * 
+     * setLocationTrackingMode: (
       viewRef: React.ElementRef<NativeComponentType>, 
       trackingmode: VMLocationTrackingMode
       ) => void;
+      **/
 
     getLocationTrackingButtonToggleModes: (
       viewRef: React.ElementRef<NativeComponentType>
@@ -313,7 +316,6 @@ export const Commands: NativeCommands = codegenNativeCommands<NativeCommands>({
 'createLocationFromLocation',
 'createPositionFromLocation',
 'getLocationTrackingMode',
-'setLocationTrackingMode',
 'getLocationTrackingButtonToggleModes',
 'setLocationTrackingButtonToggleModes',
 'getNavigationHeaderViewVisible',

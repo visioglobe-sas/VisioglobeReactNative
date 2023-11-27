@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import MapView, { Commands, NativeProps } from './VisioMapViewNativeComponent';
 import { VMCameraUpdate, VMRouteRequest, VMSceneUpdate } from './VisioTypes';
-import codegenNativeComponent, { NativeComponentType } from 'react-native/Libraries/Utilities/codegenNativeComponent';
+//import codegenNativeComponent, { NativeComponentType } from 'react-native/Libraries/Utilities/codegenNativeComponent';
 import { Double } from 'react-native/Libraries/Types/CodegenTypes';
 
 const MODULE =
@@ -25,11 +25,11 @@ const createFragment = (viewId: number | null) =>
 export const VisioMapView = forwardRef((props: NativeProps, ref) => {
   const r = useRef() as React.MutableRefObject<Component<NativeProps, {}, any> & Readonly<NativeMethods>>;
 
-  const _setExcludedAttributes = (value: string[]) => {
+  const _setExcludedAttributes = (value: [string]) => {
     Commands.setExcludedAttributes(r.current, value);
 }
 
-const _setExcludedModalities = (value: string[]) => {
+const _setExcludedModalities = (value: [string]) => {
     Commands.setExcludedModalities(r.current, value);
 }
 
