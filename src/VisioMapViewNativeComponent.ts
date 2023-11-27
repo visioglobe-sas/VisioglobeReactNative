@@ -42,6 +42,11 @@ interface NativeCommands {
     viewRef: React.ElementRef<NativeComponentType>,
     value: Array<string>
   ) => void;
+
+  updateLocation: (
+    viewRef: React.ElementRef<NativeComponentType>,
+    value: VMLocation
+  ) => void;
   
   setLocationTrackingButtonToggleModes: (
     viewRef: React.ElementRef<NativeComponentType>,
@@ -345,6 +350,7 @@ export const Commands: NativeCommands = codegenNativeCommands<NativeCommands>({
 'setStatisticsLogLocation',
 'setStatisticsTrackedPoiIDs',
 'setCompass',
+'updateLocation',
     //'getDataSDKVersion', 
     //'getMinDataSDKVersion',
   ],

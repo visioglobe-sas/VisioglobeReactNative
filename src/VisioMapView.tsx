@@ -7,7 +7,7 @@ import {
   NativeMethods,
 } from 'react-native';
 import MapView, { Commands, NativeProps } from './VisioMapViewNativeComponent';
-import { VMCameraUpdate, VMRouteRequest, VMSceneUpdate } from './VisioTypes';
+import { VMCameraUpdate, VMLocation, VMRouteRequest, VMSceneUpdate } from './VisioTypes';
 //import codegenNativeComponent, { NativeComponentType } from 'react-native/Libraries/Utilities/codegenNativeComponent';
 import { Double } from 'react-native/Libraries/Types/CodegenTypes';
 
@@ -31,6 +31,9 @@ export const VisioMapView = forwardRef((props: NativeProps, ref) => {
 
 const _setExcludedModalities = (value: [string]) => {
     Commands.setExcludedModalities(r.current, value);
+}
+const _updateLocation = (value : VMLocation) =>{
+    Commands.updateLocation(r.current, value);
 }
 
 const _setLocationTrackingButtonToggleModes = (value: string[]) => {
@@ -198,6 +201,7 @@ const _setCompass = (value: boolean) => {
     setStatisticsLogLocation: _setStatisticsLogLocation,
     setStatisticsTrackedPoiIDs: _setStatisticsTrackedPoiIDs,
     setCompass: _setCompass,
+    updateLocation: _updateLocation, 
   }));
 
   React.useEffect(() => {
