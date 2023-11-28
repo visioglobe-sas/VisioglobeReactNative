@@ -290,8 +290,13 @@ class VisioMapViewManager: RCTViewManager {
         print("SET POIS POSITION")
     }
 
-    @objc func showPoiInfo(_ reactTag: NSNumber) {
+    @objc func showPoiInfo(_ reactTag: NSNumber, data : NSString) {
         print("SHOW POI INFO")
+        DispatchQueue.main.async {
+            if let view = self.bridge.uiManager.view(forReactTag: reactTag) as? VisioMapView {
+                view.showPoiInfo(data as String)
+            }
+        }
     }
 
     @objc func setCategories(_ reactTag: NSNumber) {
@@ -362,6 +367,12 @@ class VisioMapView: UIView, VMELifeCycleListener, VMEAnimationCallback, VMEBuild
     
     func customFunctionToCall() {
         print("=====> LOG FROM CUSTOM FUNCTION")
+    }
+    
+    func showPoiInfo(_ data: String){
+        let result: () = mMapController.showPoiInfo(poiID: data);
+        print("=====> SET POIS RESULT")
+        print(result)
     }
     
     
