@@ -140,7 +140,7 @@ const _setCompass = (value: boolean) => {
 
   /// EN COURS
 
-  // Generate a queue for the next asked promises
+  /* Generate a queue for the next asked promises
   const _nextRequestId = 1;
 
   const _requestMap = new Map();
@@ -158,8 +158,7 @@ const _setCompass = (value: boolean) => {
     // Finally, we clean up our request map.
     this._requestMap.delete(requestId)
   }
-
-////
+  */
 
   /*const _getDataSDKVersion = () => {
     Commands.getDataSDKVersion(r.current);

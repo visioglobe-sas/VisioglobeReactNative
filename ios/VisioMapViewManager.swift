@@ -304,7 +304,7 @@ class VisioMapViewManager: RCTViewManager {
   } */
 }
 
-class VisioMapView: UIView, VMELifeCycleListener, VMEAnimationCallback {
+class VisioMapView: UIView, VMELifeCycleListener, VMEAnimationCallback, VMEBuildingListener, VMECameraListener, VMEMapListener, VMELocationTrackingModeListener, VMEPoiListener {
     var mMapController: VMEMapController!
     var mMapView: VMEMapView!  // assuming VMEMapView is the correct type
     let label: UILabel = UILabel()
@@ -323,8 +323,8 @@ class VisioMapView: UIView, VMELifeCycleListener, VMEAnimationCallback {
         print("====> DID SET PROPS")
         print("mapHash" + (self.mapHash as String) as String)
         print("mapPath" + (self.mapPath as String) as String)
-        print(Int32(truncating: self.mapSecret))
         print(self.listeners)
+        print(Int32(truncating: self.mapSecret))
         
         mMapController = VMEMapController.initController(builderBlock: { builder in
             builder.mapHash = self.mapHash as String
@@ -335,6 +335,29 @@ class VisioMapView: UIView, VMELifeCycleListener, VMEAnimationCallback {
 
         mMapController.setLifeCycleListener(self)
         mMapController.loadMapData()
+        for element in listeners{
+            switch(element as! String){
+            case "buildingListener":
+                print("====> SET BUILDING LISTENER")
+                mMapController.setBuildingListener(self)
+            case "cameraListener":
+                print("====> SET CAMERA LISTENER")
+                mMapController.setCameraListener(self)
+            case "mapListener":
+                print("====> SET MAP LISTENER")
+                mMapController.setMapListener(self)
+            case "locationtrackingmodeListener":
+                print("====> SET LOCATION LISTENER")
+                mMapController.setLocationTrackingModeListener(self)
+            case "poiListener":
+                print("====> SET POI LISTENER")
+                mMapController.setPoiListener(self)
+            default:
+                print("====> SET LISTENERS")
+            }
+            
+        }
+        mMapController.setBuildingListener(self)
     }
     
     func customFunctionToCall() {
