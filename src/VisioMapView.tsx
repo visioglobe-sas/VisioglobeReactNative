@@ -52,6 +52,10 @@ const _showPoiInfo = (value: string) => {
     Commands.showPoiInfo(r.current, value);
 }
 
+const _showSearchViewWithTitle = (value: string) => {
+  Commands.showSearchViewWithTitle(r.current, value);
+}
+
 const _setStatisticsLog = (value: boolean) => {
     Commands.setStatisticsLog(r.current, value);
 }
@@ -201,6 +205,7 @@ const _setCompass = (value: boolean) => {
     setStatisticsTrackedPoiIDs: _setStatisticsTrackedPoiIDs,
     setCompass: _setCompass,
     updateLocation: _updateLocation, 
+    showSearchViewWithTitle: _showSearchViewWithTitle,
   }));
 
   React.useEffect(() => {

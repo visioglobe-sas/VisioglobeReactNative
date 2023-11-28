@@ -298,6 +298,16 @@ class VisioMapViewManager: RCTViewManager {
             }
         }
     }
+    
+    @objc func showSearchViewWithTitle(_ reactTag: NSNumber, data : NSString){
+        print("SHOW SEARCH VIEW")
+        DispatchQueue.main.async {
+            if let view = self.bridge.uiManager.view(forReactTag: reactTag) as? VisioMapView {
+                view.showSearchViewWithTitle(data as String)
+            }
+        }
+
+    }
 
     @objc func setCategories(_ reactTag: NSNumber) {
         print("SET CATEGORIES")
@@ -369,9 +379,15 @@ class VisioMapView: UIView, VMELifeCycleListener, VMEAnimationCallback, VMEBuild
         print("=====> LOG FROM CUSTOM FUNCTION")
     }
     
+    func showSearchViewWithTitle(_ data: String){
+        let result: () = mMapController.showSearchViewWithTitle(data, callback: nil)
+        print("=====> SHOW SEARCH VIEW WITH TITLE")
+        print(result)
+    }
+    
     func showPoiInfo(_ data: String){
         let result: () = mMapController.showPoiInfo(poiID: data);
-        print("=====> SET POIS RESULT")
+        print("=====> SHOW POI INFO")
         print(result)
     }
     

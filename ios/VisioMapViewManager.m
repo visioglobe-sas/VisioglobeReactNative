@@ -67,6 +67,8 @@ RCT_EXTERN_METHOD(setPoiPosition : (nonnull NSNumber *)reactTag);
 RCT_EXTERN_METHOD(setPoisPosition : (nonnull NSNumber *)reactTag);
 RCT_EXTERN_METHOD(showPoiInfo : (nonnull NSNumber *)reactTag
                   data: (nonnull NSString *)data);
+RCT_EXTERN_METHOD(showSearchViewWithTitle : (nonnull NSNumber *)reactTag
+                  data : (nonnull NSString*)data);
 RCT_EXTERN_METHOD(setCategories : (nonnull NSNumber *)reactTag);
 
 RCT_EXTERN_METHOD(customFunctionToCall: () reactTag)

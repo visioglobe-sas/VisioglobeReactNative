@@ -67,6 +67,11 @@ interface NativeCommands {
     viewRef: React.ElementRef<NativeComponentType>,
     poiID: string
   ) => void;
+
+  showSearchViewWithTitle: (
+    viewRef: React.ElementRef<NativeComponentType>,
+    title: string
+  ) => void;
   
   setStatisticsLog: (
     viewRef: React.ElementRef<NativeComponentType>,
@@ -351,6 +356,7 @@ export const Commands: NativeCommands = codegenNativeCommands<NativeCommands>({
 'setStatisticsTrackedPoiIDs',
 'setCompass',
 'updateLocation',
+'showSearchViewWithTitle',
     //'getDataSDKVersion', 
     //'getMinDataSDKVersion',
   ],
