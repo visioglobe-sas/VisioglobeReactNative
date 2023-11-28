@@ -176,6 +176,9 @@ const _setCompass = (value: boolean) => {
     Commands.updateCamera(r.current,update);
   };
 
+  const _setCategories = (value: string) => {
+    Commands.setCategories(r.current, value);
+  };
   useImperativeHandle(ref, () => ({
     customFunctionToCall: _customFunctionToCall,
     updateCamera: _updateCamera,
@@ -198,6 +201,7 @@ const _setCompass = (value: boolean) => {
     setNavigationHeaderViewVisible: _setNavigationHeaderViewVisible,
     setCompassHeadingMarkerVisible: _setCompassHeadingMarkerVisible,
     showPoiInfo: _showPoiInfo,
+    setCategories: _setCategories,
     setStatisticsLog: _setStatisticsLog,
     setStatisticsLogCamera: _setStatisticsLogCamera,
     setStatisticsLogInterest: _setStatisticsLogInterest,

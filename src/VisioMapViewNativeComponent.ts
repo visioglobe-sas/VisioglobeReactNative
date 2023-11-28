@@ -304,7 +304,7 @@ interface NativeCommands {
     setCategories : (
       viewRef: React.ElementRef<NativeComponentType>, 
       data: String
-      ) =>Promise<[String : any]>;
+      ) => void;
 }
 
 export const Commands: NativeCommands = codegenNativeCommands<NativeCommands>({
