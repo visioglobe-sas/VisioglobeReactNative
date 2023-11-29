@@ -17,6 +17,7 @@
 RCT_EXPORT_VIEW_PROPERTY(mapHash, NSString)
 RCT_EXPORT_VIEW_PROPERTY(mapPath, NSString)
 RCT_EXPORT_VIEW_PROPERTY(mapSecret, NSNumber)
+RCT_EXPORT_VIEW_PROPERTY(promptToDownload, BOOL)
 RCT_EXPORT_VIEW_PROPERTY(listeners, NSArray)
 RCT_EXTERN_METHOD(customFunctionToCall: (nonnull NSNumber *) reactTag)
 RCT_EXTERN_METHOD(setPois: (nonnull NSNumber *) reactTag
@@ -53,7 +54,8 @@ RCT_EXTERN_METHOD(getNavigationHeaderViewVisible : (nonnull NSNumber *)reactTag)
 RCT_EXTERN_METHOD(setNavigationHeaderViewVisible : (nonnull NSNumber *)reactTag);
 RCT_EXTERN_METHOD(getSelectorViewVisible : (nonnull NSNumber *)reactTag);
 RCT_EXTERN_METHOD(removePoi : (nonnull NSNumber *)reactTag);
-RCT_EXTERN_METHOD(removePois : (nonnull NSNumber *)reactTag);
+RCT_EXTERN_METHOD(removePois : (nonnull NSNumber *)reactTag
+                  data : (nonnull NSArray<NSString *> *)data);
 RCT_EXTERN_METHOD(getCategory : (nonnull NSNumber *)reactTag);
 RCT_EXTERN_METHOD(getPoi : (nonnull NSNumber *)reactTag);
 RCT_EXTERN_METHOD(getPoiBoundingPositions : (nonnull NSNumber *)reactTag);

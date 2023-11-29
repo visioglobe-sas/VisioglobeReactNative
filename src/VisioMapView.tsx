@@ -127,6 +127,10 @@ const _setCompass = (value: boolean) => {
     Commands.animateScene(r.current,values);
   }
 
+  const _removePois = (values: [string]) => {
+    Commands.removePois(r.current,values)
+  }
+
   const _getVersion = () => {
     /*let requestId: number = this._nextRequestId++;
     let requestMap = this._requestMap;
@@ -210,6 +214,7 @@ const _setCompass = (value: boolean) => {
     setCompass: _setCompass,
     updateLocation: _updateLocation, 
     showSearchViewWithTitle: _showSearchViewWithTitle,
+    removePois: _removePois
   }));
 
   React.useEffect(() => {

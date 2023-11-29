@@ -81,10 +81,8 @@ class VisioMapViewManager: RCTViewManager {
         print("=====> COMPUTE ROUTE FROM VIEW MANAGER")
         var destinations : [AnyHashable] = [];
         for position in data["destinations"] as! NSArray {
-            print("TYPE IS",type(of: position))
             if (!(position is NSString)) {
                 let VMPosition = Utils.getNativePosition(VMPos: position as! NSDictionary)
-                print("POSITION IS",VMPosition)
                 destinations.append(VMPosition);
             } else if(position is NSString){
                 let pos = position as! NSString;
@@ -266,8 +264,14 @@ class VisioMapViewManager: RCTViewManager {
         print("REMOVE POI")
     }
 
-    @objc func removePois(_ reactTag: NSNumber) {
+    @objc func removePois(_ reactTag: NSNumber, data : NSArray) {
+        DispatchQueue.main.async {
+            if let view = self.bridge.uiManager.view(forReactTag: reactTag) as? VisioMapView {
+                view.removePois(data as! [String]);
+            }
+        }
         print("REMOVE POIS")
+        
     }
 
     @objc func getCategory(_ reactTag: NSNumber) {
@@ -379,6 +383,7 @@ class VisioMapView: UIView, VMELifeCycleListener, VMEAnimationCallback, VMEBuild
     @objc var mapPath: NSString = ""
     @objc var mapSecret: NSNumber = 0
     @objc var listeners: NSArray = []
+    @objc var promptToDownload: Bool = true
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -423,13 +428,20 @@ class VisioMapView: UIView, VMELifeCycleListener, VMEAnimationCallback, VMEBuild
             }
             
         }
+        if (!(self.promptToDownload)){
+            mMapController.setPromptUserToDownloadMap(enable: false);
+        }
         mMapController.setBuildingListener(self)
     }
     
     func customFunctionToCall() {
         print("=====> LOG FROM CUSTOM FUNCTION")
     }
-    
+    func removePois(_ data: [String]){
+        let result = mMapController.removePois(poiIDs: data)
+        print("====> REMOVE POIS")
+        print(result)
+    }
     func showSearchViewWithTitle(_ data: String){
         let result: () = mMapController.showSearchViewWithTitle(data, callback: nil)
         print("=====> SHOW SEARCH VIEW WITH TITLE")
