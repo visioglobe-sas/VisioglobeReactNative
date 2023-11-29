@@ -35,15 +35,35 @@ class Utils{
         return heading;
     }
     
-    static func getNativePosition(pos : NSDictionary) -> VMEPosition{
-        let sceneContext = getNativeSceneContext(scene: pos["scene"] as? NSDictionary)
-        let VMPosition = VMEPosition.init(
-            latitude: (pos["altitude"] as! NSNumber).doubleValue,
-            longitude: (pos["longitude"] as! NSNumber).doubleValue,
-            altitude: (pos["altitude"] as! NSNumber).doubleValue,
-            scene: sceneContext
+    static func getNativePosition(VMPos : NSDictionary) -> VMEPosition{
+        if let scene = VMPos["scene"]{
+            let sceneContext = getNativeSceneContext(scene: VMPos["scene"] as? NSDictionary)
+            let VMPosition = VMEPosition.init(
+                latitude: (VMPos["latitude"] as! NSNumber).doubleValue,
+                longitude: (VMPos["longitude"] as! NSNumber).doubleValue,
+                altitude: (VMPos["altitude"] as! NSNumber).doubleValue,
+                scene: sceneContext
+            );
+            return VMPosition;
+        }
+        else {
+            let VMPosition = VMEPosition.init(
+                latitude: (VMPos["latitude"] as! NSNumber).doubleValue,
+                longitude: (VMPos["longitude"] as! NSNumber).doubleValue,
+                altitude: (VMPos["altitude"] as! NSNumber).doubleValue
+            );
+            return VMPosition;
+            
+        }
+    }
+    
+    static func getNativeLocation(VMLocation : NSDictionary) -> VMELocation{
+        let location : VMELocation = VMELocation.init(
+            position : Utils.getNativePosition(VMPos: VMLocation["position"] as! NSDictionary),
+            bearing : VMLocation["bearing"] as! Double,
+            accuracy: VMLocation["accuracy"] as! Double
         );
-        return VMPosition;
+        return location;
     }
     
     static func getNativeSceneContext(scene : NSDictionary?) -> VMESceneContext{
@@ -54,4 +74,40 @@ class Utils{
         }
         return sceneContext;
     }
+    
+    static func getNativeRouteRequestType(data : NSDictionary) -> VMERouteRequestType {
+        var routeRequestType : VMERouteRequestType = VMERouteRequestType.fastest
+        if(data["requestType"] as! Int == 1) {
+            routeRequestType = VMERouteRequestType.shortest
+        }
+        
+        return routeRequestType;
+    }
+    
+    static func getNativeRouteDestinationsOrder(data : NSDictionary) -> VMERouteDestinationsOrder {
+        var routeDestinationsOrder : VMERouteDestinationsOrder
+        switch data["destinationsOrder"] as! Int{
+        case 0 :
+            routeDestinationsOrder = VMERouteDestinationsOrder.closest
+        case 1:
+            routeDestinationsOrder = VMERouteDestinationsOrder.inOrder
+        case 2 :
+            routeDestinationsOrder = VMERouteDestinationsOrder.optimal
+        case 3:
+            routeDestinationsOrder = VMERouteDestinationsOrder.optimalFinishOnLast
+        default:
+            routeDestinationsOrder = VMERouteDestinationsOrder.inOrder
+        }
+        return routeDestinationsOrder;
+        
+    }
+    
+    static func getNativeRouteRequest(data : NSDictionary)->
+    VMERouteRequest{
+        return (VMERouteRequest(
+            requestType: getNativeRouteRequestType(data: data),
+            destinationsOrder: getNativeRouteDestinationsOrder(data: data),
+            accessible: data["isAccessible"] as! Bool))
+    }
+    
 }

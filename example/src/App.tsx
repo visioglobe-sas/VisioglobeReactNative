@@ -10,7 +10,7 @@ import {
   Platform,
 } from 'react-native';
 import VisioMapView from 'react-native-visioglobe';
-import { VMCameraHeading, VMCameraPitch, VMCameraUpdate, VMERouteRequestType, VMRouteDestinationsOrder, VMRouteRequest, VMViewModeType } from '../../src/VisioTypes';
+import { VMCameraHeading, VMCameraPitch, VMCameraUpdate, VMERouteRequestType, VMLocation, VMPosition, VMRouteDestinationsOrder, VMRouteRequest, VMSceneUpdate, VMViewModeType } from '../../src/VisioTypes';
 
 export default function App() {
   const ref = React.useRef<VisioMapView>(null);
@@ -52,7 +52,7 @@ export default function App() {
   const setPois = () => {
     // do something
     const greenCatData =
-    ' {"catCringe":{"name":"Black cat","icon":"https://upload.wikimedia.org/wikipedia/commons/4/4f/Kitty_emoji.png","description":"Black cat is here","features":{"image":{"icon":"https://upload.wikimedia.org/wikipedia/commons/4/4f/Kitty_emoji.png","position":[45.74131,4.88216,0.0],"anchorMode":"bottomCenter","scale":15.0,"altitudeMode":"absolute"}}}} ';
+    ' {"catCringe":{"name":"Black cat","icon":"https://upload.wikimedia.org/wikipedia/commons/4/4f/Kitty_emoji.png","categories":["99"],"description":"Black cat is here","features":{"image":{"icon":"https://upload.wikimedia.org/wikipedia/commons/4/4f/Kitty_emoji.png","position":[45.74131,4.88216,0.0],"anchorMode":"bottomCenter","scale":15.0,"altitudeMode":"absolute"}}}} ';
     onPressSetPois();
     if (textSetPoisButton === "Set cat POIs"){
       ref.current.setPois(greenCatData);
@@ -89,8 +89,24 @@ export default function App() {
       targets : ["B2-UL00"],
       viewMode : VMViewModeType.floor,
     }
+    const scene : VMSceneUpdate = {
+      viewMode: VMViewModeType.floor,
+      buildingID: "B1",
+      floorID: null
+    }
+    const position: VMPosition = {
+      altitude: 45.74131,
+      latitude: 4.88216,
+      longitude: 0.0
+    }
+
+    const location: VMLocation = {
+      accuracy: 0.001,
+      bearing: 0.001,
+      position: position
+    }
     if (ref.current) {
-      ref.current.animateCamera(values,2,undefined);
+      ref.current.updateLocation(location);
     }
   };
 
@@ -106,13 +122,18 @@ export default function App() {
   };
 
   const computeRoute = () => {
-    // do something
+    const position: VMPosition = {
+      altitude: 0.0,
+      latitude: 45.74131,
+      longitude: 4.88216
+    }
+
     const route : VMRouteRequest = {
       animateAllRoute: false,
       destinationsOrder: VMRouteDestinationsOrder.optimalFinishOnLast,
       isAccessible: true,
       origin: "B1-UL00-ID0039",
-      destinations: ["B4-UL05-ID0032", "B2-LL01-ID0011", "B3-UL00-ID0070"],
+      destinations: [position],
       requestType: VMERouteRequestType.fatest
     }
     ref.current.computeRoute(route);
@@ -152,9 +173,9 @@ export default function App() {
 
         <TouchableOpacity
           style={styles.button}
-          onPress={() => animateCamera()}
+          onPress={() => computeRoute()}
         >
-          <Text style={styles.text}>{"Animate camera"}</Text>
+          <Text style={styles.text}>{"Compute Route"}</Text>
         </TouchableOpacity>
 
         </View>

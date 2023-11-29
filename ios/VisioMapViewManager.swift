@@ -77,12 +77,36 @@ class VisioMapViewManager: RCTViewManager {
     }
     
     @objc
-    func computeRoute(_ reactTag: NSNumber, origin: NSString, destinations: [NSString]) {
+    func computeRoute(_ reactTag: NSNumber, data: NSDictionary) {
         print("=====> COMPUTE ROUTE FROM VIEW MANAGER")
-        let lDestinations = destinations.map { $0 as String }
-        DispatchQueue.main.async {
+        var destinations : [AnyHashable] = [];
+        for position in data["destinations"] as! NSArray {
+            print("TYPE IS",type(of: position))
+            if (!(position is NSString)) {
+                let VMPosition = Utils.getNativePosition(VMPos: position as! NSDictionary)
+                print("POSITION IS",VMPosition)
+                destinations.append(VMPosition);
+            } else if(position is NSString){
+                let pos = position as! NSString;
+                destinations.append(pos);
+            } else {
+                print ("====> IOS COMPUTE ROUTE FAILED TO ADD DESTINATIONS");
+            }
+        }
+        
+        let routeRequest : VMERouteRequest = Utils.getNativeRouteRequest(data: data);
+        
+        var origin : AnyHashable = "";
+        
+        if (!(data["origin"] is NSString)) {
+            origin = Utils.getNativePosition(VMPos: data["origin"] as! NSDictionary)
+        } else {
+            origin = data["origin"] as! String;
+        }
+        
+        DispatchQueue.main.async{
             if let view = self.bridge.uiManager.view(forReactTag: reactTag) as? VisioMapView {
-                // view.computeRoute(String(origin), lDestinations: lDestinations)
+                view.computeRoute(routeRequest: routeRequest, destinations: destinations, origin: origin)
             }
         }
     }
@@ -105,16 +129,16 @@ class VisioMapViewManager: RCTViewManager {
         print("ANIMATE CAMERA");
         let duration = duration.doubleValue;
         
-        var viewMode: VMEViewMode = Utils.getNativeViewMode(data: data);
+        let viewMode: VMEViewMode = Utils.getNativeViewMode(data: data);
         
-        var heading: VMECameraHeading = Utils.getNativeHeading(data: data);
+        let heading: VMECameraHeading = Utils.getNativeHeading(data: data);
         
         var target: [AnyHashable] = [];
         let positions = (data["targets"]) as! Array<Any>;
         var _ : VMEPosition;
         for position in positions {
             if (!(position is NSString)) {
-                let VMPosition = Utils.getNativePosition(pos: position as! NSDictionary)
+                let VMPosition = Utils.getNativePosition(VMPos: position as! NSDictionary)
                 target.append(VMPosition);
             } else if(position is NSString){
                 let pos = position as! NSString;
@@ -146,16 +170,16 @@ class VisioMapViewManager: RCTViewManager {
 
     @objc func updateCamera(_ reactTag: NSNumber, data: NSDictionary) {
         print("UPDATE CAMERA")
-        var viewMode: VMEViewMode = Utils.getNativeViewMode(data: data);
+        let viewMode: VMEViewMode = Utils.getNativeViewMode(data: data);
         
-        var heading: VMECameraHeading = Utils.getNativeHeading(data: data);
+        let heading: VMECameraHeading = Utils.getNativeHeading(data: data);
         
         var target: [AnyHashable] = [];
         let positions = (data["targets"]) as! Array<Any>;
         var _ : VMEPosition;
         for position in positions {
             if (!(position is NSString)) {
-                let VMPosition = Utils.getNativePosition(pos: position as! NSDictionary)
+                let VMPosition = Utils.getNativePosition(VMPos: position as! NSDictionary)
                 target.append(VMPosition);
             } else if(position is NSString){
                 let pos = position as! NSString;
@@ -290,6 +314,16 @@ class VisioMapViewManager: RCTViewManager {
         print("SET POIS POSITION")
     }
     
+    @objc func updateLocation(_ reactTag: NSNumber, data: NSDictionary){
+        print("UPDATE LOCATION")
+        let location : VMELocation = Utils.getNativeLocation(VMLocation: data);
+        DispatchQueue.main.async {
+            if let view = self.bridge.uiManager.view(forReactTag: reactTag) as? VisioMapView {
+                view.updateLocation(location)
+            }
+        }
+    }
+    
     @objc func setCategories( _ reactTag: NSNumber, data : NSString){
         DispatchQueue.main.async {
             if let view = self.bridge.uiManager.view(forReactTag: reactTag) as? VisioMapView {
@@ -328,7 +362,15 @@ class VisioMapViewManager: RCTViewManager {
   } */
 }
 
-class VisioMapView: UIView, VMELifeCycleListener, VMEAnimationCallback, VMEBuildingListener, VMECameraListener, VMEMapListener, VMELocationTrackingModeListener, VMEPoiListener {
+class VisioMapView: UIView, VMELifeCycleListener, VMEAnimationCallback, VMEBuildingListener, VMECameraListener, VMEMapListener, VMELocationTrackingModeListener, VMEPoiListener, VMEComputeRouteCallback {
+    func computeRouteDidFinish(mapController: VisioMoveEssential.VMEMapController, parameters routeRequest: VisioMoveEssential.VMERouteRequest, result routeResult: VisioMoveEssential.VMERouteResult) -> Bool {
+        return (true);
+    }
+    
+    func computeRouteDidFail(mapController: VisioMoveEssential.VMEMapController, parameters routeRequest: VisioMoveEssential.VMERouteRequest, error: String) {
+        
+    }
+    
     var mMapController: VMEMapController!
     var mMapView: VMEMapView!  // assuming VMEMapView is the correct type
     let label: UILabel = UILabel()
@@ -406,6 +448,11 @@ class VisioMapView: UIView, VMELifeCycleListener, VMEAnimationCallback, VMEBuild
         print(result)
     }
     
+    func updateLocation (_ data: VMELocation){
+        let result: () = mMapController.updateLocation(data)
+        print("=====> UPDATE LOCATION")
+        print(result)
+    }
     
     func setPois(_ data: String) {
         let result = mMapController.setPois(data: data);
@@ -459,6 +506,14 @@ class VisioMapView: UIView, VMELifeCycleListener, VMEAnimationCallback, VMEBuild
         let lVersion = mMapController.getDataSDKVersion();
         print("=====> GET DATA SDK VERSION")
         return(lVersion)
+    }
+    
+    func computeRoute(routeRequest : VMERouteRequest, destinations: [AnyHashable],origin : AnyHashable ){
+        routeRequest.setOrigin(origin);
+        let addDestinations = routeRequest.addDestinations(destinations);
+        print(addDestinations);
+        mMapController.computeRoute(routeRequest, callback: self)
+        print("=====> COMPUTE ROUTE")
     }
     
     // MARK: - VMEComputeRouteCallback
