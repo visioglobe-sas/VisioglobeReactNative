@@ -355,6 +355,14 @@ class VisioMapViewManager: RCTViewManager {
         }
 
     }
+    
+    @objc func setCompass(_ reactTag: NSNumber, data : Bool){
+        DispatchQueue.main.async {
+            if let view = self.bridge.uiManager.view(forReactTag: reactTag) as? VisioMapView {
+                view.setCompass(data)
+            }
+        }
+    }
 
     @objc func setCategories(_ reactTag: NSNumber) {
         print("SET CATEGORIES")
@@ -366,7 +374,11 @@ class VisioMapViewManager: RCTViewManager {
   } */
 }
 
-class VisioMapView: UIView, VMELifeCycleListener, VMEAnimationCallback, VMEBuildingListener, VMECameraListener, VMEMapListener, VMELocationTrackingModeListener, VMEPoiListener, VMEComputeRouteCallback {
+class VisioMapView: UIView, VMELifeCycleListener, VMEAnimationCallback, VMEBuildingListener, VMECameraListener, VMEMapListener, VMELocationTrackingModeListener, VMEPoiListener, VMEComputeRouteCallback, VMECompassListener {
+    func compassStateChanged(state: Bool) {
+        <#code#>
+    }
+    
     func computeRouteDidFinish(mapController: VisioMoveEssential.VMEMapController, parameters routeRequest: VisioMoveEssential.VMERouteRequest, result routeResult: VisioMoveEssential.VMERouteResult) -> Bool {
         return (true);
     }
@@ -423,6 +435,9 @@ class VisioMapView: UIView, VMELifeCycleListener, VMEAnimationCallback, VMEBuild
             case "poiListener":
                 print("====> SET POI LISTENER")
                 mMapController.setPoiListener(self)
+            case "compassListener":
+                print("====> SET COMPASS LISTENER")
+                mMapController.setCompassListener(self)
             default:
                 print("====> SET LISTENERS")
             }
@@ -437,6 +452,13 @@ class VisioMapView: UIView, VMELifeCycleListener, VMEAnimationCallback, VMEBuild
     func customFunctionToCall() {
         print("=====> LOG FROM CUSTOM FUNCTION")
     }
+    
+    func setCompass(_ data: Bool){
+        let result: () = mMapController.setCompass(enabled: data)
+        print("====> SET COMPASS")
+        print(result)
+    }
+    
     func removePois(_ data: [String]){
         let result = mMapController.removePois(poiIDs: data)
         print("====> REMOVE POIS")

@@ -77,6 +77,8 @@ RCT_EXTERN_METHOD(showSearchViewWithTitle : (nonnull NSNumber *)reactTag
                   data : (nonnull NSString*)data);
 RCT_EXTERN_METHOD(setCategories : (nonnull NSNumber *)reactTag
                   data : (nonnull NSString));
+RCT_EXTERN_METHOD(setCompass : (nonnull NSNumber *)reactTag
+                  data : (nonnull BOOL)data)
 
 RCT_EXTERN_METHOD(customFunctionToCall: () reactTag)
 @end
