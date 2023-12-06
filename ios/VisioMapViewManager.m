@@ -35,7 +35,7 @@ RCT_EXTERN_METHOD(getVersion: (nonnull NSNumber *)reactTag
                   requestID: (nonnull NSNumber *) requestID)
 RCT_EXTERN_METHOD(animateCamera : (nonnull NSNumber *)reactTag
                   data: (nonnull NSDictionary *) data
-                  duration :(nonnull NSNumber*) duration);
+                  duration :(nonnull NSNumber *) duration);
 RCT_EXTERN_METHOD(getCameraContext : (nonnull NSNumber *)reactTag);
 RCT_EXTERN_METHOD(updateCamera : (nonnull NSNumber *)reactTag
                   data: (nonnull NSDictionary *)data);

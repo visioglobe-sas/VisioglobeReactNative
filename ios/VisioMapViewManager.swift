@@ -123,13 +123,15 @@ class VisioMapViewManager: RCTViewManager {
             }
         }**/
     }
-    @objc func animateCamera(_ reactTag: NSNumber, data: NSDictionary, duration: NSNumber, callback: NSDictionary?) {
+    @objc func animateCamera(_ reactTag: NSNumber, data: NSDictionary, duration: NSNumber) {
         print("ANIMATE CAMERA");
         let duration = duration.doubleValue;
         
         let viewMode: VMEViewMode = Utils.getNativeViewMode(data: data);
         
         let heading: VMECameraHeading = Utils.getNativeHeading(data: data);
+        
+        let pitch: VMECameraPitch = Utils.getNativePitch(data: data);
         
         var target: [AnyHashable] = [];
         let positions = (data["targets"]) as! Array<Any>;
@@ -154,6 +156,7 @@ class VisioMapViewManager: RCTViewManager {
             builder.paddingRight = (data["paddingRight"] as? Double)!;
             builder.viewMode = viewMode;
             builder.targets = target;
+            builder.pitch = pitch;
         }
         DispatchQueue.main.async {
             if let view = self.bridge.uiManager.view(forReactTag: reactTag) as? VisioMapView {
@@ -172,6 +175,8 @@ class VisioMapViewManager: RCTViewManager {
         
         let heading: VMECameraHeading = Utils.getNativeHeading(data: data);
         
+        let pitch: VMECameraPitch = Utils.getNativePitch(data: data);
+        
         var target: [AnyHashable] = [];
         let positions = (data["targets"]) as! Array<Any>;
         var _ : VMEPosition;
@@ -195,6 +200,7 @@ class VisioMapViewManager: RCTViewManager {
             builder.paddingRight = (data["paddingRight"] as? Double)!;
             builder.viewMode = viewMode;
             builder.targets = target;
+            builder.pitch = pitch;
         }
         DispatchQueue.main.async {
             if let view = self.bridge.uiManager.view(forReactTag: reactTag) as? VisioMapView {
@@ -376,7 +382,7 @@ class VisioMapViewManager: RCTViewManager {
 
 class VisioMapView: UIView, VMELifeCycleListener, VMEAnimationCallback, VMEBuildingListener, VMECameraListener, VMEMapListener, VMELocationTrackingModeListener, VMEPoiListener, VMEComputeRouteCallback, VMECompassListener {
     func compassStateChanged(state: Bool) {
-        <#code#>
+
     }
     
     func computeRouteDidFinish(mapController: VisioMoveEssential.VMEMapController, parameters routeRequest: VisioMoveEssential.VMERouteRequest, result routeResult: VisioMoveEssential.VMERouteResult) -> Bool {

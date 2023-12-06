@@ -119,7 +119,7 @@ const _setCompass = (value: boolean) => {
 
   const _animateCamera = (values: VMCameraUpdate, duration : number) => {
     console.log(values);
-    Commands.animateCamera(r.current,values,duration as Double,undefined);
+    Commands.animateCamera(r.current,values,duration as Double);
   }
 
   const _animateScene = (values: VMSceneUpdate) => {
