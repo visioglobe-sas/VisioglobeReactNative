@@ -1,154 +1,115 @@
-/* eslint-disable react-native/no-inline-styles */
 import React, { useState } from 'react';
-import {
-  View,
-  StyleSheet,
-  TouchableOpacity,
-  Text,
-  PixelRatio,
-  Dimensions,
-  Platform,
-} from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import CheckBox from '@react-native-community/checkbox';
 import VisioMapView from 'react-native-visioglobe';
-import { VMCameraHeading, VMCameraPitch, VMCameraUpdate, VMERouteRequestType, VMLocation, VMPosition, VMRouteDestinationsOrder, VMRouteRequest, VMSceneUpdate, VMViewModeType } from '../../src/VisioTypes';
 
-export default function App() {
+const App = () => {
   const ref = React.useRef<VisioMapView>(null);
+  const [isDropdownOpen, setDropdownOpen] = useState(false);
+  const [checkbox1, setCheckbox1] = useState(false);
+  const [checkbox2, setCheckbox2] = useState(false);
+  const [checkbox3, setCheckbox3] = useState(false);
+  const [checkBoxString1, setCheckBoxString1] = useState("");
+  const [checkBoxString2, setCheckBoxString2] = useState("");
+  const [checkBoxString3, setCheckBoxString3] = useState("");
 
+  const toggleDropdown = () => {
+    setDropdownOpen(!isDropdownOpen);
+  };
 
-  ///////////////////////// Activate and deactivate selector view /////////////////////////
-  var boolean = false;
+  const handleButtonClick = (buttonText: string) => {
+    // Faites quelque chose avec le bouton cliqué
+    console.log(`Bouton cliqué: ${buttonText}`);
+    // Fermer le dropdown menu après avoir cliqué sur un bouton
+    setDropdownOpen(false);
+  };
 
-  const [textSetSelectorViewButton,setSelectorViewText] = useState("Stop Selector View"); 
-
-  const onPressSetSelectorView = () => {
-    if (boolean === false){
-      setSelectorViewText("Use Selector View");
-    } else {
-      setSelectorViewText("Stop Selector View");
-    }
+  const handleCameraClick = () =>{
+    setCheckBoxString1("Animate Camera");
+    setCheckBoxString2("Update Camera");
+    setCheckBoxString3("Camera Context");
   }
 
-  const setSelectorViewVisible = () => {
-    onPressSetSelectorView();
-    ref.current.setSelectorViewVisible(boolean);
-    boolean = !boolean;
-  }
-  ///////////////////////////////////////////////////////////////////////////////////////
 
-
-
-  ///////////////////////// Button text for setPois /////////////////////////////////////
-  const [textSetPoisButton,setPoisText] = useState("Set cat POIs"); 
-
-  const onPressSetPois = () => {
-    if (textSetPoisButton === "Set cat POIs"){
-      setPoisText("Remove cat POIs");
-    } else {
-      setPoisText("Set cat POIs");
-    }
+  const handleBasicClick = () =>{
+    setCheckBoxString1("Display props");
+    setCheckBoxString2("Unload Map View");
+    setCheckBoxString3("Reload Map View");
   }
 
-  const setPois = () => {
-    // do something
-    const greenCatData =
-    ' {"catCringe":{"name":"Black cat","icon":"https://upload.wikimedia.org/wikipedia/commons/4/4f/Kitty_emoji.png","categories":["99"],"description":"Black cat is here","features":{"image":{"icon":"https://upload.wikimedia.org/wikipedia/commons/4/4f/Kitty_emoji.png","position":[45.74131,4.88216,0.0],"anchorMode":"bottomCenter","scale":15.0,"altitudeMode":"absolute"}}}} ';
-    onPressSetPois();
-    if (textSetPoisButton === "Set cat POIs"){
-      ref.current.setPois(greenCatData);
-    } else {
-      //removePoi native method
-    }
-  };
-  ////////////////////////////////////////////////////////////////////////////////////
+  const handleRoutingClick = () =>{
+    setCheckBoxString1("Simple Route");
+    setCheckBoxString2("Accessible Route");
+    setCheckBoxString3("Optimal Route");
+  }
 
+  const handlePOIClick = () =>{
+    setCheckBoxString1("Create POIs");
+    setCheckBoxString2("Remove POIs");
+    setCheckBoxString3("Custom POIs");
+  }
 
-  ////////////////////////////// Test Method /////////////////////////////////////////
-  const customMethod = () => {
-    if (ref.current != null) {
-      ref.current.setPoisColor();
-    }
-  };
-  ////////////////////////////////////////////////////////////////////////////////////
+  const handleSearchClick = () => {
+    setCheckBoxString1("Open SearchBar");
+    setCheckBoxString2("Show POI");
+    setCheckBoxString3("Set Categorie");
+  }
 
+  const handleThemeClick = ( ) => {
+    setCheckBoxString1("Set Theme");
+    setCheckBoxString2("Overlay");
+    setCheckBoxString3("");
+  }
 
-  const animateCamera = () => {
-    const heading : VMCameraHeading = {
-      current: true
-    }
-    const pitch : VMCameraPitch = {
-      pitch : -30,
-    }
-    const values : VMCameraUpdate = {
-      heading : heading,
-      paddingBottom: 50,
-      paddingLeft: 60,
-      paddingRight : 50,
-      paddingTop : 50,
-      pitch : pitch,
-      targets : ["B2-UL00"],
-      viewMode : VMViewModeType.floor,
-    }
-    const scene : VMSceneUpdate = {
-      viewMode: VMViewModeType.floor,
-      buildingID: "B1",
-      floorID: null
-    }
-    const position: VMPosition = {
-      altitude: 45.74131,
-      latitude: 4.88216,
-      longitude: 0.0
-    }
-
-    const location: VMLocation = {
-      accuracy: 0.001,
-      bearing: 0.001,
-      position: position
-    }
-    if (ref.current) {
-      ref.current.updateLocation(location);
-    }
+  const handleCheckbox1Change = () => {
+    setCheckbox1(!checkbox1);
   };
 
-  const resetPoisColor = () => {
-    // do something
-    ref.current.resetPoisColor();
+  const handleCheckbox2Change = () => {
+    setCheckbox2(!checkbox2);
   };
 
-  const setPoisColor = () => {
-    // do something
-    const data = ['B1-UL0-001', 'B1-UL0-002', 'B1-UL0-003'];
-    ref.current.setPoisColor(data);
+  const handleCheckbox3Change = () => {
+    setCheckbox3(!checkbox3);
   };
-
-  const computeRoute = () => {
-    const position: VMPosition = {
-      altitude: 0.0,
-      latitude: 45.74131,
-      longitude: 4.88216
-    }
-
-    const route : VMRouteRequest = {
-      animateAllRoute: false,
-      destinationsOrder: VMRouteDestinationsOrder.optimalFinishOnLast,
-      isAccessible: true,
-      origin: "B1-UL00-ID0039",
-      destinations: [position],
-      requestType: VMERouteRequestType.fatest
-    }
-    ref.current.computeRoute(route);
-  };
-
-  const getVersion = async () => {
-    //console.log(ref.current.getVersion());
-    let promise = ref.current.getVersion()
-    //promise.then((value: string) => {
-      //console.log(value);
-    };
 
   return (
-    <View style={{display: "flex", flex:1}}>
-    <VisioMapView
+    <View style={styles.container}>
+      <View style={styles.upper}>
+      {/* Dropdown Menu */}
+      <ScrollView style={[styles.dropdown, { height: '100%'}]}>
+
+      <TouchableOpacity onPress={() => handleBasicClick()} style={styles.dropdownButton}>
+          <Text>Basic</Text> 
+          {/*overlay ??*/}
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={() => handleCameraClick()} style={styles.dropdownButton}>
+          <Text>Camera</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={() => handleRoutingClick()} style={styles.dropdownButton}>
+          <Text>Routing</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={() => handlePOIClick()} style={styles.dropdownButton}>
+          <Text>POI</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={() => handleSearchClick()} style={styles.dropdownButton}>
+          <Text>Search</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={() => handleThemeClick('Bouton 5')} style={styles.dropdownButton}>
+          <Text>Theme</Text> 
+          {/*overlay ??*/}
+        </TouchableOpacity>
+
+        {/* Ajoutez autant de boutons que nécessaire */}
+      </ScrollView>
+
+      <View style = {styles.mapview}>
+      <VisioMapView
         style={{
         flex:1
         }}
@@ -159,80 +120,78 @@ export default function App() {
         promptToDownload={true}
         listeners={["buildingListener","cameraListener","mapListener","locationtrackingmodeListener","poiListener"]}
       />
-      <View style={{flexDirection: "column",flexShrink:1, flex: 0}}>
-      <View style={[styles.container, {
-      flexDirection: "row"
-    }]}>
-        <TouchableOpacity style={styles.button} onPress={() => getVersion()}>
-          <Text style={styles.text}>Display SDK Version</Text>
-        </TouchableOpacity>
+      </View>
+      </View>
 
-        <TouchableOpacity style={styles.button} onPress={() => setPois()}>
-          <Text style={styles.text}> {textSetPoisButton}</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => computeRoute()}
-        >
-          <Text style={styles.text}>{"Compute Route"}</Text>
-        </TouchableOpacity>
-
+      {/* Section avec 3 CheckBox en bas de l'écran */}
+      <View style={styles.checkboxSection}>
+        <View style= {styles.viewButton}>
+        <CheckBox value={checkbox1} onValueChange={handleCheckbox1Change} />
+        <Text>{checkBoxString1}</Text>
         </View>
 
-      <View style={[styles.container, {
-      flexDirection: "row"
-    }]}>
-        <TouchableOpacity style={styles.button} 
-        onPress={() => computeRoute()}>
-          <Text style={styles.text}>TESTING </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => customMethod()}
-        >
-          <Text style={styles.text}>TO DO </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => customMethod()}
-        >
-          <Text style={styles.text}>TO DO</Text>
-        </TouchableOpacity>
+        <View style= {styles.viewButton}>
+        <CheckBox value={checkbox2} onValueChange={handleCheckbox2Change} />
+        <Text>{checkBoxString2}</Text>
+        </View>
+
+        <View style= {styles.viewButton}>
+        <CheckBox value={checkbox3} onValueChange={handleCheckbox3Change} />
+        <Text>{checkBoxString3}</Text>
+        </View>
       </View>
-      </View>
-      </View>
+    </View>
   );
-}
+};
+
 
 const styles = StyleSheet.create({
   container: {
-    /*display: 'flex',*/
-    backgroundColor: '#90EE90',
+    flex: 1,
+    flexDirection :'column',
+  },
+  upper: {
+    marginTop : '6%',
+    flex: 1,
+    flexDirection: 'row',
+  },
+  mapview: {
+    width:'80%',
+    //marginLeft: '20%',
+  },
+  toggleButton: {
+    padding: 10,
+    backgroundColor: '#3498db',
     alignItems: 'center',
-    // justifyContent: 'center',
   },
-  box: {
-    width: 60,
-    height: 60,
-    marginVertical: 20,
+  dropdown: {
+    backgroundColor: '#e0e0e0',
+    overflow: 'hidden',
+    width: '20%',
   },
-  button: {
-    width: "23%",
-    padding: 20,
-    borderRadius: 10,
-    margin: '4%',
-    backgroundColor: 'green',
+  dropdownButton: {
+    justifyContent: 'center',
+    height : '77%',
+    padding: 5,
+    textAlign :'center',
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
   },
-  closeButton: {
-    position: 'absolute',
-    zIndex: 200,
-    backgroundColor: 'red',
-    top: 100,
-    alignSelf: 'center',
+  checkboxSection: {
+    height: '15%',
+    backgroundColor: '#f0f0f0',
+    flexDirection: 'row',
+    justifyContent:'space-around',
+    alignItems: 'center',
   },
-  text: {
-    color: 'white',
-    fontWeight: 'bold',
-  },
+  viewButton : {
+    width:'30%',
+    padding: 4, 
+    borderWidth: 3, 
+    borderRadius : 20,
+    justifyContent : 'center',
+    alignItems : 'center'
+  }
 });
+
+export default App;
