@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
 import VisioMapView from 'react-native-visioglobe';
+import { VMCameraHeading, VMCameraPitch, VMCameraUpdate, VMERouteRequestType, VMLocation, VMPosition, VMRouteDestinationsOrder, VMRouteRequest, VMSceneUpdate, VMViewModeType, pitchType } from '../../src/VisioTypes';
 
-const App = () => {
+
+export default function App(){
   const ref = React.useRef<VisioMapView>(null);
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [checkbox1, setCheckbox1] = useState(false);
@@ -12,9 +14,19 @@ const App = () => {
   const [checkBoxString1, setCheckBoxString1] = useState("");
   const [checkBoxString2, setCheckBoxString2] = useState("");
   const [checkBoxString3, setCheckBoxString3] = useState("");
+  const [opacity3, setOpacity3] = useState(1);
+  const [disable3, setDisable3] = useState(false);
 
-  const toggleDropdown = () => {
-    setDropdownOpen(!isDropdownOpen);
+  const animateCamera = (values: VMCameraUpdate) => {
+    if (ref.current) {
+      ref.current.animateCamera(values,3);
+    }
+  };
+
+  const updateCamera = (values: VMCameraUpdate) => {
+    if (ref.current) {
+      ref.current.updateCamera(values);
+    }
   };
 
   const handleButtonClick = (buttonText: string) => {
@@ -62,14 +74,113 @@ const App = () => {
   }
 
   const handleCheckbox1Change = () => {
-    setCheckbox1(!checkbox1);
+    if (!checkbox1){
+      setCheckbox2(false)
+      setCheckbox3(false)
+      if (checkBoxString1 === "Animate Camera") {
+        const heading : VMCameraHeading = {
+          current: true
+        }
+        const pitch : VMCameraPitch = {
+          type: pitchType.default,
+          pitch: 0
+        }
+        const values : VMCameraUpdate = {
+          heading : heading,
+          paddingBottom: 50,
+          paddingLeft: 50,
+          paddingRight : 50,
+          paddingTop : 50,
+          pitch : pitch,
+          targets : ["B2-UL00"],
+          viewMode : VMViewModeType.floor,
+        }
+        animateCamera(values)
+      }
+
+      if (checkBoxString1 === "Display props") {
+        console.log("La chaîne correspond à 'Display props'.");
+      }
+    
+      if (checkBoxString1 === "Simple Route") {
+        console.log("La chaîne correspond à 'Simple Route'.");
+      }
+    
+      if (checkBoxString1 === "Create POIs") {
+        console.log("La chaîne correspond à 'Create POIs'.");
+      }
+    
+      if (checkBoxString1 === "Open SearchBar") {
+        console.log("La chaîne correspond à 'Open SearchBar'.");
+      }
+    
+      if (checkBoxString1 === "Set Theme") {
+        console.log("La chaîne correspond à 'Set Theme'.");
+      }
+    } else {
+
+
+    }
+  setCheckbox1(!checkbox1);
   };
 
   const handleCheckbox2Change = () => {
-    setCheckbox2(!checkbox2);
+    if (!checkbox2){
+      setCheckbox1(false)
+      setCheckbox3(false)
+      if (checkBoxString2 === "Update Camera") {
+        const heading : VMCameraHeading = {
+          current: true
+        }
+        const pitch : VMCameraPitch = {
+          pitch : -90,
+        }
+        const position : VMPosition = {
+          altitude: 0.0,
+          latitude: 45.74094,
+          longitude: 4.88483
+        }
+        const values : VMCameraUpdate = {
+          heading : heading,
+          paddingBottom: 50,
+          paddingLeft: 50,
+          paddingRight : 50,
+          paddingTop : 50,
+          pitch : pitch,
+          targets : [position],
+          viewMode : VMViewModeType.floor,
+        }
+        updateCamera(values)
+      }
+  
+      if (checkBoxString2 === "Unload Map View") {
+        console.log("La chaîne correspond à 'Unload Map View'.");
+      }
+      
+      if (checkBoxString2 === "Accessible Route") {
+        console.log("La chaîne correspond à 'Accessible Route'.");
+      }
+      
+      if (checkBoxString2 === "Remove POIs") {
+        console.log("La chaîne correspond à 'Remove POIs'.");
+      }
+      
+      if (checkBoxString2 === "Show POI") {
+        console.log("La chaîne correspond à 'Show POI'.");
+      }
+      
+      if (checkBoxString2 === "Overlay") {
+        console.log("La chaîne correspond à 'Overlay'.");
+      }
+    }
+      setCheckbox2(!checkbox2);
   };
 
   const handleCheckbox3Change = () => {
+    if (!checkbox3){
+      setCheckbox1(false)
+      setCheckbox2(false)
+    }
     setCheckbox3(!checkbox3);
   };
 
@@ -100,7 +211,7 @@ const App = () => {
           <Text>Search</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={() => handleThemeClick('Bouton 5')} style={styles.dropdownButton}>
+        <TouchableOpacity onPress={() => handleThemeClick()} style={styles.dropdownButton}>
           <Text>Theme</Text> 
           {/*overlay ??*/}
         </TouchableOpacity>
@@ -126,17 +237,22 @@ const App = () => {
       {/* Section avec 3 CheckBox en bas de l'écran */}
       <View style={styles.checkboxSection}>
         <View style= {styles.viewButton}>
-        <CheckBox value={checkbox1} onValueChange={handleCheckbox1Change} />
+        <CheckBox value={checkbox1} 
+        onValueChange={handleCheckbox1Change} />
         <Text>{checkBoxString1}</Text>
         </View>
 
         <View style= {styles.viewButton}>
-        <CheckBox value={checkbox2} onValueChange={handleCheckbox2Change} />
+        <CheckBox value={checkbox2} 
+        onValueChange={handleCheckbox2Change} />
         <Text>{checkBoxString2}</Text>
         </View>
 
-        <View style= {styles.viewButton}>
-        <CheckBox value={checkbox3} onValueChange={handleCheckbox3Change} />
+        <View style= {styles.viewButton} { ... {opacity : opacity3}}>
+        <CheckBox value={checkbox3} 
+        onValueChange={handleCheckbox3Change}
+        disabled={disable3}
+        />
         <Text>{checkBoxString3}</Text>
         </View>
       </View>
@@ -191,7 +307,16 @@ const styles = StyleSheet.create({
     borderRadius : 20,
     justifyContent : 'center',
     alignItems : 'center'
+  },
+  viewButton3 : {
+    width:'30%',
+    padding: 4, 
+    borderWidth: 3, 
+    borderRadius : 20,
+    justifyContent : 'center',
+    alignItems : 'center',
+    opacity : 0.50
   }
 });
 
-export default App;
+ App;
