@@ -10,6 +10,17 @@ import VisioMoveEssential
 import React
 
 class Utils{
+    static func getNativePitch(data: NSDictionary) -> VMECameraPitch{
+        var data : NSDictionary = data["pitch"] as! NSDictionary;
+        if (data.contains{ $0.key as! String == "type" }){
+        if ((data["type"]) as! Int == 0){
+            return VMECameraPitch.initCameraPitchCurrent()
+        } else if ((data["type"]) as! Int == 1){
+            return VMECameraPitch.initCameraPitchDefault()
+        } 
+        }
+        return VMECameraPitch.initCameraPitch(value: data["pitch"] as! Double)
+    }
     
     static func getNativeViewMode(data: NSDictionary) -> VMEViewMode{
         var viewMode: VMEViewMode = VMEViewMode.unknown;

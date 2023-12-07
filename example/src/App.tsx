@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
 import VisioMapView from 'react-native-visioglobe';
 import { VMCameraHeading, VMCameraPitch, VMCameraUpdate, VMERouteRequestType, VMLocation, VMPosition, VMRouteDestinationsOrder, VMRouteRequest, VMSceneUpdate, VMViewModeType, pitchType } from '../../src/VisioTypes';
@@ -16,6 +16,9 @@ export default function App(){
   const [checkBoxString3, setCheckBoxString3] = useState("");
   const [opacity3, setOpacity3] = useState(1);
   const [disable3, setDisable3] = useState(false);
+  const mapHash="mc8f3fec89d2b7283d15cfcf4eb28a0517428f054"
+  const mapPath="path"
+  const mapSecret=0
 
   const animateCamera = (values: VMCameraUpdate) => {
     if (ref.current) {
@@ -28,6 +31,11 @@ export default function App(){
       ref.current.updateCamera(values);
     }
   };
+
+  const showMapInfo = (mapHash : string, mapSecret : number, mapPath : string) => {
+    Alert.alert("Current map props: ", " Hash :" + mapHash +",\n Path : " + mapPath + ",\n Secret Code : " + mapSecret);
+
+  }
 
   const handleButtonClick = (buttonText: string) => {
     // Faites quelque chose avec le bouton cliqué
@@ -99,7 +107,7 @@ export default function App(){
       }
 
       if (checkBoxString1 === "Display props") {
-        console.log("La chaîne correspond à 'Display props'.");
+        showMapInfo(mapHash,mapSecret,mapPath);
       }
     
       if (checkBoxString1 === "Simple Route") {
@@ -128,24 +136,26 @@ export default function App(){
     if (!checkbox2){
       setCheckbox1(false)
       setCheckbox3(false)
+
+      /*Camera : Update Camera*/
       if (checkBoxString2 === "Update Camera") {
         const heading : VMCameraHeading = {
-          current: true
+          current: true,
         }
         const pitch : VMCameraPitch = {
           pitch : -90,
         }
         const position : VMPosition = {
           altitude: 0.0,
-          latitude: 45.74094,
-          longitude: 4.88483
+          latitude: 45.74200,
+          longitude: 4.88400
         }
         const values : VMCameraUpdate = {
           heading : heading,
-          paddingBottom: 50,
-          paddingLeft: 50,
-          paddingRight : 50,
-          paddingTop : 50,
+          paddingBottom: 0,
+          paddingLeft: 0,
+          paddingRight : 0,
+          paddingTop : 0,
           pitch : pitch,
           targets : [position],
           viewMode : VMViewModeType.floor,
@@ -224,9 +234,9 @@ export default function App(){
         style={{
         flex:1
         }}
-        mapHash="mc8f3fec89d2b7283d15cfcf4eb28a0517428f054"
-        mapPath="path"
-        mapSecret={0}
+        mapHash={mapHash}
+        mapPath={mapPath}
+        mapSecret={mapSecret}
         ref={ref}
         promptToDownload={true}
         listeners={["buildingListener","cameraListener","mapListener","locationtrackingmodeListener","poiListener"]}
