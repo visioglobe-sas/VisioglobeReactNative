@@ -20,6 +20,7 @@ export default function App(){
   const mapPath="path"
   const mapSecret=0
 
+  //Camera Section 
   const animateCamera = (values: VMCameraUpdate) => {
     if (ref.current) {
       ref.current.animateCamera(values,3);
@@ -32,9 +33,29 @@ export default function App(){
     }
   };
 
+  //Basic Section
   const showMapInfo = (mapHash : string, mapSecret : number, mapPath : string) => {
     Alert.alert("Current map props: ", " Hash :" + mapHash +",\n Path : " + mapPath + ",\n Secret Code : " + mapSecret);
+  };
 
+  const unloadMapView = () => {
+    if (ref.current) {
+      ref.current.unloadMapView();
+    }
+  }
+
+  const loadMapView = () => {
+    if (ref.current) {
+      ref.current.loadMapView();
+    }
+  } 
+
+  //Search bar 
+
+  const setCategories = (values : string) => {
+    if (ref.current) {
+      ref.current.setCategories(values);
+    }
   }
 
   const handleButtonClick = (buttonText: string) => {
@@ -48,7 +69,9 @@ export default function App(){
     setCheckBoxString1("Animate Camera");
     setCheckBoxString2("Update Camera");
     setCheckBoxString3("Camera Context");
-  }
+  };
+
+
 
 
   const handleBasicClick = () =>{
@@ -164,7 +187,7 @@ export default function App(){
       }
   
       if (checkBoxString2 === "Unload Map View") {
-        console.log("La chaîne correspond à 'Unload Map View'.");
+        unloadMapView();
       }
       
       if (checkBoxString2 === "Accessible Route") {
@@ -190,6 +213,13 @@ export default function App(){
     if (!checkbox3){
       setCheckbox1(false)
       setCheckbox2(false)
+      if (checkBoxString3 === "Reload Map View") {
+        loadMapView();
+      }
+      if (checkBoxString3 === "Set Categorie") {
+        const value = '{"23": {"name": "The name","icon": "media/map/visio_island_essentials/category_service.png"}}';
+        setCategories(value);
+      }
     }
     setCheckbox3(!checkbox3);
   };
