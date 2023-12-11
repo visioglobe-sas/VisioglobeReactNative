@@ -89,6 +89,10 @@ const _setCompass = (value: boolean) => {
     Commands.setPois(r.current, data);
   };
 
+  const _loadMapView = () => {
+    Commands.loadMapView(r.current);
+  };
+
   const _unloadMapData = () => {
     Commands.unloadMapData(r.current);
   };
@@ -197,6 +201,7 @@ const _setCompass = (value: boolean) => {
     getVersion: _getVersion, 
     unloadMapView: _unloadMapView,
     unloadMapData: _unloadMapData,
+    loadMapView : _loadMapView,
     //getDataSDKVersion: _getDataSDKVersion, 
     getMinDataSDKVersion: _getMinDataSDKVersion,
     setExcludedAttributes: _setExcludedAttributes,

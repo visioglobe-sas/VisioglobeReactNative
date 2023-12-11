@@ -77,6 +77,24 @@ class VisioMapViewManager: RCTViewManager {
     }
     
     @objc
+    func unloadMapView(_ reactTag: NSNumber) {
+        DispatchQueue.main.async {
+            if let view = self.bridge.uiManager.view(forReactTag: reactTag) as? VisioMapView {
+                view.unloadMapView()
+            }
+        }
+    }
+    
+    @objc
+    func loadMapView(_ reactTag: NSNumber) {
+        DispatchQueue.main.async {
+            if let view = self.bridge.uiManager.view(forReactTag: reactTag) as? VisioMapView {
+                view.loadMapView()
+            }
+        }
+    }
+    
+    @objc
     func computeRoute(_ reactTag: NSNumber, data: NSDictionary) {
         print("=====> COMPUTE ROUTE FROM VIEW MANAGER")
         var destinations : [AnyHashable] = [];
@@ -370,10 +388,6 @@ class VisioMapViewManager: RCTViewManager {
         }
     }
 
-    @objc func setCategories(_ reactTag: NSNumber) {
-        print("SET CATEGORIES")
-    }
-
     
   /* override static func requiresMainQueueSetup() -> Bool {
     return true
@@ -470,6 +484,13 @@ class VisioMapView: UIView, VMELifeCycleListener, VMEAnimationCallback, VMEBuild
         print("====> REMOVE POIS")
         print(result)
     }
+    
+    func loadMapView(){
+        let result: () = mMapController.loadMapView(mapView: mMapView)
+        print("====> LOAD MAP VIEW")
+        print(result)
+    }
+    
     func showSearchViewWithTitle(_ data: String){
         let result: () = mMapController.showSearchViewWithTitle(data, callback: nil)
         print("=====> SHOW SEARCH VIEW WITH TITLE")
@@ -479,6 +500,12 @@ class VisioMapView: UIView, VMELifeCycleListener, VMEAnimationCallback, VMEBuild
     func setCategories(_ data: String){
         let result = mMapController.setCategories(data: data)
         print("=====> SHOW SET CATEGORIES")
+        print(result)
+    }
+    
+    func unloadMapView(){
+        let result: () = mMapController.unloadMapView()
+        print("=====> UNLOAD MAP VIEW")
         print(result)
     }
     

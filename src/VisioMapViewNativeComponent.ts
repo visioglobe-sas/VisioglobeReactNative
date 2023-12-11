@@ -25,6 +25,10 @@ interface NativeCommands {
     data: string
   ) => void;
 
+  loadMapView: ( 
+    viewRef: React.ElementRef<NativeComponentType>
+  ) => void;
+
   unloadMapView:  ( 
     viewRef: React.ElementRef<NativeComponentType>
   ) => void;
@@ -323,6 +327,7 @@ export const Commands: NativeCommands = codegenNativeCommands<NativeCommands>({
 'updateScene',
 'unloadMapData',
 'unloadMapView',
+'loadMapView',
 'createLocationFromLocation',
 'createPositionFromLocation',
 'getLocationTrackingMode',

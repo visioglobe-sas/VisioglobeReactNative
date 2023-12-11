@@ -44,6 +44,8 @@ RCT_EXTERN_METHOD(updateLocation : (nonnull NSNumber *)reactTag
 RCT_EXTERN_METHOD(animateScene : (nonnull NSNumber *)reactTag
                   data: (nonnull NSDictionary *)data);
 RCT_EXTERN_METHOD(updateScene : (nonnull NSNumber *)reactTag);
+RCT_EXTERN_METHOD(unloadMapView : (nonnull NSNumber *)reactTag);
+RCT_EXTERN_METHOD(loadMapView : (nonnull NSNumber *)reactTag);
 RCT_EXTERN_METHOD(createLocationFromLocation : (nonnull NSNumber *)reactTag);
 RCT_EXTERN_METHOD(createPositionFromLocation : (nonnull NSNumber *)reactTag);
 RCT_EXTERN_METHOD(getLocationTrackingMode : (nonnull NSNumber *)reactTag);
