@@ -58,6 +58,12 @@ export default function App(){
     }
   }
 
+  const computeRoute = (value : VMRouteRequest) => {
+    if (ref.current) {
+      ref.current.computeRoute(value);
+    }
+  }
+
   const handleButtonClick = (buttonText: string) => {
     // Faites quelque chose avec le bouton cliqué
     console.log(`Bouton cliqué: ${buttonText}`);
@@ -134,7 +140,20 @@ export default function App(){
       }
     
       if (checkBoxString1 === "Simple Route") {
-        console.log("La chaîne correspond à 'Simple Route'.");
+        const position: VMPosition = {
+          altitude: 0.0,
+          latitude: 45.7413,
+          longitude: 4.88216
+        }
+        const value : VMRouteRequest = {
+          animateAllRoute: false,
+          destinationsOrder: VMRouteDestinationsOrder.closest,
+          isAccessible: false,
+          origin: position,
+          destinations: ["B1-UL00-ID0034"],
+          requestType: VMERouteRequestType.fatest
+        }
+        computeRoute(value);
       }
     
       if (checkBoxString1 === "Create POIs") {
