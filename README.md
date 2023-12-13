@@ -44,11 +44,15 @@ go directly to the file with all the demo code by [clicking here](https://github
 
 <details>
     <summary> Basic Section </summary>
+    \
     This part show you how to load/unload a map.
+    \
         <details>
             <summary> Display Props </summary>
-            This shows you the minimal props you need to have within the <VisioMapView>. If you have trouble getting any of them, please ask us in our [help platform](https://my.visioglobe.com/). 
-            More specifically you have :
+            This shows you the minimal props you need to have within the VisioMapView component.\\ 
+            If you have trouble getting any of them, please ask us in our [help platform](https://my.visioglobe.com/). \\
+            
+            More specifically you have :\\
             
                 - Map Hash: A string to retrieve your map from our server. Using it will allows the map to be updated every time you are using your map is updated from our editor.
                 - Map Secret Code : Your secret code to load the map. 
