@@ -45,7 +45,7 @@ go directly to the file with all the demo code by [clicking here](https://github
 <details>
     <summary> Basic Section </summary>
     This part show you how to load/unload a map.  
-        <details>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <details>
             * <summary> Display Props </summary>
             This shows you the minimal props you need to have within the VisioMapView component.  
             If you have trouble getting any of them, please ask us in our [help platform](https://my.visioglobe.com/).   
