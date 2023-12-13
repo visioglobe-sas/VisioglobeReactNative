@@ -119,8 +119,7 @@ export default function App(){
           current: true
         }
         const pitch : VMCameraPitch = {
-          type: pitchType.default,
-          pitch: 0
+          type: pitchType.default
         }
         const values : VMCameraUpdate = {
           heading : heading,
@@ -210,7 +209,15 @@ export default function App(){
       }
       
       if (checkBoxString2 === "Accessible Route") {
-        console.log("La chaîne correspond à 'Accessible Route'.");
+        const value : VMRouteRequest = {
+          animateAllRoute: false,
+          destinationsOrder: VMRouteDestinationsOrder.closest,
+          isAccessible: true,
+          origin: "B3-UL01-ID-0013",
+          destinations: ["B3-UL00-ID0073"],
+          requestType: VMERouteRequestType.fatest
+        }
+        computeRoute(value);
       }
       
       if (checkBoxString2 === "Remove POIs") {

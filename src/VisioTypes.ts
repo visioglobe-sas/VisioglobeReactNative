@@ -75,8 +75,8 @@ export enum pitchType {
 }
 
 export type VMCameraPitch = {
-  pitch: number;
-  type?: pitchType;
+  pitch?: number;
+  type: pitchType;
 }
 
 export enum VMViewModeType {

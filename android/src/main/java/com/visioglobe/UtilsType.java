@@ -1,5 +1,7 @@
 package com.visioglobe;
 
+import android.util.Log;
+
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.ReadableType;
 import com.visioglobe.visiomoveessential.enums.VMEViewMode;
@@ -13,26 +15,45 @@ import com.visioglobe.visiomoveessential.models.VMESceneContext;
 import java.util.ArrayList;
 
 public class UtilsType {
-    public VMECameraUpdate readableMapToCamera(ReadableMap lCameraarray){
-        VMECameraUpdateBuilder builder = new VMECameraUpdateBuilder();
-        if ((lCameraarray.getMap("heading")).getBoolean("current")) {
-            VMECameraHeading heading = VMECameraHeading.newCurrent();
-            builder.setHeading(heading);
+
+    public VMECameraHeading readableMapToCameraHeading(ReadableMap lHeading){
+        VMECameraHeading heading = VMECameraHeading.newCurrent();
+        if (lHeading.getBoolean("current")){
+            heading = VMECameraHeading.newCurrent();
         }
-        else {
-            if ((lCameraarray.getMap("heading")).getType("heading") == ReadableType.String) {
-                VMECameraHeading heading = VMECameraHeading.newPoiID((lCameraarray.getMap("heading")).getString("poiID"));
-                builder.setHeading(heading);
-            } else if ((lCameraarray.getMap("heading")).getType("heading") == ReadableType.Number) {
-                VMECameraHeading heading = VMECameraHeading.newHeading((lCameraarray.getMap("heading")).getDouble("poiID"));
-                builder.setHeading(heading);
+        else if (lHeading.getType("heading") == ReadableType.String){
+            heading = VMECameraHeading.newPoiID(String.valueOf(lHeading.getType("heading")));
+        } else if (lHeading.getType("heading") == ReadableType.Number) {
+            heading = VMECameraHeading.newHeading(lHeading.getDouble("poiID"));
+        }
+        return heading;
+    }
+
+    public VMECameraPitch readableMapToCameraPitch(ReadableMap lPitch){
+        VMECameraPitch pitch = VMECameraPitch.newDefaultPitch();
+        if (lPitch.hasKey("type")) {
+            if (lPitch.getInt("type") == 0) {
+                pitch = VMECameraPitch.newCurrent();
+                return pitch;
+            } else if (lPitch.getInt("type") == 0) {
+                return pitch;
             }
         }
+        else if (lPitch.hasKey("pitch")){
+            pitch = VMECameraPitch.newPitch(lPitch.getDouble("pitch"));
+        }
+        return pitch;
+    }
+
+    public VMECameraUpdate readableMapToCamera(ReadableMap lCameraarray){
+        VMECameraUpdateBuilder builder = new VMECameraUpdateBuilder();
+        VMECameraHeading heading = readableMapToCameraHeading(lCameraarray.getMap("heading"));
+        builder.setHeading(heading);
         builder.setPaddingBottom(lCameraarray.getInt("paddingBottom"));
         builder.setPaddingLeft(lCameraarray.getInt("paddingLeft"));
         builder.setPaddingRight(lCameraarray.getInt("paddingRight"));
         builder.setPaddingTop(lCameraarray.getInt("paddingTop"));
-        builder.setPitch(VMECameraPitch.newPitch(lCameraarray.getMap("pitch").getDouble("pitch")));
+        builder.setPitch(readableMapToCameraPitch(lCameraarray.getMap("pitch")));
 
         ArrayList<Object> targets = new ArrayList<>();
         for (Object element: lCameraarray.getArray("targets").toArrayList()) {
@@ -53,6 +74,7 @@ public class UtilsType {
             builder.setViewMode(VMEViewMode.UNKNOWN);
         }
         VMECameraUpdate cameraUpdate = new VMECameraUpdate(builder);
+        Log.d("CC", "readableMapToCamera: " + builder);
         return cameraUpdate;
     }
 

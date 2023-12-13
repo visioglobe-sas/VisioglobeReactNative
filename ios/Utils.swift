@@ -11,15 +11,18 @@ import React
 
 class Utils{
     static func getNativePitch(data: NSDictionary) -> VMECameraPitch{
-        var data : NSDictionary = data["pitch"] as! NSDictionary;
-        if (data.contains{ $0.key as! String == "type" }){
+        let data : NSDictionary = data["pitch"] as! NSDictionary;
+        var pitch : VMECameraPitch = VMECameraPitch.initCameraPitchDefault();
+        if let d = (data["type"]){
         if ((data["type"]) as! Int == 0){
-            return VMECameraPitch.initCameraPitchCurrent()
+            pitch = VMECameraPitch.initCameraPitchCurrent()
         } else if ((data["type"]) as! Int == 1){
-            return VMECameraPitch.initCameraPitchDefault()
-        } 
+            pitch =  VMECameraPitch.initCameraPitchDefault()
         }
-        return VMECameraPitch.initCameraPitch(value: data["pitch"] as! Double)
+        } else if (data["pitch"] is Double){
+            pitch = VMECameraPitch.initCameraPitch(value: data["pitch"] as! Double)
+        }
+        return pitch;
     }
     
     static func getNativeViewMode(data: NSDictionary) -> VMEViewMode{
