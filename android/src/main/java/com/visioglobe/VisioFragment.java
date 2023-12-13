@@ -174,8 +174,6 @@ public class VisioFragment extends Fragment {
             Log.d(TAG, "====> SETTING LISTENERS");
         }
       }
-
-
       }
 
     View view = this.mMapView;
@@ -407,6 +405,11 @@ public class VisioFragment extends Fragment {
   public void unloadMapView() {
     Log.d("REF", "====> UNLOAD MAP VIEW ");
     mMapController.unloadMapView();
+  }
+
+  public void loadMapView() {
+    Log.d("REF", "====> RELOAD MAP VIEW ");
+    mMapController.loadMapView(mMapView);
   }
 
   public void setPois(String data) {

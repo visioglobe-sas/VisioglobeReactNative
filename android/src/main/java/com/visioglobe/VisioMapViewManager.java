@@ -70,6 +70,8 @@ public class VisioMapViewManager extends ViewGroupManager<FrameLayout> {
   public final int COMMAND_UNLOAD_MAP_DATA = 37;
   public final int COMMAND_UNLOAD_MAP_VIEW = 38;
 
+  public final int COMMAND_LOAD_MAP_VIEW = 39;
+
   private int reactNativeViewId;
   private int propWidth;
   private int propHeight;
@@ -144,6 +146,7 @@ public class VisioMapViewManager extends ViewGroupManager<FrameLayout> {
     commands.put("setCategories", COMMAND_SET_CATEGORIES);
     commands.put("unloadMapData", COMMAND_UNLOAD_MAP_DATA);
     commands.put("unloadMapView", COMMAND_UNLOAD_MAP_VIEW);
+    commands.put("loadMapView", COMMAND_LOAD_MAP_VIEW);
     return commands;
   }
 
@@ -220,6 +223,9 @@ public class VisioMapViewManager extends ViewGroupManager<FrameLayout> {
         break;
       case "unloadMapView":
         myFragment.unloadMapView();
+        break;
+      case "loadMapView":
+        myFragment.loadMapView();
         break;
       case "setExcludedAttributes" :
         ReadableArray excluded = args.getArray(0);
