@@ -45,10 +45,10 @@ go directly to the file with all the demo code by [clicking here](https://github
 <details>
     <summary> Basic Section </summary>
     This part show you how to load/unload a map.  
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <details>
-            * <summary> Display Props </summary>
+        * <details>
+             <summary> Display Props </summary>
             This shows you the minimal props you need to have within the VisioMapView component.  
-            If you have trouble getting any of them, please ask us in our [help platform](https://my.visioglobe.com/).   
+            If you have trouble getting any of them, please ask us in our [help platform](https://my.visioglobe.com) .  
             
             More specifically you have:  
             
@@ -57,8 +57,8 @@ go directly to the file with all the demo code by [clicking here](https://github
             - Map Path : If you want to use a local bundle, please indicate his path here. Note that using a local bundle means, updating it manually when the map is modified.  
         </details>  
         
-        <details>
-            * <summary> Unload Map View </summary>  
+        * <details>
+            <summary> Unload Map View </summary>  
             If you want to hide the map, you can using unload map view. You do not need to provide any argument.
         </details>
 </details> 
