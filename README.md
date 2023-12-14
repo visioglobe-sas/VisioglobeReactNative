@@ -49,7 +49,7 @@ ____
 <summary> Basic </summary>  
 This part show you how to load/unload a map.
 
-### **Display Props**  
+### ***Display Props***  
 This shows you the minimal props you need to have within the VisioMapView component.  
 If you have trouble getting any of them, please ask us in our [help platform](https://my.visioglobe.com).
 
@@ -72,7 +72,7 @@ const ref = React.useRef<VisioMapView>(null);
       />
 ```` 
 
-### **Unload Map View** 
+### ***Unload Map View*** 
 If you want to hide the map, you can using unload map view. You do not need to provide any argument.
 
 `````typescript 
@@ -84,6 +84,19 @@ const unloadMapView = () => {
 `````
 
 Then you can call it like in the [example](https://github.com/visioglobe-sas/VisioglobeReactNative/blob/main/example/src/App.tsx?plain=1#L207) 
+
+### ***Reload Map View*** 
+If you want to load the map **after hiding it**, you can with load map view. You do not need to provide any argument.
+
+`````typescript 
+ const loadMapView = () => {
+    if (ref.current) {
+      ref.current.loadMapView();
+    }
+  } 
+`````
+
+Then you can call it like in the [example](https://github.com/visioglobe-sas/VisioglobeReactNative/blob/main/example/src/App.tsx?plain=1#L243) 
 </details> 
 
 ____ 
