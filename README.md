@@ -107,21 +107,20 @@ ____
 ### ***Animate Camera***  
 This allows you to define a camera movement for a ***duration*** you define according to your ***VMCameraUpdate***.
 
-VMCameraUpdate is a TSObject defined with :        
-- *Heading* : VMHeading object define as :
-    - *heading* : string | number
-    - *current* : if you want to use current heading
-  current: boolean;
-- *paddingBottom* : the property used to define the space between the camera and its bottom-borders.
-- *paddingLeft* : the property used to define the space between the camera and its left-borders.
-- *paddingRight* : the property used to define the space between the camera and its right-borders.
-- *paddingTop* : the property used to define the space between the camera and its top-borders.
-- *pitch* : pitch //COMING NEXT TO DOC.
-- *targets* : the target you want to have at the camera (can be VMPosition or POIID (string))
-- *viewMode* : an enum of type VMViewModeType:
-    - floor
-    - global
-    - unkown
+>VMCameraUpdate is a TSObject defined with :        
+>- *Heading* : VMHeading object define as :
+>    - **heading** : string | number
+>    - **current** : if you want to use current heading
+>- *paddingBottom* : the property used to define the space between the camera and its bottom-borders.
+>- *paddingLeft* : the property used to define the space between the camera and its left-borders.
+>- *paddingRight* : the property used to define the space between the camera and its right-borders.
+>- *paddingTop* : the property used to define the space between the camera and its top-borders.
+>- *pitch* : pitch //COMING NEXT TO DOC.
+>- *targets* : the target you want to have at the camera (can be VMPosition or POIID (string))
+>- *viewMode* : an enum of type VMViewModeType:
+>    - floor
+>    - global
+>    - unkown
 
 ````typescript  
 const animateCamera = (values: VMCameraUpdate) => {
@@ -139,7 +138,6 @@ const animateCamera = (values: VMCameraUpdate) => {
 
         const pitch : VMCameraPitch = {
           type: pitchType.default,
-          pitch: -90
         }
 
         const values : VMCameraUpdate = {
@@ -152,9 +150,44 @@ const animateCamera = (values: VMCameraUpdate) => {
           targets : ["B2-UL00"],
           viewMode : VMViewModeType.floor,
         }
-        
+
         animateCamera(values)
 ```` 
+
+### ***Update Camera***  
+This allows you to define a camera movement **instantly** you define according to your ***VMCameraUpdate***. Here we are playing with the pitch and we are using a [**VMLocation**](https://github.com/visioglobe-sas/VisioglobeReactNative/blob/main/README.md?plain=1#L110) as a target.
+
+````typescript  
+const updateCamera = (values: VMCameraUpdate) => {
+    if (ref.current) {
+      ref.current.updateCamera(values);
+    }
+  };
+
+const heading : VMCameraHeading = {
+          current: true,
+        }
+        const pitch : VMCameraPitch = {
+          pitch: -90,
+        }
+        const position : VMPosition = {
+          altitude: 0.0,
+          latitude: 45.74200,
+          longitude: 4.88400
+        }
+        const values : VMCameraUpdate = {
+          heading : heading,
+          paddingBottom: 0,
+          paddingLeft: 0,
+          paddingRight : 0,
+          paddingTop : 0,
+          pitch : pitch,
+          targets : [position],
+          viewMode : VMViewModeType.floor,
+        }
+        updateCamera(values)
+```` 
+
 </details> 
 
 ____ 
