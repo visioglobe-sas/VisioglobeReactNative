@@ -42,23 +42,74 @@ clean and build the app <strong>in xcode</strong> before calling yarn ios
 Each of the following functionalities is demonstrated in the code in the example section. You can
 go directly to the file with all the demo code by [clicking here](https://github.com/visioglobe-sas/VisioglobeReactNative/blob/main/example/src/App.tsx).  
 
+### Sections  
+
+____
 <details>
-    <summary> Basic Section </summary>
-    This part show you how to load/unload a map.  
-        * <details>
-             <summary> Display Props </summary>
-            This shows you the minimal props you need to have within the VisioMapView component.  
-            If you have trouble getting any of them, please ask us in our [help platform](https://my.visioglobe.com) .  
-            
-            More specifically you have:  
-            
-            - Map Hash: A string to retrieve your map from our server. Using it will allows the map to be updated every time you are using your map is updated from our editor.
-            - Map Secret Code : Your secret code to load the map. 
-            - Map Path : If you want to use a local bundle, please indicate his path here. Note that using a local bundle means, updating it manually when the map is modified.  
-        </details>  
-        
-        * <details>
-            <summary> Unload Map View </summary>  
-            If you want to hide the map, you can using unload map view. You do not need to provide any argument.
-        </details>
+<summary> Basic </summary>  
+This part show you how to load/unload a map.
+
+### **Display Props**  
+This shows you the minimal props you need to have within the VisioMapView component.  
+If you have trouble getting any of them, please ask us in our [help platform](https://my.visioglobe.com).
+
+More specifically you have:           
+- *Map Hash* : A string to retrieve your map from our server. Using it will allows the map to be updated every time you are using your map is updated from our editor. Is mandatory if Path is not used.
+- *Map Secret Code* : Your secret code to load the map. 
+- *Map Path* : A string if you want to use a local bundle, please indicate his path here. Note that using a local bundle means, updating it manually when the map is modified. Is mandatory if Hash is not used.  
+- *Ref* : a ref to the MapView, mandatory to use this bridge.  
+
+````typescript  
+const ref = React.useRef<VisioMapView>(null);
+<VisioMapView
+        style={{
+        style
+        }}
+        mapHash={"mapHash"}
+        mapPath={"mapPath"}
+        mapSecret={0}
+        ref={ref}
+      />
+```` 
+
+### **Unload Map View** 
+If you want to hide the map, you can using unload map view. You do not need to provide any argument.
+
+`````typescript 
+const unloadMapView = () => {
+    if (ref.current) {
+      ref.current.unloadMapView();
+    }
+  }
+`````
+
+Then you can call it like in the [example](https://github.com/visioglobe-sas/VisioglobeReactNative/blob/main/example/src/App.tsx?plain=1#L207) 
 </details> 
+
+____ 
+<details>
+<summary> Camera </summary>
+</details> 
+
+____ 
+<details>
+    <summary> Routing </summary>
+</details> 
+
+____ 
+<details>
+    <summary> Search </summary>
+</details> 
+
+____ 
+<details>
+    <summary> POI </summary>
+</details> 
+
+____ 
+<details>
+    <summary> Search </summary>
+</details> 
+____ 
+
+
