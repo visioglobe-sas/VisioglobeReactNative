@@ -196,7 +196,7 @@ ____
 This allows you to define a route and the navigation on the map. 
     
 ### ***Simple Route***
-You have to use a ***VMRouteRequest*** and pass it to the computeRoute function. 
+You have to use a ***VMRouteRequest*** and pass it to the computeRoute function. Only one route can be shown at a time.
 Here is the structure of this object:
 >type VMRouteRequest = {  
 >  - *animateAllRoute*: boolean if you want to animate the routing trace on the map.
@@ -239,6 +239,29 @@ const position: VMPosition = {
         }
         computeRoute(value);
 `````
+You can find an implementation of it [here](https://github.com/visioglobe-sas/VisioglobeReactNative/blob/main/example/src/App.tsx?plain=1#141)
+
+### **Accessible Route**
+
+To build an accessible route you will have to put accessible boolean to true in your [VMRouteRequest](https://github.com/visioglobe-sas/VisioglobeReactNative/blob/main/README.md?plain=1#L200) like:
+
+`````typescript
+const value : VMRouteRequest = {
+          animateAllRoute: false,
+          destinationsOrder: VMRouteDestinationsOrder.closest,
+          isAccessible: true,
+          origin: "B3-UL01-ID-0013",
+          destinations: ["B3-UL00-ID0073"],
+          requestType: VMERouteRequestType.fatest
+        }
+        computeRoute(value);
+`````
+The route will go from B3-UL01-ID-0013 to B3-UL00-ID0073 with only accessible section (no stairs,etc..).
+
+It is implemented in the [example](https://github.com/visioglobe-sas/VisioglobeReactNative/blob/main/example/src/App.tsx?plain=1#211).
+
+
+### **Optimal and multi-destinations route**
 
 </details> 
 
