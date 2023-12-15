@@ -192,7 +192,54 @@ const heading : VMCameraHeading = {
 
 ____ 
 <details>
-    <summary> Routing </summary>
+<summary> Routing </summary>
+This allows you to define a route and the navigation on the map. 
+    
+### ***Simple Route***
+You have to use a ***VMRouteRequest*** and pass it to the computeRoute function. 
+Here is the structure of this object:
+>type VMRouteRequest = {  
+>  - *animateAllRoute*: boolean if you want to animate the routing trace on the map.
+>  - *destinationsOrder*: VMRouteDestinationsOrder enum used to define the order of reaching destinations if several are provided: 
+>    - **closest** 
+>    - **inOrder**,
+>    - **optimal**,
+>    - **optimalFinishOnLast**
+>  - *isAccessible*: boolean to define if accessibility criteria must be matched (PMR user...) 
+>  - *origin*: VMPosition|String , can be a PoiID as a string or a [VMPosition](https://github.com/visioglobe-sas/VisioglobeReactNative/blob/main/README.md?plain=1#L11) which define the beginning of the route.
+>  - *destinations* : (VMPosition|String)[], can be a list of both PoiID as a string and [VMPosition](https://github.com/visioglobe-sas/VisioglobeReactNative/blob/main/README.md?plain=1#L11) which define the destinations of the route.
+>  - *requestType*: VMERouteRequestType :
+>    - **fastest**
+>    - **shortest**  
+>  }
+
+You can use it like this : 
+
+````typescript
+const computeRoute = (value : VMRouteRequest) => {
+    if (ref.current) {
+      ref.current.computeRoute(value);
+    }
+  }
+````
+A simple way to create a routing is to call our computeRoute() with simply defined object's VMRouteRequest like so :
+`````typescript
+const position: VMPosition = {
+          altitude: 0.0,
+          latitude: 45.7413,
+          longitude: 4.88216
+        }
+        const value : VMRouteRequest = {
+          animateAllRoute: false,
+          destinationsOrder: VMRouteDestinationsOrder.closest,
+          isAccessible: false,
+          origin: position,
+          destinations: ["B1-UL00-ID0034"],
+          requestType: VMERouteRequestType.fatest
+        }
+        computeRoute(value);
+`````
+
 </details> 
 
 ____ 
