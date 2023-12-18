@@ -7,7 +7,7 @@ import {
   NativeMethods,
 } from 'react-native';
 import MapView, { Commands, NativeProps } from './VisioMapViewNativeComponent';
-import { VMCameraUpdate, VMLocation, VMRouteRequest, VMSceneUpdate } from './VisioTypes';
+import { VMCameraUpdate, VMLocation, VMPoi, VMRouteRequest, VMSceneUpdate } from './VisioTypes';
 //import codegenNativeComponent, { NativeComponentType } from 'react-native/Libraries/Utilities/codegenNativeComponent';
 import { Double } from 'react-native/Libraries/Types/CodegenTypes';
 
@@ -24,6 +24,13 @@ const createFragment = (viewId: number | null) =>
 
 export const VisioMapView = forwardRef((props: NativeProps, ref) => {
   const r = useRef() as React.MutableRefObject<Component<NativeProps, {}, any> & Readonly<NativeMethods>>;
+
+    // PSPDFKitView.js
+// We need to keep track of all running requests, so we store a counter.
+const _nextRequestId = 1;
+// We also need to keep track of all the promises we created so we can
+// resolve them later.
+const _requestMap = new Map();
 
   const _setExcludedAttributes = (value: [string]) => {
     Commands.setExcludedAttributes(r.current, value);
@@ -135,19 +142,15 @@ const _setCompass = (value: boolean) => {
     Commands.removePois(r.current,values)
   }
 
-  const _getVersion = () => {
-    /*let requestId: number = this._nextRequestId++;
+  const _getPoi = (value : string) => {
+    let requestId: number = this._nextRequestId++;
     let requestMap = this._requestMap;
     let promise = new Promise(function (resolve, reject) {
       requestMap[requestId] = { resolve: resolve, reject: reject };
-    });*/
-    const pro : Promise<String> = Commands.getVersion(r.current);
+    });
+    const pro : Promise<VMPoi|null> = Commands.getPoi(r.current,value);
     pro.then((value) => console.log(value));
-
-    /**promise.then((value) => {
-      console.log(value);
-    });**/
-    //return (promise);
+    return (promise);
   };
 
   /// EN COURS
@@ -198,7 +201,7 @@ const _setCompass = (value: boolean) => {
     computeRoute: _computeRoute,
     getPoiPosition: _getPoiPosition,
     setSelectorViewVisible: _setSelectorViewVisible,
-    getVersion: _getVersion, 
+    //getVersion: _getVersion, 
     unloadMapView: _unloadMapView,
     unloadMapData: _unloadMapData,
     loadMapView : _loadMapView,
@@ -229,6 +232,22 @@ const _setCompass = (value: boolean) => {
       createFragment(viewId);
     }
   }, []);
+
+  const _onDataReturned = (event: { nativeEvent: { requestId: any; result: any; error: any; }; }) => {
+    // We grab the relevant data out of our event.
+    let { requestId, result, error } = event.nativeEvent
+    // Then we get the promise we saved earlier for the given request ID.
+    let promise = this._requestMap[requestId]
+    if (result) {
+      // If it was successful, we resolve the promise.
+      promise.resolve(result)
+    } else {
+      // Otherwise, we reject it.
+      promise.reject(error)
+    }
+    // Finally, we clean up our request map.
+    this._requestMap.delete(requestId)
+  }
 
   return (
     <MapView

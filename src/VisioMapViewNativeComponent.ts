@@ -252,7 +252,7 @@ interface NativeCommands {
     getPoi : (
       viewRef: React.ElementRef<NativeComponentType>, 
       poiID: String
-      ) => VMPoi | null;
+      ) => Promise<VMPoi | null>;
 
     getPoiBoundingPositions : (
       viewRef: React.ElementRef<NativeComponentType>, 
