@@ -1,15 +1,19 @@
 package com.visioglobe
 
 import android.util.Log
+import com.facebook.react.bridge.ReadableArray
 import com.facebook.react.bridge.ReadableMap
 import com.facebook.react.bridge.ReadableType
+import com.facebook.react.bridge.WritableMap
 import com.visioglobe.visiomoveessential.enums.VMEViewMode
 import com.visioglobe.visiomoveessential.models.VMECameraHeading
 import com.visioglobe.visiomoveessential.models.VMECameraPitch
 import com.visioglobe.visiomoveessential.models.VMECameraUpdate
 import com.visioglobe.visiomoveessential.models.VMECameraUpdateBuilder
+import com.visioglobe.visiomoveessential.models.VMEPoi
 import com.visioglobe.visiomoveessential.models.VMEPosition
 import com.visioglobe.visiomoveessential.models.VMESceneContext
+import java.util.Dictionary
 
 class UtilsType {
     fun readableMapToCameraHeading(lHeading: ReadableMap?): VMECameraHeading {
@@ -84,5 +88,23 @@ class UtilsType {
             positionMap.getDouble("altitude"),
             scene
         )
+    }
+
+    fun vMEPoiToVMPoi(poi : VMEPoi): MutableMap<String,Any>{
+        var result = mutableMapOf<String,Any>();
+        result["altitudeMode"] = poi.altitudeMode.name
+        result["htmlDescription"] = poi.htmlDescription
+        result["name"] = poi.name
+        result["imageURL"] = poi.imageURL.toString()
+        result["id"] = poi.id
+        result["icon"] = poi.icon
+        result["categories"] = poi.categories
+        result["position"] = mutableMapOf<String,Any>("altitude" to poi.position.altitude, "longitude" to poi.position.longitude, "latitude" to poi.position.latitude,"scene" to
+                mutableMapOf<String,Any>("buildingID" to poi.position.scene.buildingID, "floorID" to poi.position.scene.floorID));
+        result["size"] = mutableMapOf("scale" to poi.size.scale, "constantSizeDistant" to poi.size.sizeDistance)
+        result["orientation"] = poi.orientation
+        result["displayMode"] = poi.displayMode.name
+        result["anchorMode"] = poi.anchorMode.name
+        return result
     }
 }

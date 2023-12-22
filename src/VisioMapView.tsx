@@ -22,15 +22,15 @@ const createFragment = (viewId: number | null) =>
     [viewId]
   );
 
+  // We need to keep track of all running requests, so we store a counter.
+  let _nextRequestId = 1;
+  // We also need to keep track of all the promises we created so we can
+  // resolve them later.
+  let _requestMap = new Map<number,Promise<any>>();
+    
+
 export const VisioMapView = forwardRef((props: NativeProps, ref) => {
   const r = useRef() as React.MutableRefObject<Component<NativeProps, {}, any> & Readonly<NativeMethods>>;
-
-    // PSPDFKitView.js
-// We need to keep track of all running requests, so we store a counter.
-const _nextRequestId = 1;
-// We also need to keep track of all the promises we created so we can
-// resolve them later.
-const _requestMap = new Map();
 
   const _setExcludedAttributes = (value: [string]) => {
     Commands.setExcludedAttributes(r.current, value);
@@ -143,14 +143,13 @@ const _setCompass = (value: boolean) => {
   }
 
   const _getPoi = (value : string) => {
-    let requestId: number = this._nextRequestId++;
-    let requestMap = this._requestMap;
+    let requestId: number = _nextRequestId++;
+    let requestMap = _requestMap;
     let promise = new Promise(function (resolve, reject) {
-      requestMap[requestId] = { resolve: resolve, reject: reject };
+      requestMap.set(requestId,{ resolve: resolve, reject: reject });
     });
-    const pro : Promise<VMPoi|null> = Commands.getPoi(r.current,value);
-    pro.then((value) => console.log(value));
-    return (promise);
+    Commands.getPoi(r.current,requestId,value);
+    return promise;
   };
 
   /// EN COURS
@@ -222,7 +221,8 @@ const _setCompass = (value: boolean) => {
     setCompass: _setCompass,
     updateLocation: _updateLocation, 
     showSearchViewWithTitle: _showSearchViewWithTitle,
-    removePois: _removePois
+    removePois: _removePois,
+    getPoi: _getPoi
   }));
 
   React.useEffect(() => {
@@ -233,11 +233,12 @@ const _setCompass = (value: boolean) => {
     }
   }, []);
 
-  const _onDataReturned = (event: { nativeEvent: { requestId: any; result: any; error: any; }; }) => {
+  const _onDataReturned = (event: { nativeEvent: { requestId: number; result: any; error: any; }; }) => {
+    console.log("cc ondatareturned here")
     // We grab the relevant data out of our event.
     let { requestId, result, error } = event.nativeEvent
     // Then we get the promise we saved earlier for the given request ID.
-    let promise = this._requestMap[requestId]
+    let promise = _requestMap.get(requestId-1);
     if (result) {
       // If it was successful, we resolve the promise.
       promise.resolve(result)
@@ -245,15 +246,20 @@ const _setCompass = (value: boolean) => {
       // Otherwise, we reject it.
       promise.reject(error)
     }
+    promise.then((value: any) => {
+      console.log(value);
+      // Expected output: 123
+    });
     // Finally, we clean up our request map.
-    this._requestMap.delete(requestId)
+    _requestMap.delete(requestId)
+    
   }
 
   return (
     <MapView
       ref={r}
       ///EN COURS
-      onDataReturned={this._onDataReturned}
+      onDataReturned={_onDataReturned}
       ///
       style={props.style}
       mapHash={props.mapHash}
@@ -263,4 +269,6 @@ const _setCompass = (value: boolean) => {
       promptToDownload={props.promptToDownload}
     />
   );
+
+  
 });

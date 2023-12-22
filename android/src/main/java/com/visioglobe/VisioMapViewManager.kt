@@ -2,6 +2,7 @@ package com.visioglobe
 
 import android.os.Build
 import android.util.Log
+import android.util.LogPrinter
 import android.view.Choreographer
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,8 @@ import androidx.fragment.app.FragmentActivity
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.ReadableArray
 import com.facebook.react.bridge.ReadableType
+import com.facebook.react.bridge.WritableMap
+import com.facebook.react.bridge.WritableNativeMap
 import com.facebook.react.common.MapBuilder
 import com.facebook.react.uimanager.ThemedReactContext
 import com.facebook.react.uimanager.UIManagerModule
@@ -21,6 +24,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import kotlin.reflect.full.memberProperties
 
 class VisioMapViewManager(var reactContext: ReactApplicationContext) :
     ViewGroupManager<FrameLayout>() {
@@ -58,11 +63,11 @@ class VisioMapViewManager(var reactContext: ReactApplicationContext) :
     val COMMAND_SET_POIS_SIZE = 32
     val COMMAND_SET_POI_POSITION = 33
     val COMMAND_SET_POIS_POSITION = 34
-    val COMMAND_SHOW_POI_INFO = 35
-    val COMMAND_SET_CATEGORIES = 36
-    val COMMAND_UNLOAD_MAP_DATA = 37
-    val COMMAND_UNLOAD_MAP_VIEW = 38
-    val COMMAND_LOAD_MAP_VIEW = 39
+    private val COMMAND_SHOW_POI_INFO = 35
+    private val COMMAND_SET_CATEGORIES = 36
+    private val COMMAND_UNLOAD_MAP_DATA = 37
+    private val COMMAND_UNLOAD_MAP_VIEW = 38
+    private val COMMAND_LOAD_MAP_VIEW = 39
     private var reactNativeViewId = 0
     private val propWidth = 0
     private val propHeight = 0
@@ -71,6 +76,7 @@ class VisioMapViewManager(var reactContext: ReactApplicationContext) :
     private var propSecret = 0
     private var propListeners: ReadableArray? = null
     private var promptToDownload = false
+    private val coroutineScope = CoroutineScope(Dispatchers.Default)
     override fun getName(): String {
         return REACT_CLASS
     }
@@ -153,7 +159,6 @@ class VisioMapViewManager(var reactContext: ReactApplicationContext) :
         super.receiveCommand(root, commandId, args)
         // int commandIdInt = Integer.parseInt(commandId);
         val context = reactContext
-        val coroutineScope = CoroutineScope(Dispatchers.Default + Job())
         val activity = reactContext.currentActivity as FragmentActivity?
         val eventDispatcher = context.getNativeModule(
             UIManagerModule::class.java
@@ -289,9 +294,23 @@ class VisioMapViewManager(var reactContext: ReactApplicationContext) :
             }
 
             "getPoi" -> {
-                val poiId = args!!.getString(0)
-                coroutineScope.launch { myFragment!!.getPoi(poiId)
+                val poiId = args?.getString(1);
+                val resultMap = WritableNativeMap();
+                val result = myFragment!!.getPoi(poiId)?.let { UtilsType().vMEPoiToVMPoi(it) };
+                val requestId = args?.getInt(0);
+                Log.d("CC", "receiveCommand:$result")
+                resultMap.putString("getPoi", result.toString());
+                coroutineScope.launch {
+                    launch(Dispatchers.Main) {
+                        eventDispatcher.dispatchEvent(requestId?.let {
+                            VisioGetReturnedEvent(
+                                reactNativeViewId,
+                                it, resultMap
+                            )
+                        })
+                    }
                 }
+
                 run {}
             }
 

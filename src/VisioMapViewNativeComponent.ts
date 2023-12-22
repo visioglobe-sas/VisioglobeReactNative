@@ -251,8 +251,9 @@ interface NativeCommands {
 
     getPoi : (
       viewRef: React.ElementRef<NativeComponentType>, 
+      requestId : number,
       poiID: String
-      ) => Promise<VMPoi | null>;
+      ) => Promise<any>;
 
     getPoiBoundingPositions : (
       viewRef: React.ElementRef<NativeComponentType>, 

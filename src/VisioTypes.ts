@@ -1,6 +1,6 @@
 export type VMSceneContext = {
   buildingID : string | null,
-  description : string,
+  description? : string,
   floorID : string | null
 }
 
