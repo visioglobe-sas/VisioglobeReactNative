@@ -237,13 +237,14 @@ const _setCompass = (value: boolean) => {
     console.log("cc ondatareturned here")
     // We grab the relevant data out of our event.
     let { requestId, result, error } = event.nativeEvent
-    console.log(requestId);
-    console.log(result);
     // Then we get the promise we saved earlier for the given request ID.
     _requestMap.forEach(function (key,value) {
       console.log(value, "+ ", key );});
-    /*let promise = _requestMap.get(requestId-1);
-    if (result) {
+    const result1 = (Object.keys(_requestMap) as (keyof typeof _requestMap)[]).find((key) => {
+        console.log(_requestMap[key] === requestId);
+      });
+      result1;
+    /*if (result) {
       // If it was successful, we resolve the promise.
       promise.resolve(result)
     } else {
