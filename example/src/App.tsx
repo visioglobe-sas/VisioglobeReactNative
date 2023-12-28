@@ -23,7 +23,8 @@ export default function App(){
   //Camera Section 
   const animateCamera = (values: VMCameraUpdate) => {
     if (ref.current) {
-      ref.current.animateCamera(values,3);
+      ref.current.animateCamera(values,3 //duration here fixed to 3
+      );
     }
   };
 
@@ -61,6 +62,14 @@ export default function App(){
   const computeRoute = (value : VMRouteRequest) => {
     if (ref.current) {
       ref.current.computeRoute(value);
+    }
+  }
+
+  //Poi section
+
+  const getPoi = (value : string) => {
+    if (ref.current) {
+      ref.current.getPoi(value);
     }
   }
 
@@ -119,7 +128,8 @@ export default function App(){
           current: true
         }
         const pitch : VMCameraPitch = {
-          type: pitchType.default
+          type: pitchType.default,
+          pitch: -90
         }
         const values : VMCameraUpdate = {
           heading : heading,
@@ -184,7 +194,7 @@ export default function App(){
           current: true,
         }
         const pitch : VMCameraPitch = {
-          pitch : -90,
+          pitch: -90,
         }
         const position : VMPosition = {
           altitude: 0.0,
@@ -225,7 +235,10 @@ export default function App(){
       }
       
       if (checkBoxString2 === "Show POI") {
-        console.log("La chaîne correspond à 'Show POI'.");
+        let res = ref.current.getPoi("B1-UL00-ID0034");
+        res.then((value: any) => {
+          Alert.alert("getPoi result is " + value);
+        });
       }
       
       if (checkBoxString2 === "Overlay") {
