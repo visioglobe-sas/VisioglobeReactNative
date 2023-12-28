@@ -305,7 +305,7 @@ class VisioMapViewManager(var reactContext: ReactApplicationContext) :
                         eventDispatcher.dispatchEvent(requestId?.let {
                             VisioGetReturnedEvent(
                                 reactNativeViewId,
-                                it, resultMap
+                                it, result.toString()
                             )
                         })
                     }

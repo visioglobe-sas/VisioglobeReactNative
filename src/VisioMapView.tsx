@@ -144,9 +144,8 @@ const _setCompass = (value: boolean) => {
 
   const _getPoi = (value : string) => {
     let requestId: number = _nextRequestId++;
-    let requestMap = _requestMap;
     let promise = new Promise(function (resolve, reject) {
-      requestMap.set(requestId,{ resolve: resolve, reject: reject });
+      _requestMap.set(requestId,{ resolve: resolve, reject: reject });
     });
     Commands.getPoi(r.current,requestId,value);
     return promise;
@@ -237,26 +236,21 @@ const _setCompass = (value: boolean) => {
     console.log("cc ondatareturned here")
     // We grab the relevant data out of our event.
     let { requestId, result, error } = event.nativeEvent
+    let promise = _requestMap.get(requestId);
     // Then we get the promise we saved earlier for the given request ID.
     _requestMap.forEach(function (key,value) {
-      console.log(value, "+ ", key );});
-    const result1 = (Object.keys(_requestMap) as (keyof typeof _requestMap)[]).find((key) => {
-        console.log(_requestMap[key] === requestId);
-      });
-      result1;
-    /*if (result) {
+      console.log("value" + value, "+ key: ", key );});
+      if (promise != undefined){
+    if (result) {
       // If it was successful, we resolve the promise.
       promise.resolve(result)
     } else {
       // Otherwise, we reject it.
       promise.reject(error)
     }
-    promise.then((value: any) => {
-      console.log(value);
-      // Expected output: 123
-    });
     // Finally, we clean up our request map.
-    _requestMap.delete(requestId)*/
+  }
+    _requestMap.delete(requestId)
     
   }
 
