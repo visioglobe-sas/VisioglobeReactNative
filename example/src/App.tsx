@@ -267,7 +267,7 @@ export default function App(){
     <View style={styles.container}>
       <View style={styles.upper}>
       {/* Dropdown Menu */}
-      <ScrollView style={[styles.dropdown, /*{ height: '100%'}*/]}>
+      <ScrollView style={[styles.dropdown]}>
 
       <TouchableOpacity onPress={() => handleBasicClick()} style={styles.dropdownButton}>
           <Text>Basic</Text> 
@@ -344,8 +344,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection :'column',
-    height :'100%'
-
   },
   upper: {
     flex: 1,
@@ -365,15 +363,17 @@ const styles = StyleSheet.create({
     backgroundColor: '#e0e0e0',
     overflow: 'scroll',
     width: '20%',
-    height:'200%'
+    height:'100%',
+    //backgroundColor: '#FF69B4'
   },
   dropdownButton: {
     justifyContent: 'center',
-    height : '40%',
+    height : 'auto',
     padding: 5,
     textAlign :'center',
     borderBottomWidth: 1,
     borderBottomColor: '#ccc',
+    //backgroundColor: '#FFB4'
   },
   checkboxSection: {
     height: '15%',
