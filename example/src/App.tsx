@@ -267,7 +267,7 @@ export default function App(){
     <View style={styles.container}>
       <View style={styles.upper}>
       {/* Dropdown Menu */}
-      <ScrollView style={[styles.dropdown, { height: '100%'}]}>
+      <ScrollView style={[styles.dropdown, /*{ height: '100%'}*/]}>
 
       <TouchableOpacity onPress={() => handleBasicClick()} style={styles.dropdownButton}>
           <Text>Basic</Text> 
@@ -313,7 +313,7 @@ export default function App(){
       </View>
       </View>
 
-      {/* Section avec 3 CheckBox en bas de l'écran */}
+      {/* Section avec 3 CheckBox en bas de l'écran*/}
       <View style={styles.checkboxSection}>
         <View style= {styles.viewButton}>
         <CheckBox value={checkbox1} 
@@ -334,7 +334,7 @@ export default function App(){
         />
         <Text>{checkBoxString3}</Text>
         </View>
-      </View>
+    </View>
     </View>
   );
 };
@@ -344,29 +344,32 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection :'column',
+    height :'100%'
+
   },
   upper: {
-    marginTop : '6%',
     flex: 1,
     flexDirection: 'row',
   },
   mapview: {
     width:'80%',
+    textAlign:'right'
     //marginLeft: '20%',
   },
   toggleButton: {
-    padding: 10,
+    //padding: 10,
     backgroundColor: '#3498db',
     alignItems: 'center',
   },
   dropdown: {
     backgroundColor: '#e0e0e0',
-    overflow: 'hidden',
+    overflow: 'scroll',
     width: '20%',
+    height:'200%'
   },
   dropdownButton: {
     justifyContent: 'center',
-    height : '77%',
+    height : '40%',
     padding: 5,
     textAlign :'center',
     borderBottomWidth: 1,
