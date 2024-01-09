@@ -293,7 +293,7 @@ const _setCompass = (value: boolean) => {
             startVisible: 0
         }
     };
-    console.log(data);
+    //console.log(data);
     data = JSON.parse(data);
     result.altitudeMode = data["altitudeMode"] 
     result.anchorMode = data["anchorMode"]

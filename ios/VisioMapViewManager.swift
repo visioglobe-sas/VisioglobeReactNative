@@ -98,6 +98,7 @@ class VisioMapViewManager: RCTViewManager {
     func computeRoute(_ reactTag: NSNumber, data: NSDictionary) {
         print("=====> COMPUTE ROUTE FROM VIEW MANAGER")
         var destinations : [AnyHashable] = [];
+        print(data);
         for position in data["destinations"] as! NSArray {
             if (!(position is NSString)) {
                 let VMPosition = Utils.getNativePosition(VMPos: position as! NSDictionary)
@@ -302,7 +303,7 @@ class VisioMapViewManager: RCTViewManager {
         print("GET CATEGORY")
     }
 
-    @objc func getPoi(_ reactTag: NSNumber) {
+    @objc func getPoi(_ reactTag: NSNumber, requestId : NSNumber ,value: NSString) {
         print("GET POI")
     }
 

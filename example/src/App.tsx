@@ -37,7 +37,7 @@ export default function App(){
 
   //Basic Section
   const showMapInfo = (mapHash : string, mapSecret : number, mapPath : string) => {
-    Alert.alert("Current map props: ", " Hash :" + mapHash +",\n Path : " + mapPath + ",\n Secret Code : " + mapSecret);
+    Alert.alert("Current map props: ", " HASH :" + mapHash +",\n PATH : " + mapPath + ",\n SECRET CODE : " + mapSecret);
   };
 
   const unloadMapView = () => {
@@ -111,7 +111,7 @@ export default function App(){
   const handleSearchClick = () => {
     setCheckBoxString1("Open SearchBar");
     setCheckBoxString2("Show POI");
-    setCheckBoxString3("Set Categorie");
+    setCheckBoxString3("Get POI");
   }
 
   const handleThemeClick = ( ) => {

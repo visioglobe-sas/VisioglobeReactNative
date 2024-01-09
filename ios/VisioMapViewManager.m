@@ -59,7 +59,9 @@ RCT_EXTERN_METHOD(removePoi : (nonnull NSNumber *)reactTag);
 RCT_EXTERN_METHOD(removePois : (nonnull NSNumber *)reactTag
                   data : (nonnull NSArray<NSString *> *)data);
 RCT_EXTERN_METHOD(getCategory : (nonnull NSNumber *)reactTag);
-RCT_EXTERN_METHOD(getPoi : (nonnull NSNumber *)reactTag);
+RCT_EXTERN_METHOD(getPoi : (nonnull NSNumber *)reactTag
+                  requestId : (nonnull NSNumber) requestId
+                  value : (nonnull NSString) value);
 RCT_EXTERN_METHOD(getPoiBoundingPositions : (nonnull NSNumber *)reactTag);
 RCT_EXTERN_METHOD(queryAllCategoryIDs : (nonnull NSNumber *)reactTag);
 RCT_EXTERN_METHOD(queryAllPoiIDs : (nonnull NSNumber *)reactTag);
