@@ -35,6 +35,12 @@ export default function App(){
     }
   };
 
+  const setPois = (values: string) => {
+    if (ref.current) {
+      ref.current.setPois(values);
+    }
+  };
+
   //Basic Section
   const showMapInfo = (mapHash : string, mapSecret : number, mapPath : string) => {
     Alert.alert("Current map props: ", " HASH :" + mapHash +",\n PATH : " + mapPath + ",\n SECRET CODE : " + mapSecret);
@@ -86,9 +92,6 @@ export default function App(){
     setCheckBoxString2("Update Camera");
     setCheckBoxString3("Camera Context");
   };
-
-
-
 
   const handleBasicClick = () =>{
     setCheckBoxString1("Display props");
@@ -167,7 +170,7 @@ export default function App(){
       }
     
       if (checkBoxString1 === "Create POIs") {
-        console.log("La chaîne correspond à 'Create POIs'.");
+        setPois('{"catCringe":{"name":"Black cat","icon":"https://upload.wikimedia.org/wikipedia/commons/4/4f/Kitty_emoji.png","description":"Black cat is here","features":{"image":{"icon":"https://upload.wikimedia.org/wikipedia/commons/4/4f/Kitty_emoji.png","position":[45.74131,4.88216,0.0],"anchorMode":"bottomCenter","scale":15.0,"altitudeMode":"absolute"}}}} ');
       }
     
       if (checkBoxString1 === "Open SearchBar") {
