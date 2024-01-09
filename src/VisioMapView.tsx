@@ -10,7 +10,6 @@ import MapView, { Commands, NativeProps } from './VisioMapViewNativeComponent';
 import { VMCameraUpdate, VMLocation, VMPoi, VMRouteRequest, VMSceneUpdate } from './VisioTypes';
 //import codegenNativeComponent, { NativeComponentType } from 'react-native/Libraries/Utilities/codegenNativeComponent';
 import { Double } from 'react-native/Libraries/Types/CodegenTypes';
-
 const MODULE =
   Platform.OS === 'android' ? 'VisioglobeModule' : 'VisioMapViewManager';
 
@@ -233,16 +232,18 @@ const _setCompass = (value: boolean) => {
   }, []);
 
   const _onDataReturned = (event: { nativeEvent: { requestId: number; result: any; error: any; }; }) => {
-    console.log("cc ondatareturned here")
+    //console.log("cc ondatareturned here")
     // We grab the relevant data out of our event.
     let { requestId, result, error } = event.nativeEvent
     let promise = _requestMap.get(requestId);
     // Then we get the promise we saved earlier for the given request ID.
-    _requestMap.forEach(function (key,value) {
-      console.log("value" + value, "+ key: ", key );});
-      if (promise != undefined){
+    if (promise != undefined){
     if (result) {
       // If it was successful, we resolve the promise.
+        if (result.startsWith("getPoi")){
+          //console.log(result.substr(result.indexOf(" ") + 1));
+          result = stringToVMPoi(result.substr(result.indexOf(" ") + 1));
+        }
       promise.resolve(result)
     } else {
       // Otherwise, we reject it.
@@ -253,6 +254,70 @@ const _setCompass = (value: boolean) => {
     _requestMap.delete(requestId)
     
   }
+
+  /// UTILS
+
+  function stringToVMPoi(data:string):VMPoi{
+    let result : VMPoi = {
+        altitudeMode: {
+            rawValue: "absolute"
+        },
+        anchorMode: {
+            rawValue: "center"
+        },
+        categories: [],
+        displayMode: {
+            rawValue: "inlay"
+        },
+        htmlDescription: "",
+        icon: "",
+        id: "",
+        imageURL: "",
+        name: "",
+        orientation: {},
+        position: {
+            altitude: 0,
+            description: undefined,
+            latitude: 0,
+            longitude: 0,
+            scene: undefined
+        },
+        size: {
+            sclae: 0,
+            constantSizeDistant: 0
+        },
+        visibilityRamp: {
+            fullyInvisible: 0,
+            fullyVisible: 0,
+            startInvisible: 0,
+            startVisible: 0
+        }
+    };
+    console.log(data);
+    data = JSON.parse(data);
+    result.altitudeMode = data["altitudeMode"] 
+    result.anchorMode = data["anchorMode"]
+    result.htmlDescription = data["htmlDescription"]
+    result.name = data["name"]
+    result.imageURL = data["imageURL"]
+    result.id = data["id"]
+    result.icon = data["icon"]
+    result.categories = data["categories"]
+    result.position.altitude = data["position"]["altitude"]
+    result.position.latitude = data["position"]["latitude"]
+    result.position.longitude = data["position"]["longitude"]
+    result.position.scene = data["position"]["scene"]
+    result.size.sclae = data["size"]["scale"]
+    result.size.constantSizeDistant = data["size"]["constantSizeDistant"]
+    result.size.sclae = data["size"]["scale"]
+    //TODO result.orientation = data["orientation"]
+    result.displayMode = data["displayMode"]
+    result.visibilityRamp.fullyInvisible = data["visibilityRamp"]["fullyInvisible"]
+    result.visibilityRamp.fullyVisible = data["visibilityRamp"]["fullyVisible"]
+    result.visibilityRamp.startInvisible = data["visibilityRamp"]["startInvisible"]
+    result.visibilityRamp.startVisible = data["visibilityRamp"]["startVisible"]
+    return result;
+}
 
   return (
     <MapView

@@ -295,17 +295,15 @@ class VisioMapViewManager(var reactContext: ReactApplicationContext) :
 
             "getPoi" -> {
                 val poiId = args?.getString(1);
-                val resultMap = WritableNativeMap();
                 val result = myFragment!!.getPoi(poiId)?.let { UtilsType().vMEPoiToVMPoi(it) };
                 val requestId = args?.getInt(0);
-                Log.d("CC", "receiveCommand:$result")
-                resultMap.putString("getPoi", result.toString());
+                //Log.d("CC", "receiveCommand:$result")
                 coroutineScope.launch {
                     launch(Dispatchers.Main) {
                         eventDispatcher.dispatchEvent(requestId?.let {
                             VisioGetReturnedEvent(
                                 reactNativeViewId,
-                                it, result.toString()
+                                it, "getPoi $result"
                             )
                         })
                     }

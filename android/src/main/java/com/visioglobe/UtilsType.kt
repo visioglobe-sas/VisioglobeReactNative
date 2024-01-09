@@ -5,12 +5,16 @@ import com.facebook.react.bridge.ReadableArray
 import com.facebook.react.bridge.ReadableMap
 import com.facebook.react.bridge.ReadableType
 import com.facebook.react.bridge.WritableMap
+import com.visioglobe.visiomoveessential.enums.VMEPoiAltitudeMode
+import com.visioglobe.visiomoveessential.enums.VMEPoiAnchorMode
+import com.visioglobe.visiomoveessential.enums.VMEPoiDisplayMode
 import com.visioglobe.visiomoveessential.enums.VMEViewMode
 import com.visioglobe.visiomoveessential.models.VMECameraHeading
 import com.visioglobe.visiomoveessential.models.VMECameraPitch
 import com.visioglobe.visiomoveessential.models.VMECameraUpdate
 import com.visioglobe.visiomoveessential.models.VMECameraUpdateBuilder
 import com.visioglobe.visiomoveessential.models.VMEPoi
+import com.visioglobe.visiomoveessential.models.VMEPoiOrientation
 import com.visioglobe.visiomoveessential.models.VMEPosition
 import com.visioglobe.visiomoveessential.models.VMESceneContext
 import java.util.Dictionary
@@ -90,21 +94,53 @@ class UtilsType {
         )
     }
 
-    fun vMEPoiToVMPoi(poi : VMEPoi): MutableMap<String,Any>{
-        var result = mutableMapOf<String,Any>();
-        result["altitudeMode"] = poi.altitudeMode.name
-        result["htmlDescription"] = poi.htmlDescription
-        result["name"] = poi.name
-        result["imageURL"] = poi.imageURL.toString()
-        result["id"] = poi.id
-        result["icon"] = poi.icon
-        result["categories"] = poi.categories
-        result["position"] = mutableMapOf<String,Any>("altitude" to poi.position.altitude, "longitude" to poi.position.longitude, "latitude" to poi.position.latitude,"scene" to
-                mutableMapOf<String,Any>("buildingID" to poi.position.scene.buildingID, "floorID" to poi.position.scene.floorID));
-        result["size"] = mutableMapOf("scale" to poi.size.scale, "constantSizeDistant" to poi.size.sizeDistance)
-        result["orientation"] = poi.orientation
-        result["displayMode"] = poi.displayMode.name
-        result["anchorMode"] = poi.anchorMode.name
+    fun altitudeModeToString(altitudeMode: VMEPoiAltitudeMode) : String{
+        return when(altitudeMode){
+            VMEPoiAltitudeMode.RELATIVE -> "\"relative\""
+            VMEPoiAltitudeMode.ABSOLUTE -> "\"absolute\""
+        }
+    }
+    fun anchorModeToString(anchorMode: VMEPoiAnchorMode) : String{
+        return when(anchorMode){
+            VMEPoiAnchorMode.TOP_LEFT -> "\"topleft\""
+            VMEPoiAnchorMode.TOP_CENTER -> "\"topcenter\""
+            VMEPoiAnchorMode.TOP_RIGHT -> "\"topright\""
+            VMEPoiAnchorMode.CENTER_LEFT -> "\"centerleft\""
+            VMEPoiAnchorMode.CENTER -> "\"center\""
+            VMEPoiAnchorMode.CENTER_RIGHT ->  "\"centerright\""
+            VMEPoiAnchorMode.BOTTOM_LEFT -> "\"bottomleft\""
+            VMEPoiAnchorMode.BOTTOM_CENTER -> "\"bottomcenter\""
+            VMEPoiAnchorMode.BOTTOM_RIGHT -> "\"bottomright\""
+        }
+    }
+
+    fun displayModeToString(displayMode: VMEPoiDisplayMode) : String{
+        return when(displayMode){
+            VMEPoiDisplayMode.OVERLAY -> "\"overlay\""
+            VMEPoiDisplayMode.INLAY -> "\"inlay\""
+        }
+    }
+
+    /*fun orientationToString(orientation: VMEPoiOrientation) : String{
+        return when(orientation.toString()){
+        }
+    }*/
+
+    fun vMEPoiToVMPoi(poi : VMEPoi): String{
+        var result = "{\"altitudeMode\" : " + altitudeModeToString(poi.altitudeMode) + " ,"
+        result += "\"htmlDescription\" :\"" + poi.htmlDescription.replace(Regex("""(\r\n)|\n"""), " <br />") + "\" ,"
+        result += "\"name\" :\"" + poi.name + "\" ,"
+        result += "\"imageURL\" :\"" + poi.imageURL.toString()+ "\" ,"
+        result += "\"id\" :\""  + poi.id+ "\" ,"
+        result += "\"icon\" :\"" + poi.icon+ "\" ,"
+        result += "\"categories\" :\"" + poi.categories+"\" ,"
+        result +="\"position\" :"+ "{\"altitude\" :" + poi.position.altitude+"," + "\"longitude\" :" + poi.position.longitude+"," + "\"latitude\" :" + poi.position.latitude+ "," +"\"scene\" :" +
+                "{\"buildingID\" :\"" + poi.position.scene.buildingID+"\",\"floorID\" :\"" + poi.position.scene.floorID+ "\"}},"
+        result +="\"size\" :{\"scale\" :" + poi.size.scale+ ",\"constantSizeDistant\":" + poi.size.sizeDistance + "},"
+        result += "\"orientation\" :\"" + poi.orientation+"\" ,"
+        result += "\"displayMode\" :" + displayModeToString(poi.displayMode)+" ,"
+        result += "\"anchorMode\" :" + anchorModeToString(poi.anchorMode)+","
+        result += "\"visibilityRamp\" :{\"fullyVisible\" : ${poi.visibilityRamp.fullyVisible}, \"fullyInvisible\" : ${poi.visibilityRamp.fullyInvisible}, \"startInvisible\" : ${poi.visibilityRamp.startInvisible}, \"startVisible\" : ${poi.visibilityRamp.startVisible}} }"
         return result
     }
 }

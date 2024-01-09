@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Alert } from 'rea
 import CheckBox from '@react-native-community/checkbox';
 import VisioMapView from 'react-native-visioglobe';
 import { VMCameraHeading, VMCameraPitch, VMCameraUpdate, VMERouteRequestType, VMLocation, VMPosition, VMRouteDestinationsOrder, VMRouteRequest, VMSceneUpdate, VMViewModeType, pitchType } from '../../src/VisioTypes';
+import { VMPoi } from '../../src/VisioTypes';
 
 
 export default function App(){
@@ -236,8 +237,9 @@ export default function App(){
       
       if (checkBoxString2 === "Show POI") {
         let res = ref.current.getPoi("B1-UL00-ID0034");
-        res.then((value: any) => {
-          Alert.alert("getPoi result is " + value);
+        res.then((value: VMPoi) => {
+          //You have access to any existing field from VMPoi
+          Alert.alert("getPoi name,description", "NAME: "+ value.name + "\nDESCRIPTION: " + value.htmlDescription);
         });
       }
       
