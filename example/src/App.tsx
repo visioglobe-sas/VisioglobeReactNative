@@ -223,11 +223,18 @@ export default function App(){
       }
       
       if (checkBoxString2 === "Accessible Route") {
+
+        const position: VMPosition = {
+          altitude: 0.0,
+          latitude: 45.7413,
+          longitude: 4.88216
+        }
+
         const value : VMRouteRequest = {
           animateAllRoute: false,
           destinationsOrder: VMRouteDestinationsOrder.closest,
           isAccessible: true,
-          origin: "B3-UL01-ID-0013",
+          origin: "B3-UL01-ID0013",
           destinations: ["B3-UL00-ID0073"],
           requestType: VMERouteRequestType.fatest
         }

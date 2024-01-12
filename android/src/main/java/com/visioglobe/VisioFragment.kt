@@ -542,25 +542,6 @@ class VisioFragment(
         }
         val isAccessible = lRouteInfo.getBoolean("isAccessible")
         val destinations = lRouteInfo.getArray("destinations")
-        val origin: Any?
-        if (lRouteInfo.getType("origin") == ReadableType.String) {
-            origin = lRouteInfo.getString("origin")
-        } else {
-            var scene = VMESceneContext()
-            if (lRouteInfo.getMap("origin")!!.toHashMap().containsKey("scene")) {
-                scene = VMESceneContext(
-                    lRouteInfo.getMap("origin")!!.getMap("scene")!!.getString("buildingID")!!,
-                    lRouteInfo.getMap("origin")!!.getMap("scene")!!.getString("FloorID")!!
-                )
-            }
-            origin = VMEPosition(
-                lRouteInfo.getMap("origin")!!.getDouble("latitude"),
-                lRouteInfo.getMap("origin")!!.getDouble("longitude"),
-                lRouteInfo.getMap("origin")!!
-                    .getDouble("altitude"),
-                scene
-            )
-        }
         val requestTypeNumber = lRouteInfo.getDouble("requestType")
         var requestType: VMERouteRequestType? = null
         if (requestTypeNumber == 0.0) {
@@ -578,7 +559,26 @@ class VisioFragment(
         assert(requestType != null)
         assert(routeDestinationsOrder != null)
         val routeRequest = VMERouteRequest(requestType!!, routeDestinationsOrder!!, isAccessible)
-        routeRequest.origin = origin
+        if (lRouteInfo.getType("origin") == ReadableType.String) {
+            var origin: String = lRouteInfo.getString("origin").toString()
+            routeRequest.setOrigin(origin);
+        } else {
+            var scene = VMESceneContext()
+            if (lRouteInfo.getMap("origin")!!.toHashMap().containsKey("scene")) {
+                scene = VMESceneContext(
+                    lRouteInfo.getMap("origin")!!.getMap("scene")!!.getString("buildingID")!!,
+                    lRouteInfo.getMap("origin")!!.getMap("scene")!!.getString("FloorID")!!
+                )
+            }
+            var origin: VMEPosition = VMEPosition(
+                lRouteInfo.getMap("origin")!!.getDouble("latitude"),
+                lRouteInfo.getMap("origin")!!.getDouble("longitude"),
+                lRouteInfo.getMap("origin")!!
+                    .getDouble("altitude"),
+                scene
+            )
+            routeRequest.setOrigin(origin);
+        }
         routeRequest.addDestinations(destinationsArray)
         mMapController!!.computeRoute(routeRequest, mRouteCallback)
     }
