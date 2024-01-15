@@ -223,13 +223,6 @@ export default function App(){
       }
       
       if (checkBoxString2 === "Accessible Route") {
-
-        const position: VMPosition = {
-          altitude: 0.0,
-          latitude: 45.7413,
-          longitude: 4.88216
-        }
-
         const value : VMRouteRequest = {
           animateAllRoute: false,
           destinationsOrder: VMRouteDestinationsOrder.closest,
@@ -270,6 +263,22 @@ export default function App(){
       if (checkBoxString3 === "Set Categorie") {
         const value = '{"23": {"name": "The name","icon": "media/map/visio_island_essentials/category_service.png"}}';
         setCategories(value);
+      }
+      if (checkBoxString3 === "Optimal Route") {
+        const position: VMPosition = {
+          altitude: 0.0,
+          latitude: 45.7413,
+          longitude: 4.88216
+        }
+        const value : VMRouteRequest = {
+          animateAllRoute: false,
+          destinationsOrder: VMRouteDestinationsOrder.optimalFinishOnLast,
+          isAccessible: false,
+          origin: position,
+          destinations: ["B1-UL00-ID0034","B3-UL01-ID0013"],
+          requestType: VMERouteRequestType.shortest
+        }
+        computeRoute(value);
       }
     }
     setCheckbox3(!checkbox3);
