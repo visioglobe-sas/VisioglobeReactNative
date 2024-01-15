@@ -347,7 +347,7 @@ class VisioFragment(
 
     fun showPoiInfo(poiID: String?) {
         Log.d("REF", "==> SHOW POI INFO")
-        mMapController!!.showPoiInfo(poiID!!)
+        mMapController!!.showPoiInfo(poiID.toString())
     }
 
     fun setStatisticsLog(value: Boolean) {
@@ -441,10 +441,9 @@ class VisioFragment(
     fun setPoisSize() {}
     fun setPoiPosition() {}
     fun setPoisPosition() {}
-    fun showPoiInfo() {}
     fun setCategories() {}
 
-    @get:ReactMethod
+    /*@get:ReactMethod
     val version: Promise
         get() {
             Log.d("REF", "====> GET VERSION ")
@@ -477,7 +476,7 @@ class VisioFragment(
         get() {
             Log.d("REF", "====> GET MIN VERSION ")
             return mMapController!!.minDataSDKVersion
-        }
+        }*/
 
     fun setSelectorViewVisible(visible: Boolean) {
         Log.d("REF", "====> SET SELECTOR VIEW ")

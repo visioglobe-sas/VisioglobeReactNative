@@ -199,12 +199,12 @@ class VisioMapViewManager(var reactContext: ReactApplicationContext) :
                 myFragment!!.setSelectorViewVisible(visible)
             }
 
-            "getVersion" -> {
+            /*"getVersion" -> {
                 val requestId = args!!.getDouble(0)
                 myFragment!!.version
             }
 
-            "getMinDataSDKVersion" -> myFragment!!.minDataSDKVersion
+            "getMinDataSDKVersion" -> myFragment!!.minDataSDKVersion*/
             "unloadMapData" -> myFragment!!.unloadMapData()
             "unloadMapView" -> myFragment!!.unloadMapView()
             "loadMapView" -> myFragment!!.loadMapView()

@@ -80,6 +80,12 @@ export default function App(){
     }
   }
 
+  const showPoiInfo = (value : string) => {
+    if (ref.current) {
+      ref.current.showPoiInfo(value);
+    }
+  }
+
   const removePois = (value : [string]) => {
     if (ref.current) {
       ref.current.removePois(value)
@@ -245,11 +251,7 @@ export default function App(){
       }
       
       if (checkBoxString2 === "Show POI") {
-        let res = ref.current.getPoi("B1-UL00-ID0034");
-        res.then((value: VMPoi) => {
-          //You have access to any existing field from VMPoi
-          Alert.alert("getPoi name,description", "NAME: "+ value.name + "\nDESCRIPTION: " + value.htmlDescription);
-        });
+        showPoiInfo("B3-UL00-ID0073")
       }
       
       if (checkBoxString2 === "Overlay") {
@@ -285,6 +287,13 @@ export default function App(){
           requestType: VMERouteRequestType.shortest
         }
         computeRoute(value);
+      }
+      if (checkBoxString3 === "Get POI"){
+        let res = ref.current.getPoi("B1-UL00-ID0034");
+        res.then((value: VMPoi) => {
+          //You have access to any existing field from VMPoi
+          Alert.alert("getPoi name,description", "NAME: "+ value.name + "\nDESCRIPTION: " + value.htmlDescription);
+        });
       }
     }
     setCheckbox3(!checkbox3);
