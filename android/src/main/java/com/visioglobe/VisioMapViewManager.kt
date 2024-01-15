@@ -2,7 +2,6 @@ package com.visioglobe
 
 import android.os.Build
 import android.util.Log
-import android.util.LogPrinter
 import android.view.Choreographer
 import android.view.View
 import android.view.ViewGroup
@@ -12,8 +11,6 @@ import androidx.fragment.app.FragmentActivity
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.ReadableArray
 import com.facebook.react.bridge.ReadableType
-import com.facebook.react.bridge.WritableMap
-import com.facebook.react.bridge.WritableNativeMap
 import com.facebook.react.common.MapBuilder
 import com.facebook.react.uimanager.ThemedReactContext
 import com.facebook.react.uimanager.UIManagerModule
@@ -22,10 +19,7 @@ import com.facebook.react.uimanager.annotations.ReactProp
 import com.facebook.react.uimanager.events.EventDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import kotlin.reflect.full.memberProperties
 
 class VisioMapViewManager(var reactContext: ReactApplicationContext) :
     ViewGroupManager<FrameLayout>() {
@@ -308,8 +302,13 @@ class VisioMapViewManager(var reactContext: ReactApplicationContext) :
                         })
                     }
                 }
-
                 run {}
+            }
+
+            "removePois" -> {
+                val pois = args!!.getArray(0)
+                myFragment!!.removePois(pois)
+
             }
 
             else -> {}

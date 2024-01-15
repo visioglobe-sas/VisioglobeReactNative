@@ -80,6 +80,12 @@ export default function App(){
     }
   }
 
+  const removePois = (value : [string]) => {
+    if (ref.current) {
+      ref.current.removePois(value)
+    }
+  }
+
   const handleButtonClick = (buttonText: string) => {
     // Faites quelque chose avec le bouton cliqué
     console.log(`Bouton cliqué: ${buttonText}`);
@@ -170,7 +176,7 @@ export default function App(){
       }
     
       if (checkBoxString1 === "Create POIs") {
-        setPois('{"catCringe":{"name":"Black cat","icon":"https://upload.wikimedia.org/wikipedia/commons/4/4f/Kitty_emoji.png","description":"Black cat is here","features":{"image":{"icon":"https://upload.wikimedia.org/wikipedia/commons/4/4f/Kitty_emoji.png","position":[45.74131,4.88216,0.0],"anchorMode":"bottomCenter","scale":15.0,"altitudeMode":"absolute"}}}} ');
+        setPois('{"catCringe":{"name":"Black cat","icon":"https://upload.wikimedia.org/wikipedia/commons/4/4f/Kitty_emoji.png","description":"Black cat is here","feature":{"image":{"icon":"https://upload.wikimedia.org/wikipedia/commons/4/4f/Kitty_emoji.png","position":[45.74131,4.88216,0.0],"anchorMode":"bottomCenter","scale":15.0,"altitudeMode":"absolute"}}}} ');
       }
     
       if (checkBoxString1 === "Open SearchBar") {
@@ -235,7 +241,7 @@ export default function App(){
       }
       
       if (checkBoxString2 === "Remove POIs") {
-        console.log("La chaîne correspond à 'Remove POIs'.");
+        removePois(["catCringe"]);
       }
       
       if (checkBoxString2 === "Show POI") {

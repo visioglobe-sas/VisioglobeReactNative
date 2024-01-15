@@ -414,7 +414,15 @@ class VisioFragment(
         get() {}
 
     fun removePoi() {}
-    fun removePois() {}
+    fun removePois(pois: ReadableArray): List<Boolean> {
+        var i = 0
+        var poisList : MutableList<String> = mutableListOf()
+        while (i < pois.size()){
+            poisList.add(pois.getString(i))
+            i ++
+        }
+        return mMapController!!.removePois(poisList);
+    }
     val category: Unit
         get() {}
 
