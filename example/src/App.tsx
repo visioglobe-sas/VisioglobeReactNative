@@ -4,7 +4,8 @@ import CheckBox from '@react-native-community/checkbox';
 import VisioMapView from 'react-native-visioglobe';
 import { VMCameraHeading, VMCameraPitch, VMCameraUpdate, VMERouteRequestType, VMLocation, VMPosition, VMRouteDestinationsOrder, VMRouteRequest, VMSceneUpdate, VMViewModeType, pitchType } from '../../src/VisioTypes';
 import { VMPoi } from '../../src/VisioTypes';
-
+import {request, PERMISSIONS, check, RESULTS} from 'react-native-permissions';
+import Geolocation from 'react-native-geolocation-service';
 
 export default function App(){
   const ref = React.useRef<VisioMapView>(null);
@@ -17,6 +18,7 @@ export default function App(){
   const [checkBoxString3, setCheckBoxString3] = useState("");
   const [opacity3, setOpacity3] = useState(1);
   const [disable3, setDisable3] = useState(false);
+  const [location, setLocation] = useState(false);
   const mapHash="mc8f3fec89d2b7283d15cfcf4eb28a0517428f054"
   const mapPath="path"
   const mapSecret=0
@@ -42,6 +44,12 @@ export default function App(){
   };
 
   //Basic Section
+  const handleBasicClick = () =>{
+    setCheckBoxString1("Display props");
+    setCheckBoxString2("Unload Map View");
+    setCheckBoxString3("Reload Map View");
+  }
+
   const showMapInfo = (mapHash : string, mapSecret : number, mapPath : string) => {
     Alert.alert("Current map props: ", " HASH :" + mapHash +",\n PATH : " + mapPath + ",\n SECRET CODE : " + mapSecret);
   };
@@ -59,7 +67,6 @@ export default function App(){
   } 
 
   //Search bar 
-
   const setCategories = (values : string) => {
     if (ref.current) {
       ref.current.setCategories(values);
@@ -105,12 +112,6 @@ export default function App(){
     setCheckBoxString3("Camera Context");
   };
 
-  const handleBasicClick = () =>{
-    setCheckBoxString1("Display props");
-    setCheckBoxString2("Unload Map View");
-    setCheckBoxString3("Reload Map View");
-  }
-
   const handleRoutingClick = () =>{
     setCheckBoxString1("Simple Route");
     setCheckBoxString2("Accessible Route");
@@ -129,12 +130,52 @@ export default function App(){
     setCheckBoxString3("Get POI");
   }
 
-  const handleThemeClick = ( ) => {
-    setCheckBoxString1("Set Theme");
-    setCheckBoxString2("Overlay");
-    setCheckBoxString3("");
+  //Location Section
+  const handleLocationClick = ( ) => {
+    check(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION)
+    .then((result) => {
+      switch (result) {
+        case RESULTS.UNAVAILABLE:
+          request(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION).then((result) => {
+            Alert.alert(result)
+          });  
+          break;
+        case RESULTS.DENIED:
+          request(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION).then((result) => {
+            Alert.alert(result)
+          });  
+          break;
+        case RESULTS.LIMITED:
+          request(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION).then((result) => {
+            if (result == RESULTS.GRANTED){
+              setLocation(true)
+            }
+            Alert.alert(result)
+          });  
+          break;
+        case RESULTS.GRANTED:
+          setLocation(true)
+          console.log('The permission is granted');
+          break;
+        case RESULTS.BLOCKED:
+          request(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION).then((result) => {
+            Alert.alert(result)
+          });  
+          break;
+      }
+    })  
+    setCheckBoxString1("Get VMLocation");
+    setCheckBoxString2("Update Location");
+    setCheckBoxString3("Update Location with new tracking mode");
   }
 
+  const updateLocation = (value : VMLocation) => {
+    if (ref.current) {
+      ref.current.updateLocation(value);
+    }
+  }
+
+  //Manage the first (left) button in the demo application
   const handleCheckbox1Change = () => {
     if (!checkbox1){
       setCheckbox2(false)
@@ -189,8 +230,32 @@ export default function App(){
         console.log("La chaîne correspond à 'Open SearchBar'.");
       }
     
-      if (checkBoxString1 === "Set Theme") {
-        console.log("La chaîne correspond à 'Set Theme'.");
+      if (checkBoxString1 === "Get VMLocation") {
+        //Get position
+        if (location) {
+          Geolocation.getCurrentPosition(
+            position => {
+              const VMPos: VMPosition = {
+                altitude: position.coords.altitude || 0.0 ,
+                latitude: position.coords.latitude,
+                longitude: position.coords.longitude
+              }
+              const VMLoc: VMLocation = {
+                accuracy: position.coords.accuracy,
+                bearing: 0.0,
+                position : VMPos
+              }
+              console.log(position);
+              return VMLoc
+            },
+
+            error => {
+              console.log(error.code, error.message);
+              setLocation(false);
+            },
+            {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
+          );
+        }
       }
     } else {
 
@@ -199,12 +264,13 @@ export default function App(){
   setCheckbox1(!checkbox1);
   };
 
+  //Manage the second (middle) button in the demo application
   const handleCheckbox2Change = () => {
     if (!checkbox2){
       setCheckbox1(false)
       setCheckbox3(false)
 
-      /*Camera : Update Camera*/
+      //Camera : Update Camera
       if (checkBoxString2 === "Update Camera") {
         const heading : VMCameraHeading = {
           current: true,
@@ -254,13 +320,24 @@ export default function App(){
         showPoiInfo("B3-UL00-ID0073")
       }
       
-      if (checkBoxString2 === "Overlay") {
-        console.log("La chaîne correspond à 'Overlay'.");
+      if (checkBoxString2 === "Update Location") {
+        const location : VMLocation = {
+          accuracy: 1.0,
+          bearing: 1.0,
+          position: {
+            altitude: 0.0,
+            latitude: 45.7413,
+            longitude: 4.88216
+          }
+        }
+        console.log("update loc")
+        updateLocation(location)
       }
     }
       setCheckbox2(!checkbox2);
   };
 
+  //Manage the third (right) button in the demo application
   const handleCheckbox3Change = () => {
     if (!checkbox3){
       setCheckbox1(false)
@@ -295,6 +372,9 @@ export default function App(){
           Alert.alert("getPoi name,description", "NAME: "+ value.name + "\nDESCRIPTION: " + value.htmlDescription);
         });
       }
+      if (checkBoxString3 === "Custom POIs"){
+        setPois('{"catCringe":{"name":"Lost Cat", "feature":{}}}')
+      }
     }
     setCheckbox3(!checkbox3);
   };
@@ -326,8 +406,8 @@ export default function App(){
           <Text>Search</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={() => handleThemeClick()} style={styles.dropdownButton}>
-          <Text>Theme</Text> 
+        <TouchableOpacity onPress={() => handleLocationClick()} style={styles.dropdownButton}>
+          <Text>Location</Text> 
           {/*overlay ??*/}
         </TouchableOpacity>
 

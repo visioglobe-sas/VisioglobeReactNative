@@ -350,6 +350,12 @@ class VisioFragment(
         mMapController!!.showPoiInfo(poiID.toString())
     }
 
+    fun updateLocation(location: ReadableMap){
+        Log.d("REF", "==> UPDATE LOCATION")
+        val loc = UtilsType().readableMapToLocation(location!!)
+        mMapController!!.updateLocation(loc)
+    }
+
     fun setStatisticsLog(value: Boolean) {
         Log.d("REF", "==> SET STATISTICS LOG")
         mMapController!!.isStatisticsLog = value

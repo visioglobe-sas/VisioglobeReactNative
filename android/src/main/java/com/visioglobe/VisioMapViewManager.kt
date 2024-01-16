@@ -205,9 +205,13 @@ class VisioMapViewManager(var reactContext: ReactApplicationContext) :
             }
 
             "getMinDataSDKVersion" -> myFragment!!.minDataSDKVersion*/
+
             "unloadMapData" -> myFragment!!.unloadMapData()
+
             "unloadMapView" -> myFragment!!.unloadMapView()
+
             "loadMapView" -> myFragment!!.loadMapView()
+
             "setExcludedAttributes" -> {
                 val excluded = args!!.getArray(0)
                 myFragment!!.setExcludedAttributes(excluded)
@@ -309,6 +313,13 @@ class VisioMapViewManager(var reactContext: ReactApplicationContext) :
                 val pois = args!!.getArray(0)
                 myFragment!!.removePois(pois)
 
+            }
+
+            "updateLocation" -> {
+                val location = args?.getMap(0);
+                if (location != null) {
+                    myFragment!!.updateLocation(location)
+                }
             }
 
             else -> {}

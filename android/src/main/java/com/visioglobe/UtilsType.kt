@@ -1,10 +1,8 @@
 package com.visioglobe
 
 import android.util.Log
-import com.facebook.react.bridge.ReadableArray
 import com.facebook.react.bridge.ReadableMap
 import com.facebook.react.bridge.ReadableType
-import com.facebook.react.bridge.WritableMap
 import com.visioglobe.visiomoveessential.enums.VMEPoiAltitudeMode
 import com.visioglobe.visiomoveessential.enums.VMEPoiAnchorMode
 import com.visioglobe.visiomoveessential.enums.VMEPoiDisplayMode
@@ -13,11 +11,10 @@ import com.visioglobe.visiomoveessential.models.VMECameraHeading
 import com.visioglobe.visiomoveessential.models.VMECameraPitch
 import com.visioglobe.visiomoveessential.models.VMECameraUpdate
 import com.visioglobe.visiomoveessential.models.VMECameraUpdateBuilder
+import com.visioglobe.visiomoveessential.models.VMELocation
 import com.visioglobe.visiomoveessential.models.VMEPoi
-import com.visioglobe.visiomoveessential.models.VMEPoiOrientation
 import com.visioglobe.visiomoveessential.models.VMEPosition
 import com.visioglobe.visiomoveessential.models.VMESceneContext
-import java.util.Dictionary
 
 class UtilsType {
     fun readableMapToCameraHeading(lHeading: ReadableMap?): VMECameraHeading {
@@ -91,6 +88,15 @@ class UtilsType {
             positionMap.getDouble("longitude"),
             positionMap.getDouble("altitude"),
             scene
+        )
+    }
+
+    fun readableMapToLocation(locationMap: ReadableMap): VMELocation {
+        return VMELocation(
+            position = locationMap.getMap("position")
+                ?.let { readableMapToPosition(it) }!!,
+            accuracy = locationMap.getDouble("accuracy"),
+            bearing = locationMap.getDouble("bearing")
         )
     }
 
