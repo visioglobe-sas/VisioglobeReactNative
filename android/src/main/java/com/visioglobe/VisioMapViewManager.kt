@@ -62,6 +62,7 @@ class VisioMapViewManager(var reactContext: ReactApplicationContext) :
     private val COMMAND_UNLOAD_MAP_DATA = 37
     private val COMMAND_UNLOAD_MAP_VIEW = 38
     private val COMMAND_LOAD_MAP_VIEW = 39
+    private val COMMAND_SHOW_SEARCH_VIEW_WITH_TITLE = 40
     private var reactNativeViewId = 0
     private val propWidth = 0
     private val propHeight = 0
@@ -128,6 +129,7 @@ class VisioMapViewManager(var reactContext: ReactApplicationContext) :
         commands["unloadMapData"] = COMMAND_UNLOAD_MAP_DATA
         commands["unloadMapView"] = COMMAND_UNLOAD_MAP_VIEW
         commands["loadMapView"] = COMMAND_LOAD_MAP_VIEW
+        commands["showSearchViewWithTitle"] = COMMAND_SHOW_SEARCH_VIEW_WITH_TITLE
         return commands
     }
 
@@ -319,6 +321,13 @@ class VisioMapViewManager(var reactContext: ReactApplicationContext) :
                 val location = args?.getMap(0);
                 if (location != null) {
                     myFragment!!.updateLocation(location)
+                }
+            }
+
+            "showSearchViewWithTitle" -> {
+                val title = args?.getString(0);
+                if (title != null) {
+                    myFragment!!.showSearchViewWithTitle(title)
                 }
             }
 

@@ -386,6 +386,11 @@ class VisioFragment(
         mMapController!!.compassHeadingMarkerVisible = enabled
     }
 
+    fun showSearchViewWithTitle(value: String){
+        mMapController!!.showSearchViewWithTitle(value,null)
+
+    }
+
     fun setLocationTrackingButtonToggleModes(value: ReadableArray?) {
         Log.d("REF", "==> SET COMPASS")
         mMapController!!.locationTrackingButtonToggleModes =

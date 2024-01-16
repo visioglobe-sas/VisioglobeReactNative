@@ -73,6 +73,12 @@ export default function App(){
     }
   }
 
+  const showSearchViewWithTitle = (values : string) => {
+    if (ref.current) {
+      ref.current.showSearchViewWithTitle(values);
+    }
+  }
+
   const computeRoute = (value : VMRouteRequest) => {
     if (ref.current) {
       ref.current.computeRoute(value);
@@ -227,7 +233,7 @@ export default function App(){
       }
     
       if (checkBoxString1 === "Open SearchBar") {
-        console.log("La chaîne correspond à 'Open SearchBar'.");
+        showSearchViewWithTitle("Search Bar View")
       }
     
       if (checkBoxString1 === "Get VMLocation") {
@@ -330,7 +336,6 @@ export default function App(){
             longitude: 4.88216
           }
         }
-        console.log("update loc")
         updateLocation(location)
       }
     }
