@@ -24,6 +24,12 @@ export default function App(){
   const mapSecret=0
 
   //Camera Section 
+  const handleCameraClick = () =>{
+    setCheckBoxString1("Animate Camera");
+    setCheckBoxString2("Update Camera");
+    setCheckBoxString3("");
+  };
+
   const animateCamera = (values: VMCameraUpdate) => {
     if (ref.current) {
       ref.current.animateCamera(values,3 //duration here fixed to 3
@@ -37,11 +43,6 @@ export default function App(){
     }
   };
 
-  const setPois = (values: string) => {
-    if (ref.current) {
-      ref.current.setPois(values);
-    }
-  };
 
   //Basic Section
   const handleBasicClick = () =>{
@@ -66,10 +67,18 @@ export default function App(){
     }
   } 
 
+
   //Search bar 
-  const setCategories = (values : string) => {
+  const handleSearchClick = () => {
+    setCheckBoxString1("Open SearchBar");
+    setCheckBoxString2("Show POI");
+    setCheckBoxString3("Get POI");
+  }
+
+
+  const showPoiInfo = (value : string) => {
     if (ref.current) {
-      ref.current.setCategories(values);
+      ref.current.showPoiInfo(value);
     }
   }
 
@@ -79,25 +88,19 @@ export default function App(){
     }
   }
 
-  const computeRoute = (value : VMRouteRequest) => {
-    if (ref.current) {
-      ref.current.computeRoute(value);
-    }
-  }
 
   //Poi section
-
-  const getPoi = (value : string) => {
-    if (ref.current) {
-      ref.current.getPoi(value);
-    }
+  const handlePOIClick = () =>{
+    setCheckBoxString1("Create POIs");
+    setCheckBoxString2("Remove POIs");
+    setCheckBoxString3("Custom POIs");
   }
 
-  const showPoiInfo = (value : string) => {
+  const setPois = (values: string) => {
     if (ref.current) {
-      ref.current.showPoiInfo(value);
+      ref.current.setPois(values);
     }
-  }
+  };
 
   const removePois = (value : [string]) => {
     if (ref.current) {
@@ -105,36 +108,20 @@ export default function App(){
     }
   }
 
-  const handleButtonClick = (buttonText: string) => {
-    // Faites quelque chose avec le bouton cliqué
-    console.log(`Bouton cliqué: ${buttonText}`);
-    // Fermer le dropdown menu après avoir cliqué sur un bouton
-    setDropdownOpen(false);
-  };
 
-  const handleCameraClick = () =>{
-    setCheckBoxString1("Animate Camera");
-    setCheckBoxString2("Update Camera");
-    setCheckBoxString3("Camera Context");
-  };
-
+  //Routing Section
   const handleRoutingClick = () =>{
     setCheckBoxString1("Simple Route");
     setCheckBoxString2("Accessible Route");
     setCheckBoxString3("Optimal Route");
   }
 
-  const handlePOIClick = () =>{
-    setCheckBoxString1("Create POIs");
-    setCheckBoxString2("Remove POIs");
-    setCheckBoxString3("Custom POIs");
+  const computeRoute = (value : VMRouteRequest) => {
+    if (ref.current) {
+      ref.current.computeRoute(value);
+    }
   }
 
-  const handleSearchClick = () => {
-    setCheckBoxString1("Open SearchBar");
-    setCheckBoxString2("Show POI");
-    setCheckBoxString3("Get POI");
-  }
 
   //Location Section
   const handleLocationClick = ( ) => {
@@ -174,12 +161,20 @@ export default function App(){
     setCheckBoxString2("Update Location");
     setCheckBoxString3("Update Location with new tracking mode");
   }
-
   const updateLocation = (value : VMLocation) => {
     if (ref.current) {
       ref.current.updateLocation(value);
     }
   }
+
+
+  //Not used in this example
+  const setCategories = (values : string) => {
+    if (ref.current) {
+      ref.current.setCategories(values);
+    }
+  }
+  
 
   //Manage the first (left) button in the demo application
   const handleCheckbox1Change = () => {
