@@ -83,7 +83,7 @@ class VisioFragment(
             builder.promptUserToDownloadMap = mPromptToDownload
             val context = this.context
             Intrinsics.checkNotNullExpressionValue(context, "requireContext()")
-            mMapController = VMEMapController(context!!, builder)
+            mMapController = this.activity?.let { VMEMapController(it, builder) }
             mController = mMapController
             Intrinsics.checkNotNull(mController)
             Log.d(TAG, "====> Set life cycle listener")
@@ -279,7 +279,7 @@ class VisioFragment(
     }
 
     private val mLifeCycleListener = object : VMELifeCycleListener() {
-        override fun mapDidInitializeEngine() {
+        fun mapDidInitializeEngine() {
             val lFilePath = extractFromAssetsAndGetFilePath()
             val var2 = lFilePath as CharSequence
             val controller: VMEMapController?

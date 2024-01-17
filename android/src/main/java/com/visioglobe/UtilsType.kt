@@ -140,8 +140,9 @@ class UtilsType {
         result += "\"id\" :\""  + poi.id+ "\" ,"
         result += "\"icon\" :\"" + poi.icon+ "\" ,"
         result += "\"categories\" :\"" + poi.categories+"\" ,"
-        result +="\"position\" :"+ "{\"altitude\" :" + poi.position.altitude+"," + "\"longitude\" :" + poi.position.longitude+"," + "\"latitude\" :" + poi.position.latitude+ "," +"\"scene\" :" +
-                "{\"buildingID\" :\"" + poi.position.scene.buildingID+"\",\"floorID\" :\"" + poi.position.scene.floorID+ "\"}},"
+        result +="\"position\" :"+ "{\"altitude\" :" + (poi.position?.altitude ?: 0.0) +"," + "\"longitude\" :" + (poi.position?.longitude
+            ?: 0.0) +"," + "\"latitude\" :" + (poi.position?.latitude ?: 0.0) + "," +"\"scene\" :" +
+                "{\"buildingID\" :\"" + poi.position?.scene?.buildingID +"\",\"floorID\" :\"" + poi.position?.scene?.floorID + "\"}},"
         result +="\"size\" :{\"scale\" :" + poi.size.scale+ ",\"constantSizeDistant\":" + poi.size.sizeDistance + "},"
         result += "\"orientation\" :\"" + poi.orientation+"\" ,"
         result += "\"displayMode\" :" + displayModeToString(poi.displayMode)+" ,"
