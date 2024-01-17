@@ -4,7 +4,7 @@ import './VisioTypes';
 import codegenNativeComponent from 'react-native/Libraries/Utilities/codegenNativeComponent';
 import codegenNativeCommands from 'react-native/Libraries/Utilities/codegenNativeCommands';
 import type { Double } from 'react-native/Libraries/Types/CodegenTypes';
-import type { VMAnimationCallback, VMCameraContext, VMCameraUpdate, VMCategory, VMLocation, VMLocationTrackingMode, VMPoi, VMPoiFilter, VMPoiFilterCallback, VMPoiSize, VMPosition, VMRouteRequest, VMSceneUpdate } from './VisioTypes';
+import type { VMCameraContext, VMCameraUpdate, VMCategory, VMLocation, VMLocationTrackingMode, VMPoiFilter, VMPoiFilterCallback, VMPoiSize, VMPosition, VMRouteRequest, VMSceneUpdate } from './VisioTypes';
 
 export interface NativeProps extends ViewProps {
   mapPath?: string;
