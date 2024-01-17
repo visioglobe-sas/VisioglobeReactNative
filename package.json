@@ -1,7 +1,7 @@
 {
   "name": "react-native-visioglobe",
   "version": "0.1.0",
-  "description": "react native bridge for visioglobe sdk",
+  "description": "react native bridge for visioglobe sdk-android ONLY",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
   "types": "src/index.d.ts",
@@ -37,13 +37,13 @@
     "ios",
     "android"
   ],
-  "repository": "https://github.com/",
-  "author": "alassane <alassane@be-tech.co> (https://www.be-tech.co/fr)",
+  "repository": "https://github.com/visioglobe-sas/VisioglobeReactNative",
+  "author": "remi <remi.mialon--evan@visioglobe.com> (https://my.visioglobe.com/)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com//issues"
+    "url": "https://github.com/visioglobe-sas/VisioglobeReactNative/issues"
   },
-  "homepage": "https://github.com/#readme",
+  "homepage": "https://github.com/visioglobe-sas/VisioglobeReactNative/blob/main/README.md",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },

@@ -1,4 +1,4 @@
-import React, { forwardRef, useRef, useImperativeHandle, ElementRef, Component } from 'react';
+import React, { forwardRef, useRef, useImperativeHandle, Component } from 'react';
 import {
   NativeModules,
   findNodeHandle,
