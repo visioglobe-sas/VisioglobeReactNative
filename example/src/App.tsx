@@ -23,11 +23,19 @@ export default function App(){
   const mapPath="path"
   const mapSecret=0
 
+  const resetCheckbox = () =>{
+    setCheckbox1(false);
+    setCheckbox2(false);
+    setCheckbox3(false);
+  }
+
   //Camera Section 
   const handleCameraClick = () =>{
+    resetCheckbox();
     setCheckBoxString1("Animate Camera");
     setCheckBoxString2("Update Camera");
     setCheckBoxString3("");
+    setDisable3(true);
   };
 
   const animateCamera = (values: VMCameraUpdate) => {
@@ -46,9 +54,11 @@ export default function App(){
 
   //Basic Section
   const handleBasicClick = () =>{
+    resetCheckbox();
     setCheckBoxString1("Display props");
     setCheckBoxString2("Unload Map View");
     setCheckBoxString3("Reload Map View");
+    setDisable3(false);
   }
 
   const showMapInfo = (mapHash : string, mapSecret : number, mapPath : string) => {
@@ -70,9 +80,11 @@ export default function App(){
 
   //Search bar 
   const handleSearchClick = () => {
+    resetCheckbox();
     setCheckBoxString1("Open SearchBar");
     setCheckBoxString2("Show POI");
     setCheckBoxString3("Get POI");
+    setDisable3(false);
   }
 
 
@@ -91,9 +103,11 @@ export default function App(){
 
   //Poi section
   const handlePOIClick = () =>{
+    resetCheckbox();
     setCheckBoxString1("Create POIs");
     setCheckBoxString2("Remove POIs");
     setCheckBoxString3("Custom POIs");
+    setDisable3(false);
   }
 
   const setPois = (values: string) => {
@@ -111,9 +125,11 @@ export default function App(){
 
   //Routing Section
   const handleRoutingClick = () =>{
+    resetCheckbox();
     setCheckBoxString1("Simple Route");
     setCheckBoxString2("Accessible Route");
     setCheckBoxString3("Optimal Route");
+    setDisable3(false);
   }
 
   const computeRoute = (value : VMRouteRequest) => {
@@ -125,6 +141,7 @@ export default function App(){
 
   //Location Section
   const handleLocationClick = ( ) => {
+    resetCheckbox();
     check(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION)
     .then((result) => {
       switch (result) {
@@ -160,6 +177,7 @@ export default function App(){
     setCheckBoxString1("Get VMLocation");
     setCheckBoxString2("Update Location");
     setCheckBoxString3("Update Location with new tracking mode");
+    setDisable3(false);
   }
   const updateLocation = (value : VMLocation) => {
     if (ref.current) {
@@ -174,7 +192,7 @@ export default function App(){
       ref.current.setCategories(values);
     }
   }
-  
+
 
   //Manage the first (left) button in the demo application
   const handleCheckbox1Change = () => {
