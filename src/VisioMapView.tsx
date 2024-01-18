@@ -17,7 +17,7 @@ const createFragment = (viewId: number | null) =>
   UIManager.dispatchViewManagerCommand(
     viewId,
     // we are calling the 'create' command
-    UIManager.VisioMapViewManager.Commands.create.toString(),
+    "1",
     [viewId]
   );
 
@@ -25,7 +25,7 @@ const createFragment = (viewId: number | null) =>
   let _nextRequestId = 1;
   // We also need to keep track of all the promises we created so we can
   // resolve them later.
-  let _requestMap = new Map<number,Promise<any>>();
+  const _requestMap = new Map<number,{ resolve: (value: any) => void; reject: (reason?: any) => void; }>();
     
 
 export const VisioMapView = forwardRef((props: NativeProps, ref) => {
@@ -143,7 +143,7 @@ const _setCompass = (value: boolean) => {
 
   const _getPoi = (value : string) => {
     let requestId: number = _nextRequestId++;
-    let promise = new Promise(function (resolve, reject) {
+    let promise = new Promise<any>(function (resolve, reject) {
       _requestMap.set(requestId,{ resolve: resolve, reject: reject });
     });
     Commands.getPoi(r.current,requestId,value);
