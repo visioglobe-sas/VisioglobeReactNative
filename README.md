@@ -4,14 +4,25 @@ react native bridge for visioglobe sdk
 
 ## Installation
 
+Put your .tgz file next to the root of your React Native Project 
+
+Then navigate to the root of your project : 
 
 ```sh
-yarn bootstrap 
+npm install ../react-native-visioglobe.tgz
 ```
 
-puis dans example 
-```sh
-yarn start
+Go to your app Android's Manifest and add 
+```xml
+<manifest ... xmlns:tools="http://schemas.android.com/tools">
+<application 
+...
+tools:replace="android:allowBackup" >
+```
+then in you app's settings.gradle add
+```gradle
+include ':visio-sdk'
+project(':visio-sdk').projectDir = new File('../node_modules/react-native-visioglobe/android/visio-sdk')
 ```
 
 ## Usage
