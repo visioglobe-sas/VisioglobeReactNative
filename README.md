@@ -27,12 +27,35 @@ project(':visio-sdk').projectDir = new File('../node_modules/react-native-visiog
 
 ## Usage
 
-```js
-import Visioglobe from "react-native-visioglobe";
+```ts
+import React, { useState } from 'react';
+import VisioMapView from 'react-native-visioglobe';
 
-// ...
+export default function App(){
+  const ref = React.useRef<typeof VisioMapView>(null);
+  const mapHash="mapHash"
+  const mapPath="path"
+  const mapSecret=0
 
-const result = await Visioglobe.multiply(3, 7);
+ 
+  return (
+      <VisioMapView
+        style={{
+          width:'100%',
+          height:'100%',
+        }}
+        mapHash={mapHash}
+        mapPath={mapPath}
+        mapSecret={mapSecret}
+        ref={ref}
+        promptToDownload={true}
+        listeners={["buildingListener","cameraListener","mapListener","locationtrackingmodeListener","poiListener"]}
+      />
+  );
+};
+
+
+App;
 ```
 
 ## Contributing
