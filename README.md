@@ -58,6 +58,13 @@ export default function App(){
 App;
 ```
 
+If you are using Visioglobe custom's enum such as : VMERouteRequestType, VMRouteDestinationsOrder, VMViewModeType, etc... you can import them from react-native-visioglobe/src/ :
+
+```ts
+import { VMViewModeType } from 'react-native-visioglobe/src/VisioTypes';
+```
+
+
 ## Contributing
 
 See the [contributing guide](CONTRIBUTING.md) to learn how to contribute to the repository and the development workflow.

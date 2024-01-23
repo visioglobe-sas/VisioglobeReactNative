@@ -1,43 +1,213 @@
 import React, { MutableRefObject } from 'react';
 import { ViewStyle } from 'react-native';
 
-export type VMEMapViewRef = {
-    customFunctionToCall: () => void;
-    setPois: (data: string) => void;
-    resetPoisColor: () => void;
-    setPoisColor: (poiIDs: Array<string>) => void;
-    computeRoute: (origin: string, destinations: Array<string>) => void;
-    getPoiPosition: (poiID: string) => void;
-  };
+export type VMSceneContext = {
+  buildingID : string | null,
+  description? : string,
+  floorID : string | null
+}
 
-export type VMEMapViewProp =
-  | ({
-      ref: MutableRefObject<VMEMapViewRef | undefined>;
-      style: Pick<
-        ViewStyle,
-        | 'width'
-        | 'height'
-        | 'backgroundColor'
-        | 'margin'
-        | 'marginTop'
-        | 'marginBottom'
-        | 'marginLeft'
-        | 'marginRight'
-        | 'position'
-        | 'left'
-        | 'right'
-        | 'bottom'
-        | 'top'
-        | 'minHeight'
-        | 'maxHeight'
-        | 'minWidth'
-        | 'maxWidth'
-        | 'opacity'
-        | 'elevation'
-        | 'zIndex'
-      >;
-    } & { mapPath: string; mapSecret: number })
-  | { mapHash: string };
+export type VMPosition = {
+  altitude: number,
+  description? : string,
+  latitude : number,
+  longitude : number,
+  scene? : VMSceneContext
+}
 
-declare const VisioMapView: React.FC<VMEMapViewProp>;
+export type VMLocation =  {
+  accuracy: number,
+  bearing: number,
+  description?: string,
+  position: VMPosition
+}
+
+export type VMPoi = {
+  altitudeMode: VMPoiAltitudeMode,
+  anchorMode: VMPoiAnchorMode,
+  categories: string[],
+  displayMode: VMPoiDisplayMode,
+  htmlDescription: string,
+  icon: string,
+  id: string,
+  imageURL: string,
+  name: string,
+  orientation: VMPoiOrientation,
+  position: VMPosition,
+  size: VMPoiSize,
+  visibilityRamp : VMPoiVisibilityRamp
+}
+
+export type VMPoiAltitudeMode = {
+  rawValue : "absolute" | "relative"
+}
+
+export type VMPoiAnchorMode = {
+ rawValue : "bottomcenter" | "bottomleft" | "bottomright" | "center" | "centerleft" | "centerright" | "topcenter" | "topleft" | "topright"
+}
+
+export type VMPoiDisplayMode = {
+  rawValue: "inlay" | "overlay"
+}
+
+export type VMPoiOrientation = {
+  //method to implement
+}
+
+export type VMPoiSize = {
+  sclae : number,
+  constantSizeDistant : number
+  //Créer ou appeler hors de la vue de l'integrateur l'initialiser (voir doc SDK )
+}
+
+export type VMPoiVisibilityRamp = {
+  fullyInvisible: number,
+  fullyVisible: number,
+  startInvisible: number,
+  startVisible: number,
+  ///Créer ou appeler hors de la vue de l'integrateur l'initialiser (voir doc SDK )
+}
+
+export type VMCameraHeading = {
+  heading?: string | number;//mandatory or numbre or current
+  current: boolean;
+}
+
+export type VMCameraPitch = {
+  pitch?: number;
+  type?: pitchType;
+}
+
+export enum VMViewModeType {
+  floor,
+  global,
+  unkown,
+}
+
+export type VMCameraUpdate = {
+  heading: VMCameraHeading;
+  paddingBottom: number;
+  paddingLeft: number;
+  paddingRight: number;
+  paddingTop: number;
+  pitch: VMCameraPitch;
+  targets: (string | VMPosition)[];
+  viewMode: VMViewModeType;
+}
+
+export type VMAnimationCallback = {
+
+}
+
+export type VMCameraContext = {
+
+}
+
+export type VMSceneUpdate = { 
+  viewMode: VMViewModeType,
+  buildingID : string | null,
+  floorID : string | null
+}
+
+export enum VMLocationTrackingMode {
+  custom,
+  follow,
+  none
+}
+
+export type VMCategory = { 
+  icon: string
+  id: string
+  name: string
+}
+
+export type VMPoiFilter = {
+  radius : number
+  restrictToPoiIDs? : string[]
+  restrictToTargetLayer : boolean
+  target : any //TO DO??
+}
+
+export type VMPoiFilterCallback = {
+  
+}
+
+export type VMRouteRequest = {
+  animateAllRoute: boolean
+  destinationsOrder: VMRouteDestinationsOrder
+  isAccessible: boolean
+  origin: VMPosition|String
+  destinations : (VMPosition|String)[]
+  requestType: VMERouteRequestType
+}
+
+export interface NativeProps extends ViewProps {
+  mapPath?: string;
+  mapSecret?: number;
+  mapHash?: string;
+  listeners?: [string]; //List of listener to instantiate with the view
+  promptToDownload?: boolean;
+  onDataReturned : any;
+  // other props go here...
+}
+
+export const Commands: NativeCommands = codegenNativeCommands<NativeCommands>({
+  supportedCommands: [
+    'setPois',
+    'resetPoisColor',
+    'computeRoute',
+    'setPoisColor',
+    'getPoiPosition',
+    'setSelectorViewVisible',
+    'getVersion',//android only
+    'animateCamera',
+    'getCameraContext',
+    'updateCamera',
+    'animateScene',
+    'updateScene',
+    'unloadMapData',
+    'unloadMapView',
+    'loadMapView',
+    'createLocationFromLocation',
+    'createPositionFromLocation',
+    'getLocationTrackingMode',
+    'getLocationTrackingButtonToggleModes',
+    'setLocationTrackingButtonToggleModes',
+    'getNavigationHeaderViewVisible',
+    'setNavigationHeaderViewVisible',
+    'getSelectorViewVisible',
+    'removePoi',
+    'removePois',
+    'getCategory',
+    'getPoi',
+    'getPoiBoundingPositions',
+    'queryAllCategoryIDs',
+    'queryAllPoiIDs',
+    'queryPois',
+    'resetPoiColor',
+    'setPoiSize',
+    'setPoisSize',
+    'setPoiPosition',
+    'setPoisPosition',
+    'showPoiInfo',
+    'setCategories',
+    'setExcludedAttributes',
+    'setExcludedModalities',
+    'setCompassHeadingMarkerVisible',
+    'setStatisticsLog',
+    'setStatisticsLogCamera',
+    'setStatisticsLogInterest',
+    'setStatisticsLogLocation',
+    'setStatisticsTrackedPoiIDs',
+    'setCompass',
+    'updateLocation',
+    'showSearchViewWithTitle',
+    //'getDataSDKVersion', 
+    //'getMinDataSDKVersion',
+  ],
+});
+
+const VisioMapView = codegenNativeComponent<NativeProps>(
+  Platform.OS === 'android' ? 'VisioMapViewManager' : 'VisioMapView'
+) as HostComponent<NativeProps>;
 export default VisioMapView;
