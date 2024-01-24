@@ -313,10 +313,9 @@ class VisioFragment(
                         VisioMapLoadedEvent(
                             reactNativeViewId,
                             "true")
-                    })
+                    )}
                 }
             }
-        }
 
         override fun mapDidGainFocus() {
             super.mapDidGainFocus()
