@@ -1,6 +1,6 @@
 {
   "name": "react-native-visioglobe",
-  "version": "0.1.0",
+  "version": "0.1.0-android",
   "description": "react native bridge for visioglobe sdk-android ONLY",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
@@ -34,7 +34,6 @@
   },
   "keywords": [
     "react-native",
-    "ios",
     "android"
   ],
   "repository": "https://github.com/visioglobe-sas/VisioglobeReactNative",
