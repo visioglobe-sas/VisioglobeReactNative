@@ -136,7 +136,9 @@ class VisioMapViewManager(var reactContext: ReactApplicationContext) :
     override fun getExportedCustomDirectEventTypeConstants(): MutableMap<String, Map<String, String>>? {
         return MapBuilder.of<String, Map<String, String>>(
             VisioGetReturnedEvent.EVENT_NAME,
-            MapBuilder.of("registrationName", "onDataReturned")
+            MapBuilder.of("registrationName", "onDataReturned"),
+            VisioMapLoadedEvent.EVENT_NAME,
+            MapBuilder.of("registrationName","onMapLoaded")
         )
     }
 
@@ -164,7 +166,7 @@ class VisioMapViewManager(var reactContext: ReactApplicationContext) :
         when (commandId) {
             "1" -> {
                 reactNativeViewId = args!!.getInt(0)
-                createFragment(root, reactNativeViewId)
+                createFragment(root, reactNativeViewId, coroutineScope, eventDispatcher)
             }
 
             "setPois" -> {
@@ -375,7 +377,7 @@ class VisioMapViewManager(var reactContext: ReactApplicationContext) :
     /**
      * Replace your React Native view with a custom fragment
      */
-    fun createFragment(root: FrameLayout, reactNativeViewId: Int) {
+    fun createFragment(root: FrameLayout, reactNativeViewId: Int, coroutineScope: CoroutineScope, eventDispatcher : EventDispatcher) {
         val parentView = root.findViewById<View>(reactNativeViewId) as ViewGroup
         setupLayout(parentView)
         Log.d("VisioMapViewManager", "====> CALLED")
@@ -383,7 +385,7 @@ class VisioMapViewManager(var reactContext: ReactApplicationContext) :
             propMapHash?.let { propMapPath?.let { it1 ->
                 propListeners?.let { it2 ->
                     VisioFragment(it,
-                        it1, propSecret, it2, promptToDownload)
+                        it1, propSecret, it2, promptToDownload,coroutineScope, eventDispatcher, reactNativeViewId)
                 }
             } }
         val activity = reactContext.currentActivity as FragmentActivity?

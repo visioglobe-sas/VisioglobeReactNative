@@ -4,25 +4,66 @@ react native bridge for visioglobe sdk
 
 ## Installation
 
+Put your .tgz file next to the root of your React Native Project 
+
+Then navigate to the root of your project : 
 
 ```sh
-yarn bootstrap 
+npm install ../react-native-visioglobe.tgz
 ```
 
-puis dans example 
-```sh
-yarn start
+Go to your app Android's Manifest and add 
+```xml
+<manifest ... xmlns:tools="http://schemas.android.com/tools">
+<application 
+...
+tools:replace="android:allowBackup" >
+```
+then in you app's settings.gradle add
+```gradle
+include ':visio-sdk'
+project(':visio-sdk').projectDir = new File('../node_modules/react-native-visioglobe/android/visio-sdk')
 ```
 
 ## Usage
 
-```js
-import Visioglobe from "react-native-visioglobe";
+```ts
+import React, { useState } from 'react';
+import VisioMapView from 'react-native-visioglobe';
 
-// ...
+export default function App(){
+  const ref = React.useRef<typeof VisioMapView>(null);
+  const mapHash="mapHash"
+  const mapPath="path"
+  const mapSecret=0
 
-const result = await Visioglobe.multiply(3, 7);
+ 
+  return (
+      <VisioMapView
+        style={{
+          width:'100%',
+          height:'100%',
+        }}
+        mapHash={mapHash}
+        mapPath={mapPath}
+        mapSecret={mapSecret}
+        ref={ref}
+        promptToDownload={true}
+        listeners={["buildingListener","cameraListener","mapListener","locationtrackingmodeListener","poiListener"]}
+      />
+  );
+};
+
+
+App;
 ```
+
+If you are using Visioglobe custom's enum such as : VMERouteRequestType, VMRouteDestinationsOrder, VMViewModeType, etc... you can import them from react-native-visioglobe/src/ :
+
+```ts
+import { VMViewModeType } from 'react-native-visioglobe/src/VisioTypes';
+```
+
 
 ## Contributing
 
