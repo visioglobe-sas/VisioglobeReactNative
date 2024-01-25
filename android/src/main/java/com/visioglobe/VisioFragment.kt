@@ -312,7 +312,7 @@ class VisioFragment(
                     eventDispatcher.dispatchEvent(
                         VisioMapLoadedEvent(
                             reactNativeViewId,
-                            "true")
+                            true)
                     )}
                 }
             }

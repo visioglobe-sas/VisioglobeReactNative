@@ -13,7 +13,7 @@ export interface NativeProps extends ViewProps {
   listeners?: [string]; //List of listener to instantiate with the view
   promptToDownload?: boolean;
   onDataReturned : any;
-  onMapLoaded : Event;
+  onMapLoaded : any;
   // other props go here...
 }
 

@@ -78,12 +78,6 @@ export type VMCameraPitch = {
   type?: pitchType;
 }
 
-export enum VMViewModeType {
-  floor,
-  global,
-  unkown,
-}
-
 export type VMCameraUpdate = {
   heading: VMCameraHeading;
   paddingBottom: number;
@@ -107,12 +101,6 @@ export type VMSceneUpdate = {
   viewMode: VMViewModeType,
   buildingID : string | null,
   floorID : string | null
-}
-
-export enum VMLocationTrackingMode {
-  custom,
-  follow,
-  none
 }
 
 export type VMCategory = { 
@@ -148,6 +136,7 @@ export interface NativeProps extends ViewProps {
   listeners?: [string]; //List of listener to instantiate with the view
   promptToDownload?: boolean;
   onDataReturned : any;
+  onMapLoaded : any;
   // other props go here...
 }
 

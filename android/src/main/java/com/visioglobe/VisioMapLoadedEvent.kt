@@ -6,12 +6,12 @@ import com.facebook.react.bridge.WritableMap
 import com.facebook.react.uimanager.events.Event
 import com.facebook.react.uimanager.events.RCTEventEmitter
 
-class VisioMapLoadedEvent(@IdRes viewId: Int, result: String?) :
+class VisioMapLoadedEvent(@IdRes viewId: Int, result: Boolean?) :
     Event<VisioMapLoadedEvent>(viewId) {
     private val payload: WritableMap = Arguments.createMap()
 
     init {
-        payload.putString("result", result)
+        payload.putBoolean("result", result!!)
     }
 
     override fun getEventName(): String {
