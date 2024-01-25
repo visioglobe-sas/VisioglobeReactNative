@@ -1,5 +1,6 @@
 package com.visioglobe
 
+import android.content.ContentValues.TAG
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -14,6 +15,7 @@ import com.facebook.react.bridge.ReadableArray
 import com.facebook.react.bridge.ReadableMap
 import com.facebook.react.bridge.ReadableType
 import com.facebook.react.bridge.WritableMap
+import com.facebook.react.uimanager.events.EventDispatcher
 import com.visioglobe.visiomoveessential.VMEMapController
 import com.visioglobe.visiomoveessential.VMEMapControllerBuilder
 import com.visioglobe.visiomoveessential.VMEMapView
@@ -33,6 +35,9 @@ import com.visioglobe.visiomoveessential.models.VMEPosition
 import com.visioglobe.visiomoveessential.models.VMERouteRequest
 import com.visioglobe.visiomoveessential.models.VMERouteResult
 import com.visioglobe.visiomoveessential.models.VMESceneContext
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.json.JSONObject
 import java.io.File
 import java.io.FileOutputStream
@@ -45,7 +50,10 @@ class VisioFragment(
     private val mMapPath: String,
     private val mMapSecret: Int,
     private val mMapListeners: ReadableArray,
-    private val mPromptToDownload: Boolean
+    private val mPromptToDownload: Boolean,
+    coroutineScope: CoroutineScope,
+    eventDispatcher: EventDispatcher,
+    reactNativeViewId : Int
 ) : Fragment() {
     private var mFragment: ViewGroup? = null
     private var mMapController: VMEMapController? = null
@@ -88,18 +96,13 @@ class VisioFragment(
             Intrinsics.checkNotNull(mController)
             Log.d(TAG, "====> Set life cycle listener")
             mController!!.setLifeCycleListener(mLifeCycleListener)
-            //Log.d(TAG, "====> Set life cycle listener success");
-            //mController = this.mMapController;
-            //Intrinsics.checkNotNull(mController);
             Log.d(TAG, "====> Set Map View")
             val mapView = mMapView
             Intrinsics.checkNotNull(mapView)
             Log.d(TAG, "====> Load map view")
-            //mController.loadMapView(mapView);
             mController = mMapController
             Intrinsics.checkNotNull(mController)
             Log.d(TAG, "====> Load map data")
-            //mController.loadMapData();
             for (i in 0 until mMapListeners.size()) {
                 val listener = mMapListeners.getString(i)
                 when (listener) {
@@ -278,7 +281,7 @@ class VisioFragment(
         return mMapView
     }
 
-    private val mLifeCycleListener = object : VMELifeCycleListener() {
+    public val mLifeCycleListener = object : VMELifeCycleListener() {
         fun mapDidInitializeEngine() {
             val lFilePath = extractFromAssetsAndGetFilePath()
             val var2 = lFilePath as CharSequence
@@ -302,14 +305,23 @@ class VisioFragment(
         }
 
         override fun mapViewDidLoad() {
+            Log.d(TAG, "====> MAP VIEW DID LOAD")
             super.mapViewDidLoad()
-        }
+            coroutineScope.launch {
+                launch(Dispatchers.Main) {
+                    eventDispatcher.dispatchEvent(
+                        VisioMapLoadedEvent(
+                            reactNativeViewId,
+                            true)
+                    )}
+                }
+            }
 
         override fun mapDidGainFocus() {
             super.mapDidGainFocus()
         }
     } as VMELifeCycleListener
-    var rand = Random()
+    private var rand = Random()
 
     // Method to generate a random color
     @ColorInt

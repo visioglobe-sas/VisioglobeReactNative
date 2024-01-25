@@ -25,7 +25,7 @@ const createFragment = (viewId: number | null) =>
   let _nextRequestId = 1;
   // We also need to keep track of all the promises we created so we can
   // resolve them later.
-  const _requestMap = new Map<number,{ resolve: (value: any) => void; reject: (reason?: any) => void; }>();
+  const _requestMap = new Map<number,{resolve: (value: any) => void; reject: (reason?: any) => void; }>();
     
 
 export const VisioMapView = forwardRef((props: NativeProps, ref) => {
@@ -255,6 +255,11 @@ const _setCompass = (value: boolean) => {
     
   }
 
+  const _onMapLoaded = (event: { nativeEvent: {result: boolean; error: any; }; }) => {
+    console.log(event.nativeEvent.result)
+    return event;
+  }
+
   /// UTILS
 
   function stringToVMPoi(data:string):VMPoi{
@@ -322,8 +327,9 @@ const _setCompass = (value: boolean) => {
   return (
     <MapView
       ref={r}
-      ///EN COURS
+      ///EVENTS
       onDataReturned={_onDataReturned}
+      onMapLoaded={_onMapLoaded}
       ///
       style={props.style}
       mapHash={props.mapHash}
