@@ -1,6 +1,6 @@
 {
-  "name": "react-native-visioglobe",
-  "version": "0.1.0",
+  "name": "@quickstart/react-native-visioglobe",
+  "version": "0.1.0-android",
   "description": "react native bridge for visioglobe sdk-android ONLY",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
@@ -30,7 +30,8 @@
     "example": "yarn --cwd example",
     "pods": "cd example && pod-install --quiet",
     "bootstrap": "yarn example && yarn && yarn pods",
-    "postinstall": "patch-package"
+    "postinstall": "patch-package",
+    "artifactregistry-login": "npx google-artifactregistry-auth"
   },
   "keywords": [
     "react-native",
@@ -45,7 +46,7 @@
   },
   "homepage": "https://github.com/visioglobe-sas/VisioglobeReactNative/blob/main/README.md",
   "publishConfig": {
-    "registry": "https://registry.npmjs.org/"
+    "registry": "https://europe-west1-npm.pkg.dev/visiosaas/test-react/"
   },
   "devDependencies": {
     "@commitlint/config-conventional": "^11.0.0",
