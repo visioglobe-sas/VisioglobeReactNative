@@ -376,7 +376,9 @@ PODS:
   - React-jsinspector (0.72.3)
   - React-logger (0.72.3):
     - glog
-  - react-native-visioglobe (0.1.0):
+  - react-native-geolocation-service (5.3.1):
+    - React
+  - react-native-visioglobe (0.1.0-android):
     - React-Core
   - React-NativeModulesApple (0.72.3):
     - hermes-engine
@@ -488,10 +490,10 @@ PODS:
     - React-jsi (= 0.72.3)
     - React-logger (= 0.72.3)
     - React-perflogger (= 0.72.3)
-  - RNCCheckbox (0.5.16):
+  - RNCCheckbox (0.5.17):
     - BEMCheckBox (~> 1.4)
     - React-Core
-  - RNPermissions (4.0.4):
+  - RNPermissions (4.1.4):
     - React-Core
   - SocketRocket (0.6.1)
   - Yoga (1.14.0)
@@ -544,6 +546,7 @@ DEPENDENCIES:
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
+  - react-native-geolocation-service (from `../node_modules/react-native-geolocation-service`)
   - react-native-visioglobe (from `../..`)
   - React-NativeModulesApple (from `../node_modules/react-native/ReactCommon/react/nativemodule/core/platform/ios`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
@@ -628,6 +631,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
   React-logger:
     :path: "../node_modules/react-native/ReactCommon/logger"
+  react-native-geolocation-service:
+    :path: "../node_modules/react-native-geolocation-service"
   react-native-visioglobe:
     :path: "../.."
   React-NativeModulesApple:
@@ -706,7 +711,8 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 59d1eb03af7d30b7d66589c410f13151271e8006
   React-jsinspector: b511447170f561157547bc0bef3f169663860be7
   React-logger: c5b527272d5f22eaa09bb3c3a690fee8f237ae95
-  react-native-visioglobe: 3d2f74f1375d88a7836e898c2ae5ea69f1e03a44
+  react-native-geolocation-service: 608e1da71a1ac31b4de64d9ef2815f697978c55b
+  react-native-visioglobe: fca97e7b7ccfc47da49849c005fb1fefa37ef0c4
   React-NativeModulesApple: c57f3efe0df288a6532b726ad2d0322a9bf38472
   React-perflogger: 6bd153e776e6beed54c56b0847e1220a3ff92ba5
   React-RCTActionSheet: c0b62af44e610e69d9a2049a682f5dba4e9dff17
@@ -724,12 +730,12 @@ SPEC CHECKSUMS:
   React-runtimescheduler: 837c1bebd2f84572db17698cd702ceaf585b0d9a
   React-utils: bcb57da67eec2711f8b353f6e3d33bd8e4b2efa3
   ReactCommon: 3ccb8fb14e6b3277e38c73b0ff5e4a1b8db017a9
-  RNCCheckbox: 75255b03e604bbcc26411eb31c4cbe3e3865f538
-  RNPermissions: ced505e90af12c346fdd8cde60974f9c5bc941e4
+  RNCCheckbox: a3ca9978cb0846b981d28da4e9914bd437403d77
+  RNPermissions: 58ee5afa4777d05c5922b80cd85171d5ec9e0ce9
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
   Yoga: 8796b55dba14d7004f980b54bcc9833ee45b28ce
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: 97d5093079a33cf2ad766ac8aa4f40811f6eb707
+PODFILE CHECKSUM: fc01bb78193e4e1466eafe00610de2401e1f6787
 
-COCOAPODS: 1.12.1
+COCOAPODS: 1.14.0
