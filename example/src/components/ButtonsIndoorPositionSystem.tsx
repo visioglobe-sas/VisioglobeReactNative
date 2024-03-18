@@ -2,10 +2,7 @@ import React from 'react';
 import {
   StyleSheet,
   Button,
-  View,
-  SafeAreaView,
-  Text,
-  Alert,
+  View
 } from 'react-native';
 import VisioMapView from 'react-native-visioglobe';
 import Geolocation from 'react-native-geolocation-service';

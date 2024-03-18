@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
 
-const ThreeStateButton = ({ buttonTexts, onClick }) => {
+const NStateButton = ({ buttonTexts, onClick }) => {
   const [currentState, setCurrentState] = useState(0);
 
   const handlePress = () => {
@@ -33,5 +33,5 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ThreeStateButton;
+export default NStateButton;
 

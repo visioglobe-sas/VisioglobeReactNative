@@ -6,10 +6,15 @@ import { VMCameraHeading, VMCameraPitch, VMCameraUpdate, VMERouteRequestType, VM
 import { VMPoi } from '../../src/VisioTypes';
 import {request, PERMISSIONS, check, RESULTS} from 'react-native-permissions';
 import Geolocation from 'react-native-geolocation-service';
+import ButtonsGettingStarted from './components/ButtonsGettingStarted';
+import ButtonsIndoorPositionSystem from './components/ButtonsIndoorPositionSystem';
 
 export default function App(){
   const ref = React.useRef<VisioMapView>(null);
-  const [isDropdownOpen, setDropdownOpen] = useState(false);
+  const mapHash="mc8f3fec89d2b7283d15cfcf4eb28a0517428f054"
+  const mapPath="path"
+  const mapSecret=0
+/*  const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [checkbox1, setCheckbox1] = useState(false);
   const [checkbox2, setCheckbox2] = useState(false);
   const [checkbox3, setCheckbox3] = useState(false);
@@ -19,9 +24,6 @@ export default function App(){
   const [opacity3, setOpacity3] = useState(1);
   const [disable3, setDisable3] = useState(false);
   const [location, setLocation] = useState(false);
-  const mapHash="mc8f3fec89d2b7283d15cfcf4eb28a0517428f054"
-  const mapPath="path"
-  const mapSecret=0
 
   const resetCheckbox = () =>{
     setCheckbox1(false);
@@ -395,80 +397,20 @@ export default function App(){
       }
     }
     setCheckbox3(!checkbox3);
-  };
+  };*/
 
   return (
     <View style={styles.container}>
-      <View style={styles.upper}>
-      {/* Dropdown Menu */}
-      <ScrollView style={[styles.dropdown]}>
-
-      <TouchableOpacity onPress={() => handleBasicClick()} style={styles.dropdownButton}>
-          <Text>Basic</Text> 
-          {/*overlay ??*/}
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={() => handleCameraClick()} style={styles.dropdownButton}>
-          <Text>Camera</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={() => handleRoutingClick()} style={styles.dropdownButton}>
-          <Text>Routing</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={() => handlePOIClick()} style={styles.dropdownButton}>
-          <Text>POI</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={() => handleSearchClick()} style={styles.dropdownButton}>
-          <Text>Search</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={() => handleLocationClick()} style={styles.dropdownButton}>
-          <Text>Location</Text> 
-          {/*overlay ??*/}
-        </TouchableOpacity>
-
-        {/* Ajoutez autant de boutons que nécessaire */}
-      </ScrollView>
-
-      <View style = {styles.mapview}>
-      <VisioMapView
-        style={{
-        flex:1
-        }}
+        <VisioMapView
+        style = {styles.mapview}
         mapHash={mapHash}
         mapPath={mapPath}
         mapSecret={mapSecret}
         ref={ref}
         promptToDownload={true}
         listeners={["buildingListener","cameraListener","mapListener","locationtrackingmodeListener","poiListener"]}
-      />
-      </View>
-      </View>
-
-      {/* Section avec 3 CheckBox en bas de l'écran*/}
-      <View style={styles.checkboxSection}>
-        <View style= {styles.viewButton}>
-        <CheckBox value={checkbox1} 
-        onValueChange={handleCheckbox1Change} />
-        <Text>{checkBoxString1}</Text>
-        </View>
-
-        <View style= {styles.viewButton}>
-        <CheckBox value={checkbox2} 
-        onValueChange={handleCheckbox2Change} />
-        <Text>{checkBoxString2}</Text>
-        </View>
-
-        <View style= {styles.viewButton} { ... {opacity : opacity3}}>
-        <CheckBox value={checkbox3} 
-        onValueChange={handleCheckbox3Change}
-        disabled={disable3}
         />
-        <Text>{checkBoxString3}</Text>
-        </View>
-    </View>
+        <ButtonsGettingStarted current={ref.current}></ButtonsGettingStarted>
     </View>
   );
 };
@@ -479,59 +421,10 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection :'column',
   },
-  upper: {
-    flex: 1,
-    flexDirection: 'row',
-  },
   mapview: {
-    width:'80%',
-    textAlign:'right'
-    //marginLeft: '20%',
-  },
-  toggleButton: {
-    //padding: 10,
-    backgroundColor: '#3498db',
-    alignItems: 'center',
-  },
-  dropdown: {
-    backgroundColor: '#e0e0e0',
-    overflow: 'scroll',
-    width: '20%',
-    height:'100%',
-    //backgroundColor: '#FF69B4'
-  },
-  dropdownButton: {
-    justifyContent: 'center',
-    height : 'auto',
-    padding: 5,
-    textAlign :'center',
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
-    //backgroundColor: '#FFB4'
-  },
-  checkboxSection: {
-    height: '15%',
-    backgroundColor: '#f0f0f0',
-    flexDirection: 'row',
-    justifyContent:'space-around',
-    alignItems: 'center',
-  },
-  viewButton : {
-    width:'30%',
-    padding: 4, 
-    borderWidth: 3, 
-    borderRadius : 20,
-    justifyContent : 'center',
-    alignItems : 'center'
-  },
-  viewButton3 : {
-    width:'30%',
-    padding: 4, 
-    borderWidth: 3, 
-    borderRadius : 20,
-    justifyContent : 'center',
-    alignItems : 'center',
-    opacity : 0.50
+    width:'100%',
+    height:'80%',
+    textAlign:'right',
   }
 });
 

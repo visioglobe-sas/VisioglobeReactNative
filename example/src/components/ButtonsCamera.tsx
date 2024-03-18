@@ -1,4 +1,4 @@
-import ThreeStateButton from './ThreeStateButton';
+import NStateButton from './ThreeStateButton';
 import React from 'react';
 import {
   StyleSheet,
@@ -157,8 +157,8 @@ const ButtonsCamera = (ref : React.MutableRefObject<VisioMapView>) => {
 
     return (
         <View style={styles.container}>
-            <ThreeStateButton buttonTexts={buttonAnimate} onClick={handleClickAnimate}/>
-            <ThreeStateButton buttonTexts={buttonUpdate} onClick={handleClickUpdate}/>
+            <NStateButton buttonTexts={buttonAnimate} onClick={handleClickAnimate}/>
+            <NStateButton buttonTexts={buttonUpdate} onClick={handleClickUpdate}/>
       </View>
   );
 };
