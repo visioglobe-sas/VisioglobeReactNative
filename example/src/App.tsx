@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
 import VisioMapView from 'react-native-visioglobe';
@@ -8,13 +8,17 @@ import {request, PERMISSIONS, check, RESULTS} from 'react-native-permissions';
 import Geolocation from 'react-native-geolocation-service';
 import ButtonsGettingStarted from './components/ButtonsGettingStarted';
 import ButtonsIndoorPositionSystem from './components/ButtonsIndoorPositionSystem';
+import NStateButton from './components/ThreeStateButton';
 
 export default function App(){
   const ref = React.useRef<VisioMapView>(null);
   const mapHash="mc8f3fec89d2b7283d15cfcf4eb28a0517428f054"
   const mapPath="path"
   const mapSecret=0
+
 /*  const [isDropdownOpen, setDropdownOpen] = useState(false);
+
+
   const [checkbox1, setCheckbox1] = useState(false);
   const [checkbox2, setCheckbox2] = useState(false);
   const [checkbox3, setCheckbox3] = useState(false);
@@ -398,19 +402,25 @@ export default function App(){
     }
     setCheckbox3(!checkbox3);
   };*/
+  useEffect(() => {
+    if (ref.current) {
+      console.log(ref.current);
+    }
+  }, []);
 
+  
   return (
     <View style={styles.container}>
         <VisioMapView
-        style = {styles.mapview}
+        ref={ref}
+        style={styles.mapview}
         mapHash={mapHash}
         mapPath={mapPath}
         mapSecret={mapSecret}
-        ref={ref}
         promptToDownload={true}
         listeners={["buildingListener","cameraListener","mapListener","locationtrackingmodeListener","poiListener"]}
         />
-        <ButtonsGettingStarted current={ref.current}></ButtonsGettingStarted>
+        <NStateButton buttonTexts={["undefined","billet"]} onClick={undefined} ></NStateButton>
     </View>
   );
 };
