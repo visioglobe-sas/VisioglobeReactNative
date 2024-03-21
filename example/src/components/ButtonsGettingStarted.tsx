@@ -9,7 +9,7 @@ import VisioMapView from 'react-native-visioglobe';
  */
 
 const ButtonsGettingStarted = (ref : React.MutableRefObject<VisioMapView>) => {
-  const [isEnabled, setIsEnabled] = useState(true);
+  const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => {
     setIsEnabled(previousState => !previousState);
     if (isEnabled){
@@ -22,7 +22,7 @@ const ButtonsGettingStarted = (ref : React.MutableRefObject<VisioMapView>) => {
   return (
     <View style={styles.container}>
       <View style={styles.onoffcontainer}>
-        <Text style={{fontWeight:'600', fontSize:19, fontFamily:'Urbanist'}}> Map data </Text>
+        <Text style={{fontWeight:'600', padding:15, fontSize:19, fontFamily:'Urbanist'}}> Map data </Text>
           <View style={styles.onofflabel}>
             <Switch
             trackColor={{false: '#393E47', true: '#0094F0'}}

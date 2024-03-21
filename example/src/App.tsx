@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
 import VisioMapView from 'react-native-visioglobe';
@@ -8,10 +8,29 @@ import {request, PERMISSIONS, check, RESULTS} from 'react-native-permissions';
 import Geolocation from 'react-native-geolocation-service';
 import ButtonsGettingStarted from './components/ButtonsGettingStarted';
 import ButtonsIndoorPositionSystem from './components/ButtonsIndoorPositionSystem';
-import NStateButton from './components/ThreeStateButton';
+import { Steps } from './components/ThreeStateButton';
+
+function useHookWithRefCallback() {
+  const ref = React.useRef<VisioMapView>(null)
+  const setRef = useCallback((node: string) => {
+    if (ref.current) {
+      // Make sure to cleanup any events/references added to the last instance
+    }
+    
+    if (node) {
+      // Check if a node is actually passed. Otherwise node would be null.
+      // You can now do what you need to, addEventListeners, measure, etc.
+    }
+    
+    // Save a reference to the node
+    ref.current = node
+  }, [])
+  
+  return [setRef]
+}
 
 export default function App(){
-  const ref = React.useRef<VisioMapView>(null);
+  const [ref] = useHookWithRefCallback()
   const mapHash="mc8f3fec89d2b7283d15cfcf4eb28a0517428f054"
   const mapPath="path"
   const mapSecret=0
@@ -402,11 +421,6 @@ export default function App(){
     }
     setCheckbox3(!checkbox3);
   };*/
-  useEffect(() => {
-    if (ref.current) {
-      console.log(ref.current);
-    }
-  }, []);
 
   
   return (
@@ -420,7 +434,7 @@ export default function App(){
         promptToDownload={true}
         listeners={["buildingListener","cameraListener","mapListener","locationtrackingmodeListener","poiListener"]}
         />
-        <NStateButton buttonTexts={["undefined","billet"]} onClick={undefined} ></NStateButton>
+        <Steps status={'two'} text={''}></Steps>
     </View>
   );
 };
