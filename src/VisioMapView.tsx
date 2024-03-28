@@ -256,7 +256,7 @@ const _setCompass = (value: boolean) => {
   }
 
   const _onMapLoaded = (event: { nativeEvent: {result: boolean; error: any; }; }) => {
-    console.log(event.nativeEvent.result)
+    console.log("looog"+event.nativeEvent.result)
     return event;
   }
 
@@ -329,7 +329,7 @@ const _setCompass = (value: boolean) => {
       ref={r}
       ///EVENTS
       onDataReturned={_onDataReturned}
-      onMapLoaded={_onMapLoaded}
+      onMapLoaded={props.onMapLoaded}
       ///
       style={props.style}
       mapHash={props.mapHash}

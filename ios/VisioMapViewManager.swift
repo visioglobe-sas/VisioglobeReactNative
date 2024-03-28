@@ -400,6 +400,7 @@ class VisioMapView: UIView, VMELifeCycleListener, VMEAnimationCallback, VMEBuild
 
     }
     
+    
     func computeRouteDidFinish(mapController: VisioMoveEssential.VMEMapController, parameters routeRequest: VisioMoveEssential.VMERouteRequest, result routeResult: VisioMoveEssential.VMERouteResult) -> Bool {
         return (true);
     }
@@ -417,6 +418,7 @@ class VisioMapView: UIView, VMELifeCycleListener, VMEAnimationCallback, VMEBuild
     @objc var mapSecret: NSNumber = 0
     @objc var listeners: NSArray = []
     @objc var promptToDownload: Bool = true
+    @objc var onMapLoaded: RCTBubblingEventBlock?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -468,6 +470,11 @@ class VisioMapView: UIView, VMELifeCycleListener, VMEAnimationCallback, VMEBuild
             mMapController.setPromptUserToDownloadMap(enable: false);
         }
         mMapController.setBuildingListener(self)
+    }
+    
+    func mapViewDidLoad(mapController: VMEMapController) {
+        let event = [AnyHashable: Any]()
+        onMapLoaded!(event)
     }
     
     func customFunctionToCall() {

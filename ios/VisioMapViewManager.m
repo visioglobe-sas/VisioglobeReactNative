@@ -19,6 +19,7 @@ RCT_EXPORT_VIEW_PROPERTY(mapPath, NSString)
 RCT_EXPORT_VIEW_PROPERTY(mapSecret, NSNumber)
 RCT_EXPORT_VIEW_PROPERTY(promptToDownload, BOOL)
 RCT_EXPORT_VIEW_PROPERTY(listeners, NSArray)
+RCT_EXPORT_VIEW_PROPERTY(onMapLoaded, RCTBubblingEventBlock)
 RCT_EXTERN_METHOD(customFunctionToCall: (nonnull NSNumber *) reactTag)
 RCT_EXTERN_METHOD(setPois: (nonnull NSNumber *) reactTag
                   data: (nonnull NSString *)data)

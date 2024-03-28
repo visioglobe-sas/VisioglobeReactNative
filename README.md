@@ -58,6 +58,48 @@ export default function App(){
 App;
 ```
 
+Please note that if you want to pass the ref of the VisioMapView (the ref contains calls to native functions), you will have to check if the map is displayed. Here is an example using the onMapLoaded event and conditional rendering
+
+```ts
+export default function App(){
+  const ref = React.useRef<VisioMapView>()
+  const mapHash="mc8f3fec89d2b7283d15cfcf4eb28a0517428f054"
+  const mapPath="path"
+  const mapSecret=0
+  /**
+   * 
+   * Mandatory with the current version.
+   * 
+   * Is used to render element when the ref to the component is defined. Not using it can result in a undefined or null ref error when calling functions.  
+   * Removing/Reloading the view with unloadMapView/loadMapView will not cause the ref to change.
+   * 
+   * **/
+  const [mapLoaded,setMapLoaded] = useState(false);
+  const _onMapLoaded = (event: { nativeEvent: {result: boolean; error: any; }; }) => {
+    setMapLoaded(true)
+    return event;
+  }
+
+  return (
+    <View style={styles.container}>
+        <VisioMapView
+        ref={ref}
+        onMapLoaded = {_onMapLoaded}
+        style={styles.mapview}
+        mapHash={mapHash}
+        mapPath={mapPath}
+        mapSecret={mapSecret}
+        promptToDownload={true}
+        listeners={["buildingListener","cameraListener","mapListener","locationtrackingmodeListener","poiListener"]}
+        />
+        {mapLoaded!== false &&
+        <ButtonsGettingStarted current={ref.current}></ButtonsGettingStarted>
+        }
+    </View>
+  );
+};
+```
+
 If you are using Visioglobe custom's enum such as : VMERouteRequestType, VMRouteDestinationsOrder, VMViewModeType, etc... you can import them from react-native-visioglobe/src/ :
 
 ```ts
