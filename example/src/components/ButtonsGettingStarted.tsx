@@ -31,7 +31,7 @@ const ButtonsGettingStarted = (ref : React.MutableRefObject<VisioMapView>) => {
             onValueChange={toggleSwitch}
             value={isEnabled}
             />
-            <Text style={{fontWeight:'400', fontSize:19, fontFamily:'Inter'}} >Unload/Load</Text>
+            <Text style={{fontWeight:'400', fontSize:19, fontFamily:'Inter'}}> Unload/Load </Text>
         </View>
       </View>
 

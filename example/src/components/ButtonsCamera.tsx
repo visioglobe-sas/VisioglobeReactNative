@@ -1,4 +1,3 @@
-import NStateButton from './ThreeStateButton';
 import React from 'react';
 import {
   StyleSheet,
