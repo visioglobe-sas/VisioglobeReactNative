@@ -473,8 +473,7 @@ class VisioMapView: UIView, VMELifeCycleListener, VMEAnimationCallback, VMEBuild
     }
     
     func mapViewDidLoad(mapController: VMEMapController) {
-        let event = [AnyHashable: Any]()
-        onMapLoaded!(event)
+        onMapLoaded!(["result": true])
     }
     
     func customFunctionToCall() {
